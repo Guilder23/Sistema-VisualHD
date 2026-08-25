@@ -22,6 +22,43 @@
 <meta name="twitter:title" content="Visual HD Producciones | Estudio Fotográfico">
 <meta name="twitter:description" content="Fotografía profesional, sesiones de 15 años, graduaciones y paquetes Kinder en San Julián.">
 <meta name="twitter:image" content="{% static 'img/visualhd/cover_quince_anos.jpeg' %}">
+
+<!-- Schema.org JSON-LD -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "Visual HD Producciones",
+  "image": "{% static 'img/visualhd/hero_house_facade.jpeg' %}",
+  "description": "Estudio fotográfico profesional en San Julián, Santa Cruz, Bolivia. Especialistas en sesiones de 15 años, paquetes de promoción Kinder, matrimonios, graduaciones y enmarcaciones.",
+  "telephone": ["+59167863880", "+59167886732"],
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "San Julián",
+    "addressRegion": "Santa Cruz",
+    "addressCountry": "BO"
+  },
+  "priceRange": "Bs. 350 - Bs. 1500",
+  "openingHours": "Mo-Sa 08:30-19:00",
+  "makesOffer": [
+    {
+      "@type": "Offer",
+      "name": "Paquete de Promoción Kinder 2026",
+      "description": "Indumentaria personalizada (toga, estola, birrete), papelería, sesión de estudio y fotografías digitales."
+    },
+    {
+      "@type": "Offer",
+      "name": "Sesión Fotográfica 15 Años",
+      "description": "Sesión de estudio y exteriores, fotos editadas de alta resolución, álbum y cuadro recuerdo."
+    },
+    {
+      "@type": "Offer",
+      "name": "Enmarcaciones y Cuadros",
+      "description": "Cuadros clásicos y modernos en poliestireno, trupan y acrílico de alta durabilidad."
+    }
+  ]
+}
+</script>
 {% endblock %}
 
 {% block estilos_extra %}
@@ -150,14 +187,14 @@
 
     <!-- HERO VISUAL PREVIEWS -->
     <div class="hero-visual">
-        <div class="hero-visual-card-main" onclick="openLightbox('{% static 'img/visualhd/cover_quince_anos.jpeg' %}', 'Sesión Fotográfica 15 Años - Visual HD')">
+        <div class="hero-visual-card-main" data-caption="Sesión Fotográfica 15 Años - Visual HD">
             <span class="hero-visual-badge">
                 <i class="fa-solid fa-crown" style="color:var(--gold)"></i> 15 Años Deluxe
             </span>
             <img src="{% static 'img/visualhd/cover_quince_anos.jpeg' %}" alt="Fotografía profesional 15 Años Visual HD">
         </div>
 
-        <div class="hero-floating-card" onclick="openLightbox('{% static 'img/visualhd/cover_promo_kinder.jpeg' %}', 'Paquete Promoción Kinder 2026 - Visual HD')">
+        <div class="hero-floating-card" data-caption="Paquete Promoción Kinder 2026 - Visual HD">
             <img src="{% static 'img/visualhd/cover_promo_kinder.jpeg' %}" alt="Promoción Kinder Visual HD">
             <div class="hero-floating-card-title">
                 <i class="fa-solid fa-graduation-cap" style="color:var(--gold)"></i> Promo Kinder 2026
@@ -289,7 +326,7 @@
         </div>
 
         <div class="album-promo-content">
-            <div class="flyer-card" onclick="openLightbox('{% static 'img/visualhd/flyer_promo_kinder.png' %}', 'Flyer Oficial Paquete de Promoción Kinder 2026 - Visual HD Producciones')">
+            <div class="flyer-card" data-caption="Flyer Oficial Paquete de Promoción Kinder 2026 - Visual HD Producciones">
                 <img src="{% static 'img/visualhd/flyer_promo_kinder.png' %}" alt="Flyer Paquete de Promoción Kinder 2026">
                 <div class="flyer-zoom-hint">
                     <i class="fa-solid fa-magnifying-glass-plus"></i> Clic para ampliar flyer
@@ -345,7 +382,7 @@
         </div>
 
         <div class="album-promo-content">
-            <div class="flyer-card" onclick="openLightbox('{% static 'img/visualhd/flyer_quince_anos.jpeg' %}', 'Flyer Oficial de Sesión 15 Años - Visual HD Producciones')">
+            <div class="flyer-card" data-caption="Flyer Oficial de Sesión 15 Años - Visual HD Producciones">
                 <img src="{% static 'img/visualhd/flyer_quince_anos.jpeg' %}" alt="Flyer Sesión 15 Años">
                 <div class="flyer-zoom-hint">
                     <i class="fa-solid fa-magnifying-glass-plus"></i> Clic para ampliar flyer
@@ -389,51 +426,51 @@
 
         <!-- Cuadrícula de fotos 15 Años -->
         <div class="gallery-grid">
-            <div class="gallery-item" onclick="openLightbox('{% static 'img/visualhd/galeria_15anos_1.jpeg' %}', 'Sesión 15 Años - Retrato 01')">
+            <div class="gallery-item" data-caption="Sesión 15 Años - Retrato 01">
                 <img src="{% static 'img/visualhd/galeria_15anos_1.jpeg' %}" alt="15 Años 01">
                 <div class="gallery-item-overlay"><span><i class="fa-solid fa-expand"></i> Ampliar</span></div>
             </div>
-            <div class="gallery-item" onclick="openLightbox('{% static 'img/visualhd/galeria_15anos_2.jpeg' %}', 'Sesión 15 Años - Retrato 02')">
+            <div class="gallery-item" data-caption="Sesión 15 Años - Retrato 02">
                 <img src="{% static 'img/visualhd/galeria_15anos_2.jpeg' %}" alt="15 Años 02">
                 <div class="gallery-item-overlay"><span><i class="fa-solid fa-expand"></i> Ampliar</span></div>
             </div>
-            <div class="gallery-item" onclick="openLightbox('{% static 'img/visualhd/galeria_15anos_3.jpeg' %}', 'Sesión 15 Años - Retrato 03')">
+            <div class="gallery-item" data-caption="Sesión 15 Años - Retrato 03">
                 <img src="{% static 'img/visualhd/galeria_15anos_3.jpeg' %}" alt="15 Años 03">
                 <div class="gallery-item-overlay"><span><i class="fa-solid fa-expand"></i> Ampliar</span></div>
             </div>
-            <div class="gallery-item" onclick="openLightbox('{% static 'img/visualhd/galeria_15anos_4.jpeg' %}', 'Sesión 15 Años - Retrato 04')">
+            <div class="gallery-item" data-caption="Sesión 15 Años - Retrato 04">
                 <img src="{% static 'img/visualhd/galeria_15anos_4.jpeg' %}" alt="15 Años 04">
                 <div class="gallery-item-overlay"><span><i class="fa-solid fa-expand"></i> Ampliar</span></div>
             </div>
-            <div class="gallery-item" onclick="openLightbox('{% static 'img/visualhd/galeria_15anos_5.jpeg' %}', 'Sesión 15 Años - Retrato 05')">
+            <div class="gallery-item" data-caption="Sesión 15 Años - Retrato 05">
                 <img src="{% static 'img/visualhd/galeria_15anos_5.jpeg' %}" alt="15 Años 05">
                 <div class="gallery-item-overlay"><span><i class="fa-solid fa-expand"></i> Ampliar</span></div>
             </div>
-            <div class="gallery-item" onclick="openLightbox('{% static 'img/visualhd/galeria_15anos_6.jpeg' %}', 'Sesión 15 Años - Retrato 06')">
+            <div class="gallery-item" data-caption="Sesión 15 Años - Retrato 06">
                 <img src="{% static 'img/visualhd/galeria_15anos_6.jpeg' %}" alt="15 Años 06">
                 <div class="gallery-item-overlay"><span><i class="fa-solid fa-expand"></i> Ampliar</span></div>
             </div>
-            <div class="gallery-item" onclick="openLightbox('{% static 'img/visualhd/galeria_15anos_7.jpeg' %}', 'Sesión 15 Años - Retrato 07')">
+            <div class="gallery-item" data-caption="Sesión 15 Años - Retrato 07">
                 <img src="{% static 'img/visualhd/galeria_15anos_7.jpeg' %}" alt="15 Años 07">
                 <div class="gallery-item-overlay"><span><i class="fa-solid fa-expand"></i> Ampliar</span></div>
             </div>
-            <div class="gallery-item" onclick="openLightbox('{% static 'img/visualhd/galeria_15anos_8.jpeg' %}', 'Sesión 15 Años - Retrato 08')">
+            <div class="gallery-item" data-caption="Sesión 15 Años - Retrato 08">
                 <img src="{% static 'img/visualhd/galeria_15anos_8.jpeg' %}" alt="15 Años 08">
                 <div class="gallery-item-overlay"><span><i class="fa-solid fa-expand"></i> Ampliar</span></div>
             </div>
-            <div class="gallery-item" onclick="openLightbox('{% static 'img/visualhd/galeria_15anos_9.jpeg' %}', 'Sesión 15 Años - Retrato 09')">
+            <div class="gallery-item" data-caption="Sesión 15 Años - Retrato 09">
                 <img src="{% static 'img/visualhd/galeria_15anos_9.jpeg' %}" alt="15 Años 09">
                 <div class="gallery-item-overlay"><span><i class="fa-solid fa-expand"></i> Ampliar</span></div>
             </div>
-            <div class="gallery-item" onclick="openLightbox('{% static 'img/visualhd/galeria_15anos_10.jpeg' %}', 'Sesión 15 Años - Retrato 10')">
+            <div class="gallery-item" data-caption="Sesión 15 Años - Retrato 10">
                 <img src="{% static 'img/visualhd/galeria_15anos_10.jpeg' %}" alt="15 Años 10">
                 <div class="gallery-item-overlay"><span><i class="fa-solid fa-expand"></i> Ampliar</span></div>
             </div>
-            <div class="gallery-item" onclick="openLightbox('{% static 'img/visualhd/galeria_15anos_11.jpeg' %}', 'Sesión 15 Años - Retrato 11')">
+            <div class="gallery-item" data-caption="Sesión 15 Años - Retrato 11">
                 <img src="{% static 'img/visualhd/galeria_15anos_11.jpeg' %}" alt="15 Años 11">
                 <div class="gallery-item-overlay"><span><i class="fa-solid fa-expand"></i> Ampliar</span></div>
             </div>
-            <div class="gallery-item" onclick="openLightbox('{% static 'img/visualhd/galeria_15anos_12.jpeg' %}', 'Sesión 15 Años - Retrato 12')">
+            <div class="gallery-item" data-caption="Sesión 15 Años - Retrato 12">
                 <img src="{% static 'img/visualhd/galeria_15anos_12.jpeg' %}" alt="15 Años 12">
                 <div class="gallery-item-overlay"><span><i class="fa-solid fa-expand"></i> Ampliar</span></div>
             </div>
@@ -453,15 +490,15 @@
         </div>
 
         <div class="gallery-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
-            <div class="gallery-item" style="height:280px;" onclick="openLightbox('{% static 'img/visualhd/marco_cuadro_1.jpeg' %}', 'Enmarcación Clásica y Moderna en Trupan y Acrílico')">
+            <div class="gallery-item" style="height:280px;" data-caption="Enmarcación Clásica y Moderna en Trupan y Acrílico">
                 <img src="{% static 'img/visualhd/marco_cuadro_1.jpeg' %}" alt="Enmarcación Trupan y Acrílico">
                 <div class="gallery-item-overlay"><span><i class="fa-solid fa-expand"></i> Trupan & Acrílico</span></div>
             </div>
-            <div class="gallery-item" style="height:280px;" onclick="openLightbox('{% static 'img/visualhd/marco_cuadro_2.jpeg' %}', 'Enmarcaciones de Lujo para Graduaciones y 15 Años')">
+            <div class="gallery-item" style="height:280px;" data-caption="Enmarcaciones de Lujo para Graduaciones y 15 Años">
                 <img src="{% static 'img/visualhd/marco_cuadro_2.jpeg' %}" alt="Enmarcación de Lujo">
                 <div class="gallery-item-overlay"><span><i class="fa-solid fa-expand"></i> Marco de Lujo Dorado</span></div>
             </div>
-            <div class="gallery-item" style="height:280px;" onclick="openLightbox('{% static 'img/visualhd/marco_cuadro_3.jpeg' %}', 'Cuadros Personalizados de Alta Calidad')">
+            <div class="gallery-item" style="height:280px;" data-caption="Cuadros Personalizados de Alta Calidad">
                 <img src="{% static 'img/visualhd/marco_cuadro_3.jpeg' %}" alt="Cuadro Personalizado">
                 <div class="gallery-item-overlay"><span><i class="fa-solid fa-expand"></i> Cuadro Poliestireno</span></div>
             </div>
@@ -477,7 +514,7 @@
 <section class="studio-showcase" id="estudio">
 <div class="section-container">
     <div class="studio-grid">
-        <div class="studio-image-wrap" onclick="openLightbox('{% static 'img/visualhd/hero_house_facade.jpeg' %}', 'Estudio Visual HD Producciones en San Julián')">
+        <div class="studio-image-wrap" data-caption="Estudio Visual HD Producciones en San Julián">
             <img src="{% static 'img/visualhd/hero_house_facade.jpeg' %}" alt="Fachada e Instalaciones Visual HD">
         </div>
 
@@ -699,16 +736,15 @@
 </button>
 
 <!-- Lightbox Modal -->
-<div class="lightbox-modal" id="lightboxModal" onclick="closeLightbox(event)">
-    <div class="lightbox-content" onclick="event.stopPropagation()">
-        <button class="lightbox-close" onclick="closeLightbox()" aria-label="Cerrar">&times;</button>
-        <button class="lightbox-nav-btn lightbox-nav-prev" onclick="prevLightboxImage()" aria-label="Anterior">&#10094;</button>
-        <button class="lightbox-nav-btn lightbox-nav-next" onclick="nextLightboxImage()" aria-label="Siguiente">&#10095;</button>
+<div class="lightbox-modal" id="lightboxModal">
+    <div class="lightbox-content">
+        <button class="lightbox-close" id="lightboxCloseBtn" aria-label="Cerrar">&times;</button>
+        <button class="lightbox-nav-btn lightbox-nav-prev" id="lightboxPrevBtn" aria-label="Anterior">&#10094;</button>
+        <button class="lightbox-nav-btn lightbox-nav-next" id="lightboxNextBtn" aria-label="Siguiente">&#10095;</button>
         <img src="" alt="Vista previa" class="lightbox-img" id="lightboxImg">
         <div class="lightbox-caption" id="lightboxCaption"></div>
     </div>
 </div>
-
 {% endblock %}
 
 {% block scripts_extra %}

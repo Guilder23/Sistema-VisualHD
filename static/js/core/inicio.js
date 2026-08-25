@@ -18,9 +18,11 @@ if (mobileBtn && mobileMenu) {
     });
 }
 
-// Header Scroll Effect
+// Header Scroll Effect & Back to Top visibility
+const header = document.getElementById('mainHeader');
+const backToTopBtn = document.getElementById('backToTopBtn');
+
 window.addEventListener('scroll', () => {
-    const header = document.getElementById('mainHeader');
     if (header) {
         if (window.scrollY > 30) {
             header.classList.add('scrolled');
@@ -29,8 +31,6 @@ window.addEventListener('scroll', () => {
         }
     }
 
-    // Back to Top Button visibility
-    const backToTopBtn = document.getElementById('backToTopBtn');
     if (backToTopBtn) {
         if (window.scrollY > 400) {
             backToTopBtn.classList.add('visible');
@@ -41,58 +41,55 @@ window.addEventListener('scroll', () => {
 });
 
 // Back to Top click
-const backToTopBtn = document.getElementById('backToTopBtn');
 if (backToTopBtn) {
     backToTopBtn.addEventListener('click', () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 }
 
-// Lightbox Logic
+// =========================================================
+// LIGHTBOX SYSTEM
+// =========================================================
 const lightboxModal = document.getElementById('lightboxModal');
 const lightboxImg = document.getElementById('lightboxImg');
 const lightboxCaption = document.getElementById('lightboxCaption');
+const lightboxCloseBtn = document.getElementById('lightboxCloseBtn');
+const lightboxPrevBtn = document.getElementById('lightboxPrevBtn');
+const lightboxNextBtn = document.getElementById('lightboxNextBtn');
 
-const galleryImages = [
-    { src: 'static/img/visualhd/cover_quince_anos.jpeg', caption: 'Sesión Fotográfica 15 Años - Portada Visual HD' },
-    { src: 'static/img/visualhd/cover_promo_kinder.jpeg', caption: 'Paquete de Promoción Kinder 2026 - Portada' },
-    { src: 'static/img/visualhd/flyer_promo_kinder.png', caption: 'Flyer Oficial Paquete de Promoción Kinder 2026' },
-    { src: 'static/img/visualhd/marco_cuadro_1.jpeg', caption: 'Enmarcación Clásica y Moderna en Trupan y Acrílico' },
-    { src: 'static/img/visualhd/marco_cuadro_2.jpeg', caption: 'Enmarcaciones de Lujo para Graduaciones y 15 Años' },
-    { src: 'static/img/visualhd/marco_cuadro_3.jpeg', caption: 'Cuadros Personalizados de Alta Calidad' },
-    { src: 'static/img/visualhd/flyer_quince_anos.jpeg', caption: 'Flyer Oficial de Sesiones de 15 Años' },
-    { src: 'static/img/visualhd/galeria_15anos_1.jpeg', caption: 'Galería 15 Años - Retrato 01' },
-    { src: 'static/img/visualhd/galeria_15anos_2.jpeg', caption: 'Galería 15 Años - Retrato 02' },
-    { src: 'static/img/visualhd/galeria_15anos_3.jpeg', caption: 'Galería 15 Años - Retrato 03' },
-    { src: 'static/img/visualhd/galeria_15anos_4.jpeg', caption: 'Galería 15 Años - Retrato 04' },
-    { src: 'static/img/visualhd/galeria_15anos_5.jpeg', caption: 'Galería 15 Años - Retrato 05' },
-    { src: 'static/img/visualhd/galeria_15anos_6.jpeg', caption: 'Galería 15 Años - Retrato 06' },
-    { src: 'static/img/visualhd/galeria_15anos_7.jpeg', caption: 'Galería 15 Años - Retrato 07' },
-    { src: 'static/img/visualhd/galeria_15anos_8.jpeg', caption: 'Galería 15 Años - Retrato 08' },
-    { src: 'static/img/visualhd/galeria_15anos_9.jpeg', caption: 'Galería 15 Años - Retrato 09' },
-    { src: 'static/img/visualhd/galeria_15anos_10.jpeg', caption: 'Galería 15 Años - Retrato 10' },
-    { src: 'static/img/visualhd/galeria_15anos_11.jpeg', caption: 'Galería 15 Años - Retrato 11' },
-    { src: 'static/img/visualhd/galeria_15anos_12.jpeg', caption: 'Galería 15 Años - Retrato 12' },
-    { src: 'static/img/visualhd/hero_house_facade.jpeg', caption: 'Fachada del Estudio Visual HD Producciones en San Julián' }
-];
-
+// Auto-populate gallery items from DOM
+let galleryItems = [];
 let currentLightboxIndex = 0;
 
-function openLightbox(src, caption) {
-    const index = galleryImages.findIndex(img => img.src === src || src.endsWith(img.src.replace('static/', '')));
-    currentLightboxIndex = index !== -1 ? index : 0;
-    
-    if (lightboxImg && lightboxModal) {
-        lightboxImg.src = src;
-        if (lightboxCaption) {
-            lightboxCaption.textContent = caption || (galleryImages[currentLightboxIndex] ? galleryImages[currentLightboxIndex].caption : '');
+function refreshGalleryItems() {
+    const triggerElements = document.querySelectorAll('.gallery-item, .flyer-card, .hero-visual-card-main, .hero-floating-card, .studio-image-wrap, [data-lightbox]');
+    galleryItems = [];
+    triggerElements.forEach(el => {
+        const img = el.querySelector('img');
+        if (img) {
+            const src = el.getAttribute('data-lightbox-src') || img.currentSrc || img.getAttribute('src') || '';
+            const caption = el.getAttribute('data-caption') || img.getAttribute('alt') || '';
+            galleryItems.push({ src, caption, el });
         }
-        lightboxModal.classList.add('active');
-        document.body.style.overflow = 'hidden';
-    }
+    });
 }
 
-function closeLightbox(e) {
+function openLightbox(src, caption) {
+    if (!lightboxModal || !lightboxImg) return;
+    
+    refreshGalleryItems();
+    const index = galleryItems.findIndex(item => item.src === src || (src && item.src.includes(src.split('/').pop())));
+    currentLightboxIndex = index !== -1 ? index : 0;
+    
+    lightboxImg.src = src;
+    if (lightboxCaption) {
+        lightboxCaption.textContent = caption || (galleryItems[currentLightboxIndex] ? galleryItems[currentLightboxIndex].caption : '');
+    }
+    lightboxModal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
     if (lightboxModal) {
         lightboxModal.classList.remove('active');
         document.body.style.overflow = '';
@@ -100,27 +97,68 @@ function closeLightbox(e) {
 }
 
 function nextLightboxImage() {
-    currentLightboxIndex = (currentLightboxIndex + 1) % galleryImages.length;
+    if (galleryItems.length === 0) return;
+    currentLightboxIndex = (currentLightboxIndex + 1) % galleryItems.length;
     updateLightbox();
 }
 
 function prevLightboxImage() {
-    currentLightboxIndex = (currentLightboxIndex - 1 + galleryImages.length) % galleryImages.length;
+    if (galleryItems.length === 0) return;
+    currentLightboxIndex = (currentLightboxIndex - 1 + galleryItems.length) % galleryItems.length;
     updateLightbox();
 }
 
 function updateLightbox() {
-    const item = galleryImages[currentLightboxIndex];
+    const item = galleryItems[currentLightboxIndex];
     if (lightboxImg && item) {
         lightboxImg.src = item.src;
         if (lightboxCaption) lightboxCaption.textContent = item.caption;
     }
 }
 
-// Keyboard controls
+// Event Delegation for opening lightbox
+document.addEventListener('click', (e) => {
+    const trigger = e.target.closest('.gallery-item, .flyer-card, .hero-visual-card-main, .hero-floating-card, .studio-image-wrap, [data-lightbox]');
+    if (trigger) {
+        e.preventDefault();
+        const img = trigger.querySelector('img');
+        if (img) {
+            const src = trigger.getAttribute('data-lightbox-src') || img.currentSrc || img.getAttribute('src');
+            const caption = trigger.getAttribute('data-caption') || img.getAttribute('alt') || '';
+            openLightbox(src, caption);
+        }
+    }
+});
+
+// Lightbox Controls Event Listeners
+lightboxCloseBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    closeLightbox();
+});
+
+lightboxPrevBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    prevLightboxImage();
+});
+
+lightboxNextBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    nextLightboxImage();
+});
+
+lightboxModal?.addEventListener('click', (e) => {
+    if (e.target === lightboxModal) {
+        closeLightbox();
+    }
+});
+
+// Keyboard Navigation
 document.addEventListener('keydown', (e) => {
     if (!lightboxModal || !lightboxModal.classList.contains('active')) return;
     if (e.key === 'Escape') closeLightbox();
     if (e.key === 'ArrowRight') nextLightboxImage();
     if (e.key === 'ArrowLeft') prevLightboxImage();
 });
+
+// Initialize on DOM ready
+document.addEventListener('DOMContentLoaded', refreshGalleryItems);
