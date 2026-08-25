@@ -1,0 +1,63 @@
+{% load static %}
+<div class="modal fade" id="modalCrearPago" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <form method="post" action="{% url 'pagos:crear_pago' %}">
+                {% csrf_token %}
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-plus"></i> Nuevo Pago</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label for="crear_cliente_id">Cliente</label>
+                            <select id="crear_cliente_id" name="cliente_id" class="form-control" required>
+                                <option value="">Selecciona un cliente</option>
+                                {% for cliente in clientes %}
+                                <option value="{{ cliente.pk }}">{{ cliente }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label for="crear_sesion_id">Sesión asociada</label>
+                            <select id="crear_sesion_id" name="sesion_id" class="form-control">
+                                <option value="">Sin sesión asociada</option>
+                                {% for sesion in sesiones %}
+                                <option value="{{ sesion.pk }}">{{ sesion }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 form-group">
+                            <label for="crear_monto">Monto (Bs)</label>
+                            <input type="number" step="0.01" min="0" id="crear_monto" name="monto" class="form-control" required>
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <label for="crear_metodo_pago">Método de pago</label>
+                            <select id="crear_metodo_pago" name="metodo_pago" class="form-control">
+                                <option value="efectivo">Efectivo</option>
+                                <option value="tarjeta">Tarjeta</option>
+                                <option value="transferencia">Transferencia</option>
+                                <option value="qr">QR</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <label for="crear_fecha_pago">Fecha de pago</label>
+                            <input type="date" id="crear_fecha_pago" name="fecha_pago" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="crear_observacion">Observación</label>
+                        <textarea id="crear_observacion" name="observacion" class="form-control" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar Pago</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

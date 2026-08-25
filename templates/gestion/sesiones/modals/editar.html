@@ -1,0 +1,77 @@
+{% load static %}
+<div class="modal fade" id="modalEditarSesion" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <form method="post" id="formEditarSesion" action="">
+                {% csrf_token %}
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-edit"></i> Editar Sesión</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label for="editar_cliente_id">Cliente</label>
+                            <select id="editar_cliente_id" name="cliente_id" class="form-control" required>
+                                {% for cliente in clientes %}
+                                <option value="{{ cliente.pk }}">{{ cliente }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label for="editar_servicio_id">Servicio</label>
+                            <select id="editar_servicio_id" name="servicio_id" class="form-control">
+                                <option value="">Sin servicio específico</option>
+                                {% for servicio in servicios %}
+                                <option value="{{ servicio.pk }}">{{ servicio }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 form-group">
+                            <label for="editar_empleado_id">Fotógrafo asignado</label>
+                            <select id="editar_empleado_id" name="empleado_id" class="form-control">
+                                <option value="">Sin asignar</option>
+                                {% for empleado in empleados %}
+                                <option value="{{ empleado.pk }}">{{ empleado }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <label for="editar_fecha">Fecha</label>
+                            <input type="date" id="editar_fecha" name="fecha" class="form-control">
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <label for="editar_hora">Hora</label>
+                            <input type="time" id="editar_hora" name="hora" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label for="editar_lugar">Lugar</label>
+                            <input type="text" id="editar_lugar" name="lugar" class="form-control">
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label for="editar_estado">Estado</label>
+                            <select id="editar_estado" name="estado" class="form-control">
+                                <option value="pendiente">Pendiente</option>
+                                <option value="confirmada">Confirmada</option>
+                                <option value="realizada">Realizada</option>
+                                <option value="cancelada">Cancelada</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="editar_observacion">Observación</label>
+                        <textarea id="editar_observacion" name="observacion" class="form-control" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

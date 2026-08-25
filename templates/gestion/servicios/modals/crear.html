@@ -1,0 +1,38 @@
+{% load static %}
+<div class="modal fade" id="modalCrearServicio" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <form method="post" action="{% url 'servicios:crear_servicio' %}">
+                {% csrf_token %}
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-plus"></i> Nuevo Servicio</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="crear_nombre">Nombre del servicio</label>
+                        <input type="text" id="crear_nombre" name="nombre" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="crear_descripcion">Descripción</label>
+                        <textarea id="crear_descripcion" name="descripcion" class="form-control" rows="3"></textarea>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label for="crear_precio">Precio (Bs)</label>
+                            <input type="number" step="0.01" min="0" id="crear_precio" name="precio" class="form-control">
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label for="crear_duracion_minutos">Duración (minutos)</label>
+                            <input type="number" min="0" id="crear_duracion_minutos" name="duracion_minutos" class="form-control" value="60">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar Servicio</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

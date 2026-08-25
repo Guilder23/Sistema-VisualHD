@@ -1,0 +1,70 @@
+{% load static %}
+<div class="modal fade" id="modalEditarPago" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <form method="post" id="formEditarPago" action="">
+                {% csrf_token %}
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-edit"></i> Editar Pago</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label for="editar_cliente_id">Cliente</label>
+                            <select id="editar_cliente_id" name="cliente_id" class="form-control" required>
+                                {% for cliente in clientes %}
+                                <option value="{{ cliente.pk }}">{{ cliente }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label for="editar_sesion_id">Sesión asociada</label>
+                            <select id="editar_sesion_id" name="sesion_id" class="form-control">
+                                <option value="">Sin sesión asociada</option>
+                                {% for sesion in sesiones %}
+                                <option value="{{ sesion.pk }}">{{ sesion }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 form-group">
+                            <label for="editar_monto">Monto (Bs)</label>
+                            <input type="number" step="0.01" min="0" id="editar_monto" name="monto" class="form-control">
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <label for="editar_metodo_pago">Método de pago</label>
+                            <select id="editar_metodo_pago" name="metodo_pago" class="form-control">
+                                <option value="efectivo">Efectivo</option>
+                                <option value="tarjeta">Tarjeta</option>
+                                <option value="transferencia">Transferencia</option>
+                                <option value="qr">QR</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4 form-group">
+                            <label for="editar_estado">Estado</label>
+                            <select id="editar_estado" name="estado" class="form-control">
+                                <option value="pendiente">Pendiente</option>
+                                <option value="pagado">Pagado</option>
+                                <option value="anulado">Anulado</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="editar_fecha_pago">Fecha de pago</label>
+                        <input type="date" id="editar_fecha_pago" name="fecha_pago" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="editar_observacion">Observación</label>
+                        <textarea id="editar_observacion" name="observacion" class="form-control" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

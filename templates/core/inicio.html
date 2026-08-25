@@ -1,0 +1,84 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block titulo %}VisualHD - Estudio Fotográfico{% endblock %}
+
+{% block seo %}
+<meta name="description" content="VisualHD: estudio fotográfico. Gestión de clientes, servicios y sesiones fotográficas.">
+<meta name="robots" content="index, follow">
+{% endblock %}
+
+{% block estilos_extra %}
+<link rel="stylesheet" href="{% static 'css/componentes/navbar-inicio.css' %}">
+<link rel="stylesheet" href="{% static 'css/componentes/footer-inicio.css' %}">
+<link rel="stylesheet" href="{% static 'css/core/inicio.css' %}">
+{% endblock %}
+
+{% block contenido %}
+{% include 'componentes/navbar-inicio.html' %}
+
+<section class="hero-portada" id="inicio">
+    <div class="hero-portada-overlay"></div>
+    <div class="hero-portada-inner">
+        <div class="container py-5">
+            <div class="row align-items-center">
+                <div class="col-lg-8 text-white">
+                    <span class="hero-kicker hero-anim hero-anim-1"><i class="fas fa-camera-retro"></i> Estudio fotográfico</span>
+                    <h1 class="hero-portada-title hero-anim hero-anim-2">VisualHD, capturamos tus mejores momentos.</h1>
+                    <div class="hero-portada-desc hero-anim hero-anim-3">
+                        <p>Gestionamos sesiones fotográficas, servicios y clientes de forma sencilla y profesional.</p>
+                    </div>
+                    <div class="hero-actions hero-anim hero-anim-5">
+                        <a href="{% url 'core:login' %}" class="btn btn-primary btn-lg mt-3 hero-btn-glow">
+                            <i class="fas fa-sign-in-alt mr-2"></i>Acceder al sistema
+                        </a>
+                        <a href="#servicios" class="btn btn-outline-light btn-lg mt-3 ml-2 hero-btn-float">Ver servicios</a>
+                    </div>
+                </div>
+                <div class="col-lg-4 hero-brand-visual hero-anim hero-anim-5 text-center">
+                    <i class="fas fa-camera-retro" style="font-size:10rem;color:#ffffff;"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="container py-5">
+    <section id="servicios" class="mb-5">
+        <div class="section-heading reveal">
+            <span class="section-eyebrow"><i class="fas fa-gem"></i> Servicios</span>
+            <h2>¿Qué ofrecemos?</h2>
+        </div>
+        <div class="row align-items-center">
+            <div class="col-lg-4 mb-4">
+                <div class="card p-4 h-100 shadow-sm border-0 servicio-card-modern reveal">
+                    <div class="servicio-icono"><i class="fas fa-portrait"></i></div>
+                    <h4>Sesiones de retrato</h4>
+                    <p>Fotografía profesional individual, familiar y de estudio.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 mb-4">
+                <div class="card p-4 h-100 shadow-sm border-0 servicio-card-modern reveal">
+                    <div class="servicio-icono"><i class="fas fa-heart"></i></div>
+                    <h4>Eventos y bodas</h4>
+                    <p>Cobertura fotográfica completa para tus eventos especiales.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 mb-4">
+                <div class="card p-4 h-100 shadow-sm border-0 servicio-card-modern reveal">
+                    <div class="servicio-icono"><i class="fas fa-building"></i></div>
+                    <h4>Fotografía comercial</h4>
+                    <p>Contenido visual profesional para productos y negocios.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+{% include 'componentes/footer-inicio.html' %}
+{% endblock %}
+
+{% block scripts_extra %}
+<script src="{% static 'js/core/inicio.js' %}"></script>
+<script src="{% static 'js/componentes/navbar-inicio.js' %}"></script>
+{% endblock %}

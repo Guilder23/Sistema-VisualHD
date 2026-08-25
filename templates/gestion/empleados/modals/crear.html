@@ -1,0 +1,53 @@
+{% load static %}
+<div class="modal fade" id="modalCrearEmpleado" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <form method="post" action="{% url 'empleados:crear_empleado' %}">
+                {% csrf_token %}
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-user-plus"></i> Nuevo Empleado</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label for="crear_nombre">Nombres</label>
+                            <input type="text" id="crear_nombre" name="nombre" class="form-control" required>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label for="crear_apellido">Apellidos</label>
+                            <input type="text" id="crear_apellido" name="apellido" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label for="crear_cargo">Cargo</label>
+                            <select id="crear_cargo" name="cargo" class="form-control">
+                                <option value="fotografo">Fotógrafo</option>
+                                <option value="editor">Editor</option>
+                                <option value="asistente">Asistente</option>
+                                <option value="administrativo">Administrativo</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label for="crear_telefono">Teléfono</label>
+                            <input type="text" id="crear_telefono" name="telefono" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="crear_email">Correo electrónico</label>
+                        <input type="email" id="crear_email" name="email" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="crear_observacion">Observación</label>
+                        <textarea id="crear_observacion" name="observacion" class="form-control" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar Empleado</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

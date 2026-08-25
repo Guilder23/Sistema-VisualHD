@@ -1,0 +1,19 @@
+.tabla-servicios td {
+    vertical-align: middle;
+}
+
+.badge-estado {
+    padding: 0.35em 0.65em;
+    border-radius: 0.35rem;
+    font-size: 0.8rem;
+}
+
+.badge-estado-activo {
+    background-color: #d1e7dd;
+    color: #0f5132;
+}
+
+.badge-estado-inactivo {
+    background-color: #f8d7da;
+    color: #842029;
+}

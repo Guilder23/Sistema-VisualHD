@@ -1,0 +1,19 @@
+{% load static %}
+<div class="modal fade" id="modalEliminarServicio" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+        <div class="modal-content">
+            <form method="post" id="formEliminarServicio" action="">
+                {% csrf_token %}
+                <div class="modal-body text-center p-4">
+                    <div class="eliminar-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                    <h5 class="mt-3">¿Eliminar servicio?</h5>
+                    <p class="text-muted">Esta acción no se puede deshacer. Se eliminará <strong id="eliminarServicioNombre"></strong>.</p>
+                    <div class="d-flex justify-content-center mt-3">
+                        <button type="button" class="btn btn-outline-secondary mr-2" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

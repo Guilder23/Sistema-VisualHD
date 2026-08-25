@@ -1,0 +1,83 @@
+<aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+        <div class="sidebar-brand">
+            <i class="fas fa-camera-retro"></i>
+            <span class="sidebar-brand-text">VisualHD</span>
+        </div>
+        <button class="sidebar-collapse-btn" id="sidebarCollapseBtn" title="Colapsar menu">
+            <i class="fas fa-angles-left"></i>
+        </button>
+    </div>
+
+    <nav class="sidebar-nav">
+        <ul class="sidebar-menu">
+            {% if request.user.is_staff %}
+            <li class="sidebar-item">
+                <a href="{% url 'dashboard:dashboard' %}" class="sidebar-link {% if '/dashboard/' in request.path %}active{% endif %}">
+                    <i class="fas fa-chart-pie"></i><span>Dashboard</span>
+                </a>
+            </li>
+            <li class="sidebar-section">
+                <span class="sidebar-section-title">Gestión</span>
+            </li>
+            <li class="sidebar-item">
+                <a href="{% url 'clientes:listar_clientes' %}" class="sidebar-link {% if '/gestion/clientes/' in request.path %}active{% endif %}">
+                    <i class="fas fa-address-book"></i><span>Clientes</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a href="{% url 'servicios:listar_servicios' %}" class="sidebar-link {% if '/gestion/servicios/' in request.path %}active{% endif %}">
+                    <i class="fas fa-camera-retro"></i><span>Servicios</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a href="{% url 'sesiones:listar_sesiones' %}" class="sidebar-link {% if '/gestion/sesiones/' in request.path %}active{% endif %}">
+                    <i class="fas fa-calendar-check"></i><span>Sesiones</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a href="{% url 'empleados:listar_empleados' %}" class="sidebar-link {% if '/gestion/empleados/' in request.path %}active{% endif %}">
+                    <i class="fas fa-id-badge"></i><span>Empleados</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a href="{% url 'pagos:listar_pagos' %}" class="sidebar-link {% if '/gestion/pagos/' in request.path %}active{% endif %}">
+                    <i class="fas fa-money-bill-wave"></i><span>Pagos</span>
+                </a>
+            </li>
+            <li class="sidebar-section">
+                <span class="sidebar-section-title">Administración</span>
+            </li>
+            <li class="sidebar-item">
+                <a href="{% url 'core:registro' %}" class="sidebar-link {% if '/registro/' in request.path %}active{% endif %}">
+                    <i class="fas fa-user-shield"></i><span>Usuarios</span>
+                </a>
+            </li>
+            {% endif %}
+            <li class="sidebar-section">
+                <span class="sidebar-section-title">Cuenta</span>
+            </li>
+            <li class="sidebar-item">
+                <a href="{% url 'core:perfil' %}" class="sidebar-link {% if '/perfil/' in request.path %}active{% endif %}">
+                    <i class="fas fa-user-circle"></i><span>Mi Perfil</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="sidebar-footer">
+        <div class="sidebar-user">
+            <div class="sidebar-user-avatar">
+                {% if user_profile.foto %}
+                    <img src="{{ user_profile.foto.url }}" alt="avatar" style="width:40px;height:40px;border-radius:50%;object-fit:cover;"/>
+                {% else %}
+                    <i class="fas fa-user"></i>
+                {% endif %}
+            </div>
+            <div class="sidebar-user-info">
+                <strong>{{ user.username|title }}</strong>
+                <small>{% if user.is_staff %}Administrador{% else %}Usuario{% endif %}</small>
+            </div>
+        </div>
+    </div>
+</aside>

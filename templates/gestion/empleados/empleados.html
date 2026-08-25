@@ -1,0 +1,108 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block titulo %}Empleados{% endblock %}
+
+{% block estilos_extra %}
+<link rel="stylesheet" href="{% static 'css/gestion/empleados/empleados.css' %}">
+<link rel="stylesheet" href="{% static 'css/gestion/empleados/modals/crear.css' %}">
+<link rel="stylesheet" href="{% static 'css/gestion/empleados/modals/ver.css' %}">
+<link rel="stylesheet" href="{% static 'css/gestion/empleados/modals/editar.css' %}">
+<link rel="stylesheet" href="{% static 'css/gestion/empleados/modals/eliminar.css' %}">
+{% endblock %}
+
+{% block contenido %}
+<div class="container-fluid">
+    <div class="page-header">
+        <div class="page-header-content">
+            <h1 class="page-title"><i class="fas fa-id-badge"></i> Gestión de Empleados</h1>
+            <p class="page-subtitle">Fotógrafos y personal de VisualHD</p>
+        </div>
+        <button class="btn btn-primary" data-toggle="modal" data-target="#modalCrearEmpleado">
+            <i class="fas fa-user-plus"></i> Nuevo Empleado
+        </button>
+    </div>
+
+    <div class="card card-filtros mb-3">
+        <div class="card-body py-3">
+            <form method="get" class="row align-items-center">
+                <div class="col-md-6 mb-2 mb-md-0">
+                    <input type="text" class="form-control form-control-sm" name="q" value="{{ q }}" placeholder="Buscar por nombre o email...">
+                </div>
+                <div class="col-md-3 mb-2 mb-md-0">
+                    <select name="estado" class="form-control form-control-sm">
+                        <option value="">Todos los estados</option>
+                        <option value="activo" {% if estado == 'activo' %}selected{% endif %}>Activos</option>
+                        <option value="inactivo" {% if estado == 'inactivo' %}selected{% endif %}>Inactivos</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <button type="submit" class="btn btn-outline-secondary btn-sm">Filtrar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card card-tabla">
+        <div class="card-header bg-light"><strong>Empleados registrados</strong></div>
+        <div class="table-responsive">
+            <table class="table table-sm mb-0 tabla-empleados">
+                <thead>
+                    <tr><th>Nombre</th><th>Cargo</th><th>Teléfono</th><th>Estado</th><th class="text-center">Acciones</th></tr>
+                </thead>
+                <tbody>
+                    {% for empleado in page_obj %}
+                    <tr>
+                        <td>{{ empleado.nombre }} {{ empleado.apellido }}</td>
+                        <td>{{ empleado.get_cargo_display }}</td>
+                        <td>{{ empleado.telefono|default:'-' }}</td>
+                        <td>
+                            {% if empleado.estado == 'activo' %}
+                            <span class="badge-estado badge-estado-activo">Activo</span>
+                            {% else %}
+                            <span class="badge-estado badge-estado-inactivo">Inactivo</span>
+                            {% endif %}
+                        </td>
+                        <td class="text-center">
+                            <button type="button" class="btn btn-info btn-sm btn-ver-empleado" data-toggle="modal" data-target="#modalVerEmpleado"
+                                data-nombre="{{ empleado.nombre }}" data-apellido="{{ empleado.apellido }}" data-cargo="{{ empleado.get_cargo_display }}"
+                                data-telefono="{{ empleado.telefono }}" data-email="{{ empleado.email }}" data-estado="{{ empleado.get_estado_display }}"
+                                data-observacion="{{ empleado.observacion }}" data-ingreso="{{ empleado.fecha_ingreso|date:'d/m/Y' }}">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button type="button" class="btn btn-warning btn-sm btn-editar-empleado" data-toggle="modal" data-target="#modalEditarEmpleado"
+                                data-action="{% url 'empleados:editar_empleado' empleado.pk %}" data-nombre="{{ empleado.nombre }}" data-apellido="{{ empleado.apellido }}"
+                                data-cargo="{{ empleado.cargo }}" data-telefono="{{ empleado.telefono }}" data-email="{{ empleado.email }}"
+                                data-estado="{{ empleado.estado }}" data-observacion="{{ empleado.observacion }}">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button type="button" class="btn btn-danger btn-sm btn-eliminar-empleado" data-toggle="modal" data-target="#modalEliminarEmpleado"
+                                data-action="{% url 'empleados:eliminar_empleado' empleado.pk %}" data-nombre="{{ empleado.nombre }} {{ empleado.apellido }}">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="5" class="text-center py-4">No hay empleados registrados.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    {% include 'componentes/paginacion.html' %}
+</div>
+
+{% include 'gestion/empleados/modals/crear.html' %}
+{% include 'gestion/empleados/modals/ver.html' %}
+{% include 'gestion/empleados/modals/editar.html' %}
+{% include 'gestion/empleados/modals/eliminar.html' %}
+{% endblock %}
+
+{% block scripts_extra %}
+<script src="{% static 'js/gestion/empleados/empleados.js' %}"></script>
+<script src="{% static 'js/gestion/empleados/modals/crear.js' %}"></script>
+<script src="{% static 'js/gestion/empleados/modals/ver.js' %}"></script>
+<script src="{% static 'js/gestion/empleados/modals/editar.js' %}"></script>
+<script src="{% static 'js/gestion/empleados/modals/eliminar.js' %}"></script>
+{% endblock %}

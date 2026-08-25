@@ -1,0 +1,105 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block titulo %}Pagos{% endblock %}
+
+{% block estilos_extra %}
+<link rel="stylesheet" href="{% static 'css/gestion/pagos/pagos.css' %}">
+<link rel="stylesheet" href="{% static 'css/gestion/pagos/modals/crear.css' %}">
+<link rel="stylesheet" href="{% static 'css/gestion/pagos/modals/ver.css' %}">
+<link rel="stylesheet" href="{% static 'css/gestion/pagos/modals/editar.css' %}">
+<link rel="stylesheet" href="{% static 'css/gestion/pagos/modals/eliminar.css' %}">
+{% endblock %}
+
+{% block contenido %}
+<div class="container-fluid">
+    <div class="page-header">
+        <div class="page-header-content">
+            <h1 class="page-title"><i class="fas fa-money-bill-wave"></i> Gestión de Pagos</h1>
+            <p class="page-subtitle">Registro de pagos de clientes</p>
+        </div>
+        <button class="btn btn-primary" data-toggle="modal" data-target="#modalCrearPago">
+            <i class="fas fa-plus"></i> Nuevo Pago
+        </button>
+    </div>
+
+    <div class="card card-filtros mb-3">
+        <div class="card-body py-3">
+            <form method="get" class="row align-items-center">
+                <div class="col-md-6 mb-2 mb-md-0">
+                    <input type="text" class="form-control form-control-sm" name="q" value="{{ q }}" placeholder="Buscar por cliente...">
+                </div>
+                <div class="col-md-3 mb-2 mb-md-0">
+                    <select name="estado" class="form-control form-control-sm">
+                        <option value="">Todos los estados</option>
+                        <option value="pendiente" {% if estado == 'pendiente' %}selected{% endif %}>Pendiente</option>
+                        <option value="pagado" {% if estado == 'pagado' %}selected{% endif %}>Pagado</option>
+                        <option value="anulado" {% if estado == 'anulado' %}selected{% endif %}>Anulado</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <button type="submit" class="btn btn-outline-secondary btn-sm">Filtrar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card card-tabla">
+        <div class="card-header bg-light"><strong>Pagos registrados</strong></div>
+        <div class="table-responsive">
+            <table class="table table-sm mb-0 tabla-pagos">
+                <thead>
+                    <tr><th>Cliente</th><th>Sesión</th><th>Monto (Bs)</th><th>Método</th><th>Estado</th><th>Fecha</th><th class="text-center">Acciones</th></tr>
+                </thead>
+                <tbody>
+                    {% for pago in page_obj %}
+                    <tr>
+                        <td>{{ pago.cliente }}</td>
+                        <td>{{ pago.sesion|default:'-' }}</td>
+                        <td>{{ pago.monto }}</td>
+                        <td>{{ pago.get_metodo_pago_display }}</td>
+                        <td><span class="badge-estado badge-estado-{{ pago.estado }}">{{ pago.get_estado_display }}</span></td>
+                        <td>{{ pago.fecha_pago|date:'d/m/Y' }}</td>
+                        <td class="text-center">
+                            <button type="button" class="btn btn-info btn-sm btn-ver-pago" data-toggle="modal" data-target="#modalVerPago"
+                                data-cliente="{{ pago.cliente }}" data-sesion="{{ pago.sesion|default:'-' }}" data-monto="{{ pago.monto }}"
+                                data-metodo="{{ pago.get_metodo_pago_display }}" data-estado="{{ pago.get_estado_display }}"
+                                data-fecha="{{ pago.fecha_pago|date:'d/m/Y' }}" data-observacion="{{ pago.observacion }}">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button type="button" class="btn btn-warning btn-sm btn-editar-pago" data-toggle="modal" data-target="#modalEditarPago"
+                                data-action="{% url 'pagos:editar_pago' pago.pk %}" data-cliente-id="{{ pago.cliente_id }}" data-sesion-id="{{ pago.sesion_id }}"
+                                data-monto="{{ pago.monto }}" data-metodo="{{ pago.metodo_pago }}" data-estado="{{ pago.estado }}"
+                                data-fecha="{{ pago.fecha_pago|date:'Y-m-d' }}" data-observacion="{{ pago.observacion }}">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button type="button" class="btn btn-danger btn-sm btn-eliminar-pago" data-toggle="modal" data-target="#modalEliminarPago"
+                                data-action="{% url 'pagos:eliminar_pago' pago.pk %}" data-nombre="{{ pago.cliente }} - Bs {{ pago.monto }}">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="7" class="text-center py-4">No hay pagos registrados.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    {% include 'componentes/paginacion.html' %}
+</div>
+
+{% include 'gestion/pagos/modals/crear.html' %}
+{% include 'gestion/pagos/modals/ver.html' %}
+{% include 'gestion/pagos/modals/editar.html' %}
+{% include 'gestion/pagos/modals/eliminar.html' %}
+{% endblock %}
+
+{% block scripts_extra %}
+<script src="{% static 'js/gestion/pagos/pagos.js' %}"></script>
+<script src="{% static 'js/gestion/pagos/modals/crear.js' %}"></script>
+<script src="{% static 'js/gestion/pagos/modals/ver.js' %}"></script>
+<script src="{% static 'js/gestion/pagos/modals/editar.js' %}"></script>
+<script src="{% static 'js/gestion/pagos/modals/eliminar.js' %}"></script>
+{% endblock %}

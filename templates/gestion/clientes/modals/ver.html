@@ -1,0 +1,28 @@
+{% load static %}
+<div class="modal fade" id="modalVerCliente" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="fas fa-user"></i> Detalle del Cliente</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <dl class="row">
+                    <dt class="col-sm-3">Nombre</dt><dd class="col-sm-9" id="ver_nombre_completo"></dd>
+                    <dt class="col-sm-3">Correo</dt><dd class="col-sm-9" id="ver_email"></dd>
+                    <dt class="col-sm-3">Teléfono</dt><dd class="col-sm-9" id="ver_telefono"></dd>
+                    <dt class="col-sm-3">CI / Carnet</dt><dd class="col-sm-9" id="ver_ci"></dd>
+                    <dt class="col-sm-3">Ciudad</dt><dd class="col-sm-9" id="ver_ciudad"></dd>
+                    <dt class="col-sm-3">Dirección</dt><dd class="col-sm-9" id="ver_direccion"></dd>
+                    <dt class="col-sm-3">Fecha de nacimiento</dt><dd class="col-sm-9" id="ver_fecha_nacimiento"></dd>
+                    <dt class="col-sm-3">Estado</dt><dd class="col-sm-9" id="ver_estado"></dd>
+                    <dt class="col-sm-3">Observación</dt><dd class="col-sm-9" id="ver_observacion"></dd>
+                    <dt class="col-sm-3">Registrado</dt><dd class="col-sm-9" id="ver_creado"></dd>
+                </dl>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
