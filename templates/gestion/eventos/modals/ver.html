@@ -20,14 +20,3 @@
     </div>
 </div>
 
-<script>
-$('#modalVerEvento').on('show.bs.modal', function(e) {
-    const btn = $(e.relatedTarget);
-    $('#verNombre').text(btn.data('nombre'));
-    $('#verClienteEvento').text(btn.data('cliente'));
-    $('#verTipo').text(btn.data('tipo'));
-    $('#verEstadoEvento').text(btn.data('estado'));
-    $('#verPresupuesto').text(btn.data('presupuesto') || '0.00');
-    $('#verDescripcionEvento').text(btn.data('descripcion') || '-');
-});
-</script>

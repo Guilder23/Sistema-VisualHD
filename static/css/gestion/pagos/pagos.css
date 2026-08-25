@@ -18,6 +18,11 @@
     color: #0f5132;
 }
 
+#modalCrearPago .modal-header { background: #0d6efd !important; color: #fff; }
+#modalVerPago .modal-header { background: #17a2b8 !important; color: #fff; }
+#modalEditarPago .modal-header { background: #f0ad00 !important; color: #212529; }
+#modalEliminarPago .modal-content { border-top: 5px solid #dc3545; }
+
 .badge-estado-anulado {
     background-color: #f8d7da;
     color: #842029;

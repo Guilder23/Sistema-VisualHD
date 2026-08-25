@@ -5,6 +5,10 @@
 
 {% block estilos_extra %}
 <link rel="stylesheet" href="{% static 'css/gestion/agenda/agenda.css' %}">
+<link rel="stylesheet" href="{% static 'css/gestion/agenda/modals/crear.css' %}">
+<link rel="stylesheet" href="{% static 'css/gestion/agenda/modals/ver.css' %}">
+<link rel="stylesheet" href="{% static 'css/gestion/agenda/modals/editar.css' %}">
+<link rel="stylesheet" href="{% static 'css/gestion/agenda/modals/eliminar.css' %}">
 {% endblock %}
 
 {% block contenido %}
@@ -58,7 +62,7 @@
                     <td>
                         <button class="btn btn-sm btn-info" data-toggle="modal" data-target="#modalVerCita" data-id="{{ cita.id }}" data-cliente="{{ cita.cliente }}" data-fecha="{{ cita.fecha|date:'Y-m-dTH:i' }}" data-empleado="{{ cita.empleado.id|default:'' }}" data-estado="{{ cita.estado }}" data-duracion="{{ cita.duracion_minutos }}" data-descripcion="{{ cita.descripcion }}" data-ubicacion="{{ cita.ubicacion }}" data-notas="{{ cita.notas }}">Ver</button>
                         <button class="btn btn-sm btn-warning" data-toggle="modal" data-target="#modalEditarCita" data-id="{{ cita.id }}" data-action="{% url 'agenda:editar_cita' cita.id %}">Editar</button>
-                        <button class="btn btn-sm btn-danger" onclick="confirmarEliminar('{% url 'agenda:eliminar_cita' cita.id %}')">Eliminar</button>
+                        <button class="btn btn-sm btn-danger btn-eliminar-cita" data-toggle="modal" data-target="#modalEliminarCita" data-action="{% url 'agenda:eliminar_cita' cita.id %}" data-nombre="{{ cita }}">Eliminar</button>
                     </td>
                 </tr>
                 {% empty %}
@@ -82,6 +86,10 @@
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.5/main.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.5/locales-all.min.js"></script>
 <script src="{% static 'js/gestion/agenda/agenda.js' %}"></script>
+<script src="{% static 'js/gestion/agenda/modals/crear.js' %}"></script>
+<script src="{% static 'js/gestion/agenda/modals/ver.js' %}"></script>
+<script src="{% static 'js/gestion/agenda/modals/editar.js' %}"></script>
+<script src="{% static 'js/gestion/agenda/modals/eliminar.js' %}"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     const calendario = document.getElementById('calendarioCitas');

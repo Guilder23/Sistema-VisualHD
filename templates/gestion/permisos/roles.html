@@ -3,6 +3,10 @@
 
 {% block titulo %}Roles - VisualHD{% endblock %}
 
+{% block estilos_extra %}
+<link rel="stylesheet" href="{% static 'css/gestion/permisos/permisos.css' %}">
+{% endblock %}
+
 {% block contenido %}
 <div class="container-fluid py-4">
     <h2 class="mb-3"><i class="fas fa-lock"></i> Gestión de Roles</h2>
@@ -40,4 +44,8 @@
         </table>
     </div>
 </div>
+{% endblock %}
+
+{% block scripts_extra %}
+<script src="{% static 'js/gestion/permisos/roles.js' %}"></script>
 {% endblock %}

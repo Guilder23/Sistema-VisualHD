@@ -4,3 +4,9 @@
 .badge-en_progreso { background-color: #0066cc; color: white; }
 .badge-completado { background-color: #17a2b8; color: white; }
 .badge-cancelado { background-color: #dc3545; color: white; }
+
+/* Modales de Eventos: crear azul, ver celeste, editar amarillo, eliminar rojo. */
+#modalCrearEvento .modal-header { background: #0d6efd; color: #fff; }
+#modalVerEvento .modal-header { background: #17a2b8; color: #fff; }
+#modalEditarEvento .modal-header { background: #f0ad00; color: #212529; }
+#modalEliminarEvento .modal-content { border-top: 5px solid #dc3545; }

@@ -34,3 +34,9 @@
         gap: 0.35rem;
     }
 }
+
+/* Modales de Finanzas: crear azul, ver celeste, editar amarillo, eliminar rojo. */
+#modalCrearEgreso .modal-header, #modalPagoEmpleado .modal-header { background: #0d6efd; color: #fff; }
+#modalVerEgreso .modal-header { background: #17a2b8; color: #fff; }
+#modalEditarEgreso .modal-header { background: #f0ad00; color: #212529; }
+#modalEliminarEgreso .modal-content { border-top: 5px solid #dc3545; }

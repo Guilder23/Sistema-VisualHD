@@ -21,15 +21,3 @@
     </div>
 </div>
 
-<script>
-$('#modalVerCita').on('show.bs.modal', function(e) {
-    const btn = $(e.relatedTarget);
-    $('#verCliente').text(btn.data('cliente'));
-    $('#verFecha').text(btn.data('fecha'));
-    $('#verEmpleado').text(btn.data('empleado') || '-');
-    $('#verDuracion').text(btn.data('duracion'));
-    $('#verDescripcion').text(btn.data('descripcion') || '-');
-    $('#verUbicacion').text(btn.data('ubicacion') || '-');
-    $('#verEstado').text(btn.data('estado'));
-});
-</script>

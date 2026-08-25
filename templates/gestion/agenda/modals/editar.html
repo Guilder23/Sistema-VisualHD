@@ -19,10 +19,3 @@
     </div>
 </div>
 
-<script>
-$('#modalEditarCita').on('show.bs.modal', function(e) {
-    const btn = $(e.relatedTarget);
-    const action = btn.data('action');
-    $('#formEditarCita').attr('action', action);
-});
-</script>

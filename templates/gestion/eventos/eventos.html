@@ -5,6 +5,10 @@
 
 {% block estilos_extra %}
 <link rel="stylesheet" href="{% static 'css/gestion/eventos/eventos.css' %}">
+<link rel="stylesheet" href="{% static 'css/gestion/eventos/modals/crear.css' %}">
+<link rel="stylesheet" href="{% static 'css/gestion/eventos/modals/ver.css' %}">
+<link rel="stylesheet" href="{% static 'css/gestion/eventos/modals/editar.css' %}">
+<link rel="stylesheet" href="{% static 'css/gestion/eventos/modals/eliminar.css' %}">
 {% endblock %}
 
 {% block contenido %}
@@ -45,7 +49,7 @@
                     <td>
                         <button class="btn btn-sm btn-info" data-toggle="modal" data-target="#modalVerEvento" data-id="{{ evento.id }}" data-nombre="{{ evento.nombre }}" data-cliente="{{ evento.cliente }}" data-tipo="{{ evento.tipo }}" data-estado="{{ evento.estado }}" data-presupuesto="{{ evento.presupuesto }}" data-descripcion="{{ evento.descripcion }}">Ver</button>
                         <button class="btn btn-sm btn-warning" data-toggle="modal" data-target="#modalEditarEvento" data-id="{{ evento.id }}" data-action="{% url 'eventos:editar_evento' evento.id %}">Editar</button>
-                        <button class="btn btn-sm btn-danger" onclick="confirmarEliminar('{% url 'eventos:eliminar_evento' evento.id %}')">Eliminar</button>
+                        <button class="btn btn-sm btn-danger btn-eliminar-evento" data-toggle="modal" data-target="#modalEliminarEvento" data-action="{% url 'eventos:eliminar_evento' evento.id %}" data-nombre="{{ evento.nombre }}">Eliminar</button>
                     </td>
                 </tr>
                 {% empty %}
@@ -66,4 +70,8 @@
 
 {% block scripts_extra %}
 <script src="{% static 'js/gestion/eventos/eventos.js' %}"></script>
+<script src="{% static 'js/gestion/eventos/modals/crear.js' %}"></script>
+<script src="{% static 'js/gestion/eventos/modals/ver.js' %}"></script>
+<script src="{% static 'js/gestion/eventos/modals/editar.js' %}"></script>
+<script src="{% static 'js/gestion/eventos/modals/eliminar.js' %}"></script>
 {% endblock %}

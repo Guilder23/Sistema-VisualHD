@@ -152,16 +152,5 @@
 {% endblock %}
 
 {% block scripts_extra %}
-<script>
-$('#modalEditarEgreso').on('show.bs.modal', function (event) {
-    const button = $(event.relatedTarget);
-    $('#formEditarEgreso').attr('action', button.data('action'));
-    $('#editarCategoria').val(button.data('categoria'));
-    $('#editarFecha').val(button.data('fecha'));
-    $('#editarConcepto').val(button.data('concepto'));
-    $('#editarMonto').val(button.data('monto'));
-    $('#editarComprobante').val(button.data('comprobante'));
-    $('#editarNotas').val(button.data('notas'));
-});
-</script>
+<script src="{% static 'js/gestion/finanzas/finanzas.js' %}"></script>
 {% endblock %}
