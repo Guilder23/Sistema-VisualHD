@@ -29,6 +29,7 @@ def listar_citas(request):
         'estado': estado,
         'clientes': Cliente.objects.filter(estado='activo').order_by('nombre'),
         'empleados': Empleado.objects.filter(estado='activo').order_by('nombre'),
+        'citas_calendario': citas,
     })
 
 

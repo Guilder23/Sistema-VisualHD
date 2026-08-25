@@ -8,6 +8,26 @@ from django.utils import timezone
 from .models import Pago
 from apps.gestion.clientes.models import Cliente
 from apps.gestion.sesiones.models import Sesion
+from apps.gestion.finanzas.models import Ingreso
+
+
+def sincronizar_ingreso(pago):
+    if pago.estado != 'pagado':
+        Ingreso.objects.filter(pago=pago).delete()
+        return
+    ingreso, _ = Ingreso.objects.update_or_create(
+        pago=pago,
+        defaults={
+            'cliente': pago.cliente,
+            'categoria': 'sesion_foto' if pago.sesion_id else 'servicio',
+            'concepto': f'Pago de cliente: {pago.cliente}',
+            'monto': pago.monto,
+            'fecha': pago.fecha_pago,
+            'referencia': f'Pago #{pago.pk}',
+            'notas': pago.observacion,
+        },
+    )
+    return ingreso
 
 
 @login_required
@@ -42,6 +62,7 @@ def crear_pago(request):
         monto = request.POST.get('monto') or 0
         metodo_pago = request.POST.get('metodo_pago', 'efectivo')
         fecha_pago = request.POST.get('fecha_pago') or None
+        estado = request.POST.get('estado', 'pagado')
         observacion = request.POST.get('observacion', '').strip()
 
         cliente = Cliente.objects.filter(id=cliente_id).first()
@@ -49,14 +70,16 @@ def crear_pago(request):
             messages.error(request, 'Selecciona un cliente válido.')
             return redirect('pagos:listar_pagos')
 
-        Pago.objects.create(
+        pago = Pago.objects.create(
             cliente=cliente,
             sesion_id=sesion_id or None,
             monto=monto,
             metodo_pago=metodo_pago,
             fecha_pago=fecha_pago or timezone.now().date(),
+            estado=estado,
             observacion=observacion,
         )
+        sincronizar_ingreso(pago)
         messages.success(request, 'Pago registrado correctamente.')
     return redirect('pagos:listar_pagos')
 
@@ -78,6 +101,7 @@ def editar_pago(request, pk):
         pago.fecha_pago = request.POST.get('fecha_pago') or pago.fecha_pago
         pago.observacion = request.POST.get('observacion', pago.observacion).strip()
         pago.save()
+        sincronizar_ingreso(pago)
         messages.success(request, 'Pago actualizado correctamente.')
     return redirect('pagos:listar_pagos')
 
@@ -87,6 +111,7 @@ def editar_pago(request, pk):
 def eliminar_pago(request, pk):
     pago = get_object_or_404(Pago, pk=pk)
     if request.method == 'POST':
+        Ingreso.objects.filter(pago=pago).delete()
         pago.delete()
         messages.success(request, 'Pago eliminado correctamente.')
     return redirect('pagos:listar_pagos')

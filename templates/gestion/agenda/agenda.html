@@ -22,6 +22,19 @@
         </div>
     </div>
 
+    <div class="card mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <strong><i class="fas fa-calendar-days mr-2"></i>Calendario de citas</strong>
+            <div class="agenda-leyenda">
+                <span><i class="fas fa-circle estado-programada"></i> Programada</span>
+                <span><i class="fas fa-circle estado-confirmada"></i> Confirmada</span>
+                <span><i class="fas fa-circle estado-completada"></i> Completada</span>
+                <span><i class="fas fa-circle estado-cancelada"></i> Cancelada</span>
+            </div>
+        </div>
+        <div class="card-body"><div id="calendarioCitas"></div></div>
+    </div>
+
     <div class="table-responsive">
         <table class="table table-hover">
             <thead>
@@ -65,5 +78,21 @@
 {% endblock %}
 
 {% block scripts_extra %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.5/main.min.css">
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.5/main.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.5/locales-all.min.js"></script>
 <script src="{% static 'js/gestion/agenda/agenda.js' %}"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const calendario = document.getElementById('calendarioCitas');
+    if (!calendario) return;
+    const colores = {programada: '#0066cc', confirmada: '#28a745', completada: '#17a2b8', cancelada: '#dc3545', reprogramada: '#f0ad00'};
+    const eventos = [
+        {% for cita in citas_calendario %}
+        {title: '{{ cita.cliente|escapejs }}', start: '{{ cita.fecha|date:"c" }}', end: '{{ cita.fecha|date:"c" }}', backgroundColor: colores['{{ cita.estado }}'], borderColor: colores['{{ cita.estado }}'], extendedProps: {estado: '{{ cita.get_estado_display|escapejs }}', empleado: '{{ cita.empleado|default:"Sin asignar"|escapejs }}'}},
+        {% endfor %}
+    ];
+    new FullCalendar.Calendar(calendario, {locale: 'es', initialView: 'dayGridMonth', height: 'auto', headerToolbar: {left: 'prev,next today', center: 'title', right: 'dayGridMonth,timeGridWeek,listWeek'}, events: eventos, eventTimeFormat: {hour: '2-digit', minute: '2-digit', hour12: false}, eventClick: function(info) { alert(info.event.title + '\n' + info.event.extendedProps.estado + '\n' + info.event.extendedProps.empleado); }}).render();
+});
+</script>
 {% endblock %}

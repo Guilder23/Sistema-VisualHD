@@ -4,3 +4,13 @@
 .badge-completada { background-color: #17a2b8; color: white; }
 .badge-cancelada { background-color: #dc3545; color: white; }
 .badge-reprogramada { background-color: #ffc107; color: #333; }
+
+#calendarioCitas { min-height: 520px; }
+.agenda-leyenda { display: flex; flex-wrap: wrap; gap: 0.8rem; font-size: 0.75rem; color: #6c757d; }
+.agenda-leyenda i { margin-right: 0.2rem; }
+.estado-programada { color: #0066cc; }
+.estado-confirmada { color: #28a745; }
+.estado-completada { color: #17a2b8; }
+.estado-cancelada { color: #dc3545; }
+.estado-reprogramada { color: #f0ad00; }
+@media (max-width: 576px) { .agenda-leyenda { margin-top: 0.5rem; } #calendarioCitas { min-height: 420px; } }

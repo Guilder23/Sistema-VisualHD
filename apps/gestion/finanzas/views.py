@@ -5,6 +5,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 
 from .models import Ingreso, Egreso, Caja, PagoEmpleado, ServicioBasico
+from apps.gestion.empleados.models import Empleado
 
 
 @login_required
@@ -73,3 +74,38 @@ def eliminar_egreso(request, pk):
     if request.method == 'POST':
         egreso.delete()
     return redirect('finanzas:finanzas_dashboard')
+
+
+@login_required
+@user_passes_test(lambda u: u.is_staff, login_url='/login/')
+def listar_pagos_empleados(request):
+    pagos = PagoEmpleado.objects.select_related('empleado').all()
+    return render(request, 'gestion/finanzas/pagos_empleados.html', {
+        'pagos': pagos,
+        'empleados': Empleado.objects.filter(estado='activo').order_by('nombre', 'apellido'),
+        'estados': PagoEmpleado.ESTADO_CHOICES,
+    })
+
+
+@login_required
+@user_passes_test(lambda u: u.is_staff, login_url='/login/')
+def crear_pago_empleado(request):
+    if request.method == 'POST':
+        base = request.POST.get('monto_base') or 0
+        bonificacion = request.POST.get('bonificacion') or 0
+        descuentos = request.POST.get('descuentos') or 0
+        total = request.POST.get('total_a_pagar') or base
+        PagoEmpleado.objects.create(
+            empleado_id=request.POST.get('empleado_id'),
+            mes_año=request.POST.get('mes_año', '').strip(),
+            monto_base=base,
+            bonificación=bonificacion,
+            descuentos=descuentos,
+            total_a_pagar=total,
+            monto_pagado=request.POST.get('monto_pagado') or 0,
+            fecha_pago=request.POST.get('fecha_pago') or None,
+            estado=request.POST.get('estado', 'pendiente'),
+            comprobante=request.POST.get('comprobante', '').strip(),
+            notas=request.POST.get('notas', '').strip(),
+        )
+    return redirect('finanzas:listar_pagos_empleados')

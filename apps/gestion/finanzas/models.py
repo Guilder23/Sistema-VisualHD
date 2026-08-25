@@ -12,6 +12,7 @@ class Ingreso(models.Model):
     ]
 
     cliente = models.ForeignKey('clientes.Cliente', on_delete=models.SET_NULL, null=True, blank=True, related_name='ingresos')
+    pago = models.OneToOneField('pagos.Pago', on_delete=models.SET_NULL, null=True, blank=True, related_name='ingreso_financiero')
     categoria = models.CharField(max_length=50, choices=CATEGORIA_CHOICES, default='sesion_foto')
     concepto = models.CharField(max_length=255, verbose_name='Concepto/Descripción')
     monto = models.DecimalField(max_digits=12, decimal_places=2, verbose_name='Monto (Bs)')
