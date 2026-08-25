@@ -1,15 +1,20 @@
 {% load static %}
 <footer class="footer">
     <div class="footer-container">
-        <div class="footer-bottom">
-            <div class="footer-section">
-                <h4><i class="fas fa-camera-retro"></i> VisualHD</h4>
+        <div class="footer-content-wrapper">
+            <div class="footer-brand">
+                <div class="footer-brand-icon">
+                    <i class="fas fa-camera-retro"></i>
+                </div>
+                <span><strong>Visual</strong>HD Producciones</span>
             </div>
-            <p>&copy; 2026 VisualHD - Estudio fotográfico</p>
-            <div class="footer-legal">
-                <a href="#">Términos</a>
-                <a href="#">Privacidad</a>
-                <a href="#">Licencia</a>
+            <p class="footer-copyright">&copy; 2026 Visual HD - Todos los derechos reservados.</p>
+            <div class="footer-links">
+                <a href="{% url 'core:inicio' %}" target="_blank">Sitio Web</a>
+                <span class="footer-separator">•</span>
+                <a href="{% url 'core:perfil' %}">Mi Perfil</a>
+                <span class="footer-separator">•</span>
+                <a href="#">Soporte</a>
             </div>
         </div>
     </div>

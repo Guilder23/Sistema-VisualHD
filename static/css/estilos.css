@@ -1,52 +1,612 @@
-/* ==========================================
-   ESTILOS GENERALES - SOLO VARIABLES Y RESET
-   ========================================== */
+/* ============================================================================
+   VISUAL HD PRODUCCIONES - SISTEMA DE GESTIÓN (MODO CLARO MODERNO)
+   Paleta: Crimson / Gold / Slate / Pure White
+   Sin Gradientes - 100% Sólido, Limpio, Minimalista y Elegante
+   ============================================================================ */
 
-/* Variables CSS Globales */
 :root {
-    /* Colores principales - Azul oscuro y Verde oscuro profesional */
-    --color-primario: #1e3a8a;
-    --color-primario-hover: #1e40af;
-    --color-secundario: #065f46;
-    --color-secundario-hover: #047857;
-    --color-exito: #059669;
-    --color-peligro: #dc2626;
-    --color-advertencia: #d97706;
-    --color-info: #0891b2;
-    --color-fondo: #f9fafb;
-    --color-texto: #1f2937;
-    --color-texto-secundario: #6b7280;
-    --color-blanco: #ffffff;
-    --color-gris-claro: #e5e7eb;
-    --color-gris-oscuro: #4b5563;
-    --color-borde: #e5e7eb;
-    
-    --fuente-principal: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    --radio-borde: 6px;
-    --radio-sm: 4px;
-    --radio-md: 6px;
-    --radio-lg: 8px;
-    --sombra: 0 1px 3px rgba(0, 0, 0, 0.1);
-    --sombra-hover: 0 4px 6px rgba(0, 0, 0, 0.1);
-    --transicion: all 0.2s ease;
+    /* Marca Visual HD - Crimson / Tinto Primario */
+    --crimson: #C81D31;
+    --crimson-hover: #A81226;
+    --crimson-dark: #8A0E1F;
+    --crimson-light: #E5253D;
+    --crimson-soft: #FDF2F4;
+    --crimson-border: #F5CCD2;
+    --crimson-subtle: #FFF5F6;
+
+    /* Marca Visual HD - Gold / Dorado Acento */
+    --gold: #D4A017;
+    --gold-hover: #B8860B;
+    --gold-dark: #A8780B;
+    --gold-light: #F3CA65;
+    --gold-soft: #FEF9EC;
+    --gold-border: #F7E5B5;
+
+    /* Compatibilidad con variables previas */
+    --color-primario: var(--crimson);
+    --color-primario-hover: var(--crimson-hover);
+    --color-secundario: var(--gold);
+    --color-secundario-hover: var(--gold-hover);
+
+    /* Estados Semánticos Claros (Flat & Clean) */
+    --color-exito: #10B981;
+    --color-exito-soft: #ECFDF5;
+    --color-exito-text: #065F46;
+    --color-exito-border: #A7F3D0;
+
+    --color-peligro: #EF4444;
+    --color-peligro-soft: #FEF2F2;
+    --color-peligro-text: #991B1B;
+    --color-peligro-border: #FECACA;
+
+    --color-advertencia: #F59E0B;
+    --color-advertencia-soft: #FFFBEB;
+    --color-advertencia-text: #92400E;
+    --color-advertencia-border: #FDE68A;
+
+    --color-info: #0284C7;
+    --color-info-soft: #F0F9FF;
+    --color-info-text: #075985;
+    --color-info-border: #BAE6FD;
+
+    /* Superficies y Fondos en Modo Claro */
+    --color-fondo: #F8F9FA;
+    --bg-body: #F8F9FA;
+    --bg-surface: #FFFFFF;
+    --bg-card: #FFFFFF;
+    --bg-muted: #F1F5F9;
+    --bg-hover: #F8FAFC;
+    --color-blanco: #FFFFFF;
+
+    /* Tipografía y Textos */
+    --color-texto: #1E293B;
+    --color-texto-secundario: #64748B;
+    --color-texto-muted: #94A3B8;
+    --color-gris-oscuro: #334155;
+    --color-gris-claro: #F1F5F9;
+
+    /* Bordes y Separadores */
+    --color-borde: #E2E8F0;
+    --border-color: #E2E8F0;
+    --border-light: #F1F5F9;
+    --border-focus: var(--crimson);
+
+    /* Tipografía */
+    --fuente-principal: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    --fuente-display: 'Playfair Display', Georgia, serif;
+
+    /* Radios y Bordes */
+    --radio-sm: 6px;
+    --radio-md: 8px;
+    --radio-lg: 12px;
+    --radio-xl: 16px;
+    --radio-pill: 9999px;
+    --radio-borde: var(--radio-md);
+
+    /* Sombras Elegantes y Suaves (Light Mode) */
+    --sombra-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --sombra: 0 1px 3px 0 rgba(0, 0, 0, 0.07), 0 1px 2px 0 rgba(0, 0, 0, 0.04);
+    --sombra-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
+    --sombra-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
+    --sombra-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 10px 10px -5px rgba(0, 0, 0, 0.03);
+    --sombra-hover: var(--sombra-md);
+
+    /* Transición */
+    --transicion: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Reset Básico */
+/* ============================================================================
+   RESET Y BASE
+   ============================================================================ */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-body {
-    font-family: var(--fuente-principal);
-    background-color: var(--color-fondo);
-    color: var(--color-texto);
-    line-height: 1.6;
-    font-size: 14px;
+html {
+    background-color: var(--bg-body);
 }
 
-/* Utilidades Globales Mínimas */
+body {
+    font-family: var(--fuente-principal);
+    background-color: var(--bg-body);
+    color: var(--color-texto);
+    line-height: 1.5;
+    font-size: 0.875rem;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+    color: var(--crimson);
+    text-decoration: none;
+    transition: var(--transicion);
+}
+
+a:hover {
+    color: var(--crimson-hover);
+    text-decoration: none;
+}
+
+/* ============================================================================
+   BOTONES MODERNOS (SÓLIDOS, SIN GRADIENTES)
+   ============================================================================ */
+.btn {
+    font-family: var(--fuente-principal);
+    font-weight: 600;
+    font-size: 0.875rem;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radio-md);
+    border: 1px solid transparent;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: var(--transicion);
+    cursor: pointer;
+    box-shadow: var(--sombra-sm);
+    line-height: 1.25;
+}
+
+.btn:focus, .btn:active:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(200, 29, 49, 0.2);
+}
+
+.btn-primary {
+    background-color: var(--crimson);
+    color: #FFFFFF !important;
+    border-color: var(--crimson);
+}
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active {
+    background-color: var(--crimson-hover) !important;
+    border-color: var(--crimson-hover) !important;
+    color: #FFFFFF !important;
+    box-shadow: var(--sombra-md);
+}
+
+.btn-secondary {
+    background-color: #64748B;
+    color: #FFFFFF !important;
+    border-color: #64748B;
+}
+
+.btn-secondary:hover {
+    background-color: #475569 !important;
+    border-color: #475569 !important;
+    color: #FFFFFF !important;
+}
+
+.btn-outline-secondary {
+    background-color: #FFFFFF;
+    color: #475569 !important;
+    border-color: #CBD5E1;
+}
+
+.btn-outline-secondary:hover {
+    background-color: #F8FAFC !important;
+    color: var(--crimson) !important;
+    border-color: #CBD5E1 !important;
+}
+
+.btn-outline-primary {
+    background-color: #FFFFFF;
+    color: var(--crimson) !important;
+    border-color: var(--crimson-border);
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--crimson-soft) !important;
+    color: var(--crimson-hover) !important;
+    border-color: var(--crimson) !important;
+}
+
+.btn-success {
+    background-color: var(--color-exito);
+    color: #FFFFFF !important;
+    border-color: var(--color-exito);
+}
+
+.btn-success:hover {
+    background-color: #059669 !important;
+    border-color: #059669 !important;
+    color: #FFFFFF !important;
+}
+
+.btn-warning {
+    background-color: var(--gold);
+    color: #FFFFFF !important;
+    border-color: var(--gold);
+}
+
+.btn-warning:hover {
+    background-color: var(--gold-hover) !important;
+    border-color: var(--gold-hover) !important;
+    color: #FFFFFF !important;
+}
+
+.btn-danger {
+    background-color: var(--color-peligro);
+    color: #FFFFFF !important;
+    border-color: var(--color-peligro);
+}
+
+.btn-danger:hover {
+    background-color: #DC2626 !important;
+    border-color: #DC2626 !important;
+    color: #FFFFFF !important;
+}
+
+.btn-info {
+    background-color: var(--color-info);
+    color: #FFFFFF !important;
+    border-color: var(--color-info);
+}
+
+.btn-info:hover {
+    background-color: #0369A1 !important;
+    border-color: #0369A1 !important;
+    color: #FFFFFF !important;
+}
+
+.btn-sm {
+    padding: 0.35rem 0.65rem;
+    font-size: 0.8125rem;
+    border-radius: var(--radio-sm);
+}
+
+/* ============================================================================
+   TARJETAS Y PANELES (CARDS)
+   ============================================================================ */
+.card {
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radio-lg);
+    box-shadow: var(--sombra);
+    margin-bottom: 1.5rem;
+    transition: var(--transicion);
+    overflow: hidden;
+}
+
+.card-header {
+    background-color: var(--bg-surface);
+    border-bottom: 1px solid var(--border-color);
+    padding: 1rem 1.25rem;
+    font-weight: 700;
+    color: var(--color-texto);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.card-header.bg-light {
+    background-color: #F8FAFC !important;
+}
+
+.card-body {
+    padding: 1.25rem;
+}
+
+.card-footer {
+    background-color: #F8FAFC;
+    border-top: 1px solid var(--border-color);
+    padding: 0.875rem 1.25rem;
+}
+
+.card-filtros {
+    border-radius: var(--radio-lg);
+    background: #FFFFFF;
+    border: 1px solid var(--border-color);
+}
+
+/* ============================================================================
+   PAGE HEADERS (TÍTULOS DE PÁGINA)
+   ============================================================================ */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.page-header-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.page-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--color-texto);
+    letter-spacing: -0.025em;
+    margin-bottom: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+}
+
+.page-title i {
+    color: var(--crimson);
+    font-size: 1.4rem;
+}
+
+.page-subtitle {
+    font-size: 0.875rem;
+    color: var(--color-texto-secundario);
+    margin-bottom: 0;
+}
+
+/* ============================================================================
+   FORMULARIOS E INPUTS
+   ============================================================================ */
+.form-group label {
+    font-weight: 600;
+    color: var(--color-gris-oscuro);
+    font-size: 0.8125rem;
+    margin-bottom: 0.375rem;
+    display: block;
+}
+
+.form-control, .form-select, select.form-control {
+    border: 1px solid #CBD5E1;
+    background-color: #FFFFFF;
+    color: var(--color-texto);
+    border-radius: var(--radio-md);
+    padding: 0.5rem 0.875rem;
+    font-size: 0.875rem;
+    transition: var(--transicion);
+    box-shadow: var(--sombra-sm);
+    height: auto;
+}
+
+.form-control:focus, .form-select:focus, select.form-control:focus {
+    border-color: var(--crimson);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(200, 29, 49, 0.15);
+    background-color: #FFFFFF;
+    color: var(--color-texto);
+}
+
+.form-control::placeholder {
+    color: var(--color-texto-muted);
+}
+
+.form-control-sm {
+    padding: 0.35rem 0.65rem;
+    font-size: 0.8125rem;
+    border-radius: var(--radio-sm);
+}
+
+/* ============================================================================
+   TABLAS MODERNAS (DATA-TABLES EN MODO CLARO)
+   ============================================================================ */
+.card-tabla {
+    border-radius: var(--radio-lg);
+    overflow: hidden;
+    background: #FFFFFF;
+    border: 1px solid var(--border-color);
+}
+
+.table-responsive {
+    border-radius: 0 0 var(--radio-lg) var(--radio-lg);
+}
+
+.table {
+    width: 100%;
+    margin-bottom: 0;
+    color: var(--color-texto);
+    border-collapse: collapse;
+    background-color: #FFFFFF;
+}
+
+.table thead th {
+    background-color: #F8FAFC;
+    color: #475569;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.875rem 1rem;
+    border-top: none;
+    border-bottom: 2px solid var(--border-color);
+    white-space: nowrap;
+    vertical-align: middle;
+}
+
+.table tbody td {
+    padding: 0.875rem 1rem;
+    vertical-align: middle;
+    border-top: 1px solid #F1F5F9;
+    font-size: 0.875rem;
+    color: var(--color-texto);
+}
+
+.table tbody tr {
+    transition: background-color 0.15s ease;
+}
+
+.table tbody tr:hover {
+    background-color: var(--crimson-subtle);
+}
+
+.table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.table-sm thead th, .table-sm tbody td {
+    padding: 0.65rem 0.875rem;
+}
+
+/* ============================================================================
+   BADGES Y ESTADOS MODERNOS (PILL SOFT STYLE)
+   ============================================================================ */
+.badge-estado, .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.35rem 0.65rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    border-radius: var(--radio-pill);
+    letter-spacing: 0.02em;
+    border: 1px solid transparent;
+    line-height: 1;
+}
+
+.badge-estado-activo, .badge-success {
+    background-color: var(--color-exito-soft) !important;
+    color: var(--color-exito-text) !important;
+    border-color: var(--color-exito-border) !important;
+}
+
+.badge-estado-inactivo, .badge-danger {
+    background-color: var(--color-peligro-soft) !important;
+    color: var(--color-peligro-text) !important;
+    border-color: var(--color-peligro-border) !important;
+}
+
+.badge-warning {
+    background-color: var(--color-advertencia-soft) !important;
+    color: var(--color-advertencia-text) !important;
+    border-color: var(--color-advertencia-border) !important;
+}
+
+.badge-info {
+    background-color: var(--color-info-soft) !important;
+    color: var(--color-info-text) !important;
+    border-color: var(--color-info-border) !important;
+}
+
+.badge-primary, .badge-crimson {
+    background-color: var(--crimson-soft) !important;
+    color: var(--crimson) !important;
+    border-color: var(--crimson-border) !important;
+}
+
+.badge-gold {
+    background-color: var(--gold-soft) !important;
+    color: var(--gold-dark) !important;
+    border-color: var(--gold-border) !important;
+}
+
+/* ============================================================================
+   MODALES MODERNOS (CLEAN LIGHT MODALS)
+   ============================================================================ */
+.modal-content {
+    background-color: #FFFFFF;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radio-xl);
+    box-shadow: var(--sombra-xl);
+    overflow: hidden;
+}
+
+.modal-header {
+    background-color: #FFFFFF;
+    border-bottom: 1px solid var(--border-color);
+    padding: 1.15rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.modal-title {
+    font-size: 1.125rem;
+    font-weight: 800;
+    color: var(--color-texto);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0;
+}
+
+.modal-title i {
+    color: var(--crimson);
+}
+
+.modal-header .close {
+    padding: 0.5rem;
+    margin: -0.5rem -0.5rem -0.5rem auto;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-texto-secundario);
+    opacity: 0.6;
+    transition: var(--transicion);
+}
+
+.modal-header .close:hover {
+    opacity: 1;
+    color: var(--crimson);
+}
+
+.modal-body {
+    padding: 1.5rem;
+    color: var(--color-texto);
+    background-color: #FFFFFF;
+}
+
+.modal-footer {
+    background-color: #F8FAFC;
+    border-top: 1px solid var(--border-color);
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.75rem;
+}
+
+.modal-backdrop.show {
+    opacity: 0.45;
+    background-color: #0F172A;
+}
+
+/* ============================================================================
+   PAGINACIÓN
+   ============================================================================ */
+.pagination {
+    display: flex;
+    gap: 0.25rem;
+    list-style: none;
+    padding: 0;
+}
+
+.page-link {
+    background-color: #FFFFFF;
+    border: 1px solid var(--border-color);
+    color: #475569;
+    font-weight: 600;
+    font-size: 0.8125rem;
+    padding: 0.45rem 0.85rem;
+    border-radius: var(--radio-md) !important;
+    transition: var(--transicion);
+}
+
+.page-link:hover {
+    background-color: var(--crimson-soft);
+    border-color: var(--crimson-border);
+    color: var(--crimson);
+}
+
+.page-item.active .page-link {
+    background-color: var(--crimson) !important;
+    border-color: var(--crimson) !important;
+    color: #FFFFFF !important;
+    box-shadow: var(--sombra-sm);
+}
+
+.page-item.disabled .page-link {
+    background-color: #F8FAFC;
+    border-color: var(--border-color);
+    color: var(--color-texto-muted);
+}
+
+/* ============================================================================
+   UTILIDADES
+   ============================================================================ */
 .texto-centro { text-align: center; }
 .texto-derecha { text-align: right; }
 .texto-izquierda { text-align: left; }

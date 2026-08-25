@@ -1,19 +1,30 @@
+/* ============================================================================
+   PERFIL DE USUARIO - VisualHD (Modo Claro Moderno)
+   ============================================================================ */
+
 .perfil-avatar {
-    width: 120px;
-    height: 120px;
+    width: 110px;
+    height: 110px;
     border-radius: 50%;
-    background-color: #e9ecef;
+    background-color: var(--crimson-soft, #FDF2F4);
+    border: 3px solid var(--crimson-border, #F5CCD2);
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 0 auto;
     overflow: hidden;
-    font-size: 3rem;
-    color: #adb5bd;
+    font-size: 2.75rem;
+    color: var(--crimson, #C81D31);
 }
 
 .perfil-avatar img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+.card h5 {
+    font-weight: 800;
+    color: #1E293B;
+    letter-spacing: -0.01em;
 }

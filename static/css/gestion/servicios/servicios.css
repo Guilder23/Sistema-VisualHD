@@ -1,24 +1,40 @@
+/* ============================================================================
+   GESTIÓN DE SERVICIOS - VisualHD (Modo Claro Moderno)
+   ============================================================================ */
+
 .tabla-servicios td {
     vertical-align: middle;
 }
 
-.badge-estado {
-    padding: 0.35em 0.65em;
-    border-radius: 0.35rem;
-    font-size: 0.8rem;
+.btn-ver-servicio {
+    background-color: #F0F9FF;
+    color: #0284C7 !important;
+    border: 1px solid #BAE6FD;
 }
 
-.badge-estado-activo {
-    background-color: #d1e7dd;
-    color: #0f5132;
+.btn-ver-servicio:hover {
+    background-color: #0284C7;
+    color: #FFFFFF !important;
 }
 
-.badge-estado-inactivo {
-    background-color: #f8d7da;
-    color: #842029;
+.btn-editar-servicio {
+    background-color: #FEF9EC;
+    color: #D4A017 !important;
+    border: 1px solid #F7E5B5;
 }
 
-#modalCrearServicio .modal-header { background: #0d6efd !important; color: #fff; }
-#modalVerServicio .modal-header { background: #17a2b8 !important; color: #fff; }
-#modalEditarServicio .modal-header { background: #f0ad00 !important; color: #212529; }
-#modalEliminarServicio .modal-content { border-top: 5px solid #dc3545; }
+.btn-editar-servicio:hover {
+    background-color: #D4A017;
+    color: #FFFFFF !important;
+}
+
+.btn-eliminar-servicio {
+    background-color: #FEF2F2;
+    color: #EF4444 !important;
+    border: 1px solid #FECACA;
+}
+
+.btn-eliminar-servicio:hover {
+    background-color: #DC2626;
+    color: #FFFFFF !important;
+}

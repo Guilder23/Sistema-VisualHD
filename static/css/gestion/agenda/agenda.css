@@ -1,22 +1,64 @@
-/* Agenda */
-.badge-programada { background-color: #0066cc; color: white; }
-.badge-confirmada { background-color: #28a745; color: white; }
-.badge-completada { background-color: #17a2b8; color: white; }
-.badge-cancelada { background-color: #dc3545; color: white; }
-.badge-reprogramada { background-color: #ffc107; color: #333; }
+/* ============================================================================
+   AGENDA DE CITAS - VisualHD (Modo Claro Moderno)
+   ============================================================================ */
 
-#calendarioCitas { min-height: 520px; }
-.agenda-leyenda { display: flex; flex-wrap: wrap; gap: 0.8rem; font-size: 0.75rem; color: #6c757d; }
-.agenda-leyenda i { margin-right: 0.2rem; }
-.estado-programada { color: #0066cc; }
-.estado-confirmada { color: #28a745; }
-.estado-completada { color: #17a2b8; }
-.estado-cancelada { color: #dc3545; }
-.estado-reprogramada { color: #f0ad00; }
-@media (max-width: 576px) { .agenda-leyenda { margin-top: 0.5rem; } #calendarioCitas { min-height: 420px; } }
+.badge-programada {
+    background-color: var(--crimson-soft, #FDF2F4) !important;
+    color: var(--crimson, #C81D31) !important;
+    border: 1px solid var(--crimson-border, #F5CCD2) !important;
+}
 
-/* Modales de Agenda: crear azul, ver celeste, editar amarillo, eliminar rojo. */
-#modalCrearCita .modal-header { background: #0d6efd; color: #fff; }
-#modalVerCita .modal-header { background: #17a2b8; color: #fff; }
-#modalEditarCita .modal-header { background: #f0ad00; color: #212529; }
-#modalEliminarCita .modal-content { border-top: 5px solid #dc3545; }
+.badge-confirmada {
+    background-color: #ECFDF5 !important;
+    color: #065F46 !important;
+    border: 1px solid #A7F3D0 !important;
+}
+
+.badge-completada {
+    background-color: #F0F9FF !important;
+    color: #075985 !important;
+    border: 1px solid #BAE6FD !important;
+}
+
+.badge-cancelada {
+    background-color: #FEF2F2 !important;
+    color: #991B1B !important;
+    border: 1px solid #FECACA !important;
+}
+
+.badge-reprogramada {
+    background-color: #FFFBEB !important;
+    color: #92400E !important;
+    border: 1px solid #FDE68A !important;
+}
+
+#calendarioCitas {
+    min-height: 540px;
+    background-color: #FFFFFF;
+    border-radius: var(--radio-lg, 12px);
+    padding: 1rem;
+}
+
+.agenda-leyenda {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: #64748B;
+}
+
+.agenda-leyenda i {
+    margin-right: 0.35rem;
+}
+
+.estado-programada { color: var(--crimson, #C81D31); }
+.estado-confirmada { color: #10B981; }
+.estado-completada { color: #0284C7; }
+.estado-cancelada { color: #EF4444; }
+.estado-reprogramada { color: #F59E0B; }
+
+@media (max-width: 576px) {
+    .agenda-leyenda { margin-top: 0.5rem; }
+    #calendarioCitas { min-height: 420px; }
+}

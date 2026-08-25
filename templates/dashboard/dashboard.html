@@ -1,33 +1,185 @@
 {% extends 'base/base.html' %}
 {% load static %}
-{% block titulo %}Dashboard{% endblock %}
+
+{% block titulo %}Dashboard - VisualHD{% endblock %}
+
 {% block estilos_extra %}
 <link rel="stylesheet" href="{% static 'css/dashboard/dashboard.css' %}">
 {% endblock %}
+
 {% block contenido %}
-<div class="container-fluid py-4">
-    <h2 class="mb-3">Panel de VisualHD</h2>
+<div class="container-fluid">
+    <div class="page-header">
+        <div class="page-header-content">
+            <h1 class="page-title">
+                <i class="fas fa-chart-pie"></i> Panel de Control
+            </h1>
+            <p class="page-subtitle">Bienvenido al sistema de administración de Visual HD Producciones</p>
+        </div>
+        <div class="d-flex gap-2">
+            <a href="{% url 'agenda:listar_citas' %}" class="btn btn-outline-secondary">
+                <i class="fas fa-calendar-alt"></i> Ver Agenda
+            </a>
+            <a href="{% url 'sesiones:listar_sesiones' %}" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Nueva Sesión
+            </a>
+        </div>
+    </div>
+
+    <!-- METRICS GRID -->
+    <div class="row mb-4">
+        <div class="col-xl-3 col-md-6 mb-3 mb-xl-0">
+            <div class="card stat-card stat-card-crimson">
+                <div class="card-body">
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-label">Total Clientes</span>
+                        <h3 class="stat-value">{{ total_clientes|default:'0' }}</h3>
+                        <span class="stat-subtext text-success"><i class="fas fa-check-circle"></i> {{ clientes_activos|default:'0' }} activos</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-3 mb-xl-0">
+            <div class="card stat-card stat-card-gold">
+                <div class="card-body">
+                    <div class="stat-icon">
+                        <i class="fas fa-camera-retro"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-label">Servicios Disponibles</span>
+                        <h3 class="stat-value">{{ total_servicios|default:'0' }}</h3>
+                        <span class="stat-subtext text-muted">Paquetes fotográficos</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-3 mb-xl-0">
+            <div class="card stat-card stat-card-info">
+                <div class="card-body">
+                    <div class="stat-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-label">Sesiones Confirmadas</span>
+                        <h3 class="stat-value">{{ sesiones_confirmadas|default:'0' }}</h3>
+                        <span class="stat-subtext text-warning"><i class="fas fa-clock"></i> {{ sesiones_pendientes|default:'0' }} pendientes</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-3 mb-xl-0">
+            <div class="card stat-card stat-card-success">
+                <div class="card-body">
+                    <div class="stat-icon">
+                        <i class="fas fa-id-badge"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-label">Equipo de Trabajo</span>
+                        <h3 class="stat-value">{{ total_empleados|default:'0' }}</h3>
+                        <span class="stat-subtext text-muted">Fotógrafos y personal</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- QUICK ACCESS SECTION -->
     <div class="row">
-        <div class="col-md-4 mb-3">
-            <div class="card p-3"><h4>{{ total_clientes }}</h4><p class="mb-0">Total de clientes</p></div>
+        <div class="col-lg-8 mb-4">
+            <div class="card h-100">
+                <div class="card-header bg-light">
+                    <span><i class="fas fa-bolt text-warning mr-2"></i> Accesos Rápidos de Gestión</span>
+                </div>
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-md-4 col-sm-6 mb-3">
+                            <a href="{% url 'clientes:listar_clientes' %}" class="quick-card">
+                                <div class="quick-icon icon-crimson"><i class="fas fa-address-book"></i></div>
+                                <h6>Clientes</h6>
+                                <p>Registro y directorio</p>
+                            </a>
+                        </div>
+                        <div class="col-md-4 col-sm-6 mb-3">
+                            <a href="{% url 'sesiones:listar_sesiones' %}" class="quick-card">
+                                <div class="quick-icon icon-gold"><i class="fas fa-calendar-check"></i></div>
+                                <h6>Sesiones</h6>
+                                <p>Citas y contratos</p>
+                            </a>
+                        </div>
+                        <div class="col-md-4 col-sm-6 mb-3">
+                            <a href="{% url 'pagos:listar_pagos' %}" class="quick-card">
+                                <div class="quick-icon icon-success"><i class="fas fa-money-bill-wave"></i></div>
+                                <h6>Pagos</h6>
+                                <p>Ingresos y cobros</p>
+                            </a>
+                        </div>
+                        <div class="col-md-4 col-sm-6 mb-3">
+                            <a href="{% url 'agenda:listar_citas' %}" class="quick-card">
+                                <div class="quick-icon icon-info"><i class="fas fa-calendar-day"></i></div>
+                                <h6>Agenda</h6>
+                                <p>Calendario de trabajo</p>
+                            </a>
+                        </div>
+                        <div class="col-md-4 col-sm-6 mb-3">
+                            <a href="{% url 'finanzas:finanzas_dashboard' %}" class="quick-card">
+                                <div class="quick-icon icon-warning"><i class="fas fa-coins"></i></div>
+                                <h6>Finanzas</h6>
+                                <p>Balance e ingresos</p>
+                            </a>
+                        </div>
+                        <div class="col-md-4 col-sm-6 mb-3">
+                            <a href="{% url 'reportes:reportes_inicio' %}" class="quick-card">
+                                <div class="quick-icon icon-crimson"><i class="fas fa-chart-bar"></i></div>
+                                <h6>Reportes</h6>
+                                <p>Métricas y estadísticas</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="col-md-4 mb-3">
-            <div class="card p-3"><h4>{{ clientes_activos }}</h4><p class="mb-0">Clientes activos</p></div>
-        </div>
-        <div class="col-md-4 mb-3">
-            <div class="card p-3"><h4>{{ total_servicios }}</h4><p class="mb-0">Servicios activos</p></div>
-        </div>
-        <div class="col-md-4 mb-3">
-            <div class="card p-3"><h4>{{ total_empleados }}</h4><p class="mb-0">Empleados activos</p></div>
-        </div>
-        <div class="col-md-4 mb-3">
-            <div class="card p-3"><h4>{{ sesiones_pendientes }}</h4><p class="mb-0">Sesiones pendientes</p></div>
-        </div>
-        <div class="col-md-4 mb-3">
-            <div class="card p-3"><h4>{{ sesiones_confirmadas }}</h4><p class="mb-0">Sesiones confirmadas</p></div>
-        </div>
-        <div class="col-md-4 mb-3">
-            <div class="card p-3"><h4>{{ pagos_pendientes }}</h4><p class="mb-0">Pagos pendientes</p></div>
+
+        <div class="col-lg-4 mb-4">
+            <div class="card h-100">
+                <div class="card-header bg-light">
+                    <span><i class="fas fa-bell text-crimson mr-2"></i> Estado del Sistema</span>
+                </div>
+                <div class="card-body d-flex flex-column justify-content-between">
+                    <div class="system-status-list">
+                        <div class="system-status-item">
+                            <div class="status-indicator status-ok"></div>
+                            <div>
+                                <strong>Estudio Fotográfico Activo</strong>
+                                <small class="text-muted d-block">Operando con normalidad</small>
+                            </div>
+                        </div>
+                        <div class="system-status-item">
+                            <div class="status-indicator {% if pagos_pendientes %}status-warning{% else %}status-ok{% endif %}"></div>
+                            <div>
+                                <strong>Pagos por cobrar</strong>
+                                <small class="text-muted d-block">{{ pagos_pendientes|default:'0' }} pagos pendientes</small>
+                            </div>
+                        </div>
+                        <div class="system-status-item">
+                            <div class="status-indicator status-ok"></div>
+                            <div>
+                                <strong>Base de Datos</strong>
+                                <small class="text-muted d-block">Sincronizada correctamente</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-info mt-3 mb-0">
+                        <i class="fas fa-info-circle mr-2"></i> Para agendar nuevas sesiones directamente consulta la sección de Clientes y Servicios.
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

@@ -1,20 +1,23 @@
-/* Reportes */
-.card {
-    border: none;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    transition: transform 0.2s;
+/* ============================================================================
+   REPORTES - VisualHD (Modo Claro Moderno)
+   ============================================================================ */
+
+.card-reporte {
+    border: 1px solid var(--border-color, #E2E8F0);
+    border-radius: var(--radio-lg, 12px);
+    transition: var(--transicion, all 0.2s ease);
+    background-color: #FFFFFF;
 }
 
-.card:hover {
+.card-reporte:hover {
     transform: translateY(-4px);
+    box-shadow: var(--sombra-md);
+    border-color: var(--crimson-border, #F5CCD2);
 }
 
-.card-body i {
-    display: block;
-}
-
-.card-title {
-    margin-top: 1rem;
-    font-weight: 600;
+.card-reporte .card-title {
+    font-weight: 700;
+    color: #1E293B;
+    margin-top: 0.75rem;
+    margin-bottom: 0.75rem;
 }

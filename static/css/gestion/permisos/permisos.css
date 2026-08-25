@@ -1,11 +1,17 @@
+/* ============================================================================
+   USUARIOS Y PERMISOS - VisualHD (Modo Claro Moderno)
+   ============================================================================ */
+
 .usuarios-header {
-    margin-bottom: 1rem;
+    margin-bottom: 1.25rem;
 }
 
 .usuarios-card .card-header {
     display: flex;
     align-items: center;
     min-height: 48px;
+    background-color: #F8FAFC;
+    border-bottom: 1px solid var(--border-color, #E2E8F0);
 }
 
 .usuarios-card td {
@@ -13,11 +19,5 @@
 }
 
 .usuarios-card .badge {
-    font-weight: 600;
+    font-weight: 700;
 }
-
-/* Modales de Permisos: crear azul, ver celeste, editar amarillo, eliminar rojo. */
-#modalCrearRol .modal-header, #modalCrearUsuario .modal-header { background: #0d6efd; color: #fff; }
-#modalVerRol .modal-header, #modalVerUsuario .modal-header { background: #17a2b8; color: #fff; }
-#modalEditarRol .modal-header, #modalEditarUsuario .modal-header { background: #f0ad00; color: #212529; }
-#modalEliminarRol .modal-content, #modalEliminarUsuario .modal-content { border-top: 5px solid #dc3545; }

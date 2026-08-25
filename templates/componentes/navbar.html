@@ -2,36 +2,63 @@
 <nav class="navbar navbar-principal">
     <div class="navbar-container">
         <div class="navbar-left">
-            <button class="sidebar-toggle-btn" id="sidebarToggle" title="Alternar menu">
+            <button class="sidebar-toggle-btn" id="sidebarToggle" title="Alternar menú">
                 <i class="fas fa-bars"></i>
             </button>
             <div class="navbar-logo">
                 <a href="{% url 'core:inicio' %}">
-                    <i class="fas fa-camera-retro" style="font-size:2rem;vertical-align:middle;color:#0d6efd;"></i>
-                    <span class="navbar-brand-text" style="font-size:1.3rem;vertical-align:middle;"><span class="brand-primary">Visual</span><span class="brand-secondary">HD</span></span>
+                    <div class="navbar-logo-icon">
+                        <i class="fas fa-camera-retro"></i>
+                    </div>
+                    <span class="navbar-brand-text">
+                        <span class="brand-primary">Visual</span><span class="brand-secondary">HD</span>
+                    </span>
                 </a>
             </div>
         </div>
 
         <div class="navbar-right">
+            <a href="{% url 'core:inicio' %}" class="navbar-web-link" title="Ver sitio web público" target="_blank">
+                <i class="fas fa-globe"></i>
+                <span class="d-none d-md-inline">Ver Sitio Web</span>
+            </a>
 
             <div class="navbar-usuario">
-                <button class="navbar-user-btn" id="usuarioBtn" title="Mi cuenta">
-                    <div class="user-avatar"><i class="fas fa-user"></i></div>
-                    <div class="user-info">
+                <button class="navbar-user-btn" id="usuarioBtn" title="Mi cuenta" aria-expanded="false">
+                    <div class="user-avatar">
+                        {% if user_profile.foto %}
+                            <img src="{{ user_profile.foto.url }}" alt="avatar" class="user-avatar-img">
+                        {% else %}
+                            <i class="fas fa-user"></i>
+                        {% endif %}
+                    </div>
+                    <div class="user-info d-none d-sm-flex">
                         <span class="user-name">{{ user.username|title }}</span>
                         <span class="user-role">{% if user.is_staff %}Administrador{% else %}Usuario{% endif %}</span>
                     </div>
-                    <i class="fas fa-chevron-down"></i>
+                    <i class="fas fa-chevron-down user-chevron"></i>
                 </button>
                 <div class="navbar-dropdown usuario-dropdown" id="usuarioDropdown">
-                    <a href="{% url 'core:perfil' %}" class="dropdown-item"><i class="fas fa-user-circle"></i> {{ user.get_full_name|default:user.username }}</a>
+                    <div class="dropdown-header-user">
+                        <strong>{{ user.get_full_name|default:user.username }}</strong>
+                        <span>{{ user.email|default:'Visual HD' }}</span>
+                    </div>
+                    <div class="dropdown-divider"></div>
+                    <a href="{% url 'core:perfil' %}" class="dropdown-item">
+                        <i class="fas fa-user-circle"></i> Mi Perfil
+                    </a>
                     {% if user.is_staff %}
-                    <a href="{% url 'core:registro' %}" class="dropdown-item"><i class="fas fa-user-plus"></i> Registrar Usuarios</a>
-                    <a href="{% url 'dashboard:dashboard' %}" class="dropdown-item"><i class="fas fa-chart-pie"></i> Dashboard</a>
+                    <a href="{% url 'dashboard:dashboard' %}" class="dropdown-item">
+                        <i class="fas fa-chart-pie"></i> Dashboard
+                    </a>
+                    <a href="{% url 'core:registro' %}" class="dropdown-item">
+                        <i class="fas fa-user-plus"></i> Registrar Usuarios
+                    </a>
                     {% endif %}
                     <div class="dropdown-divider"></div>
-                    <a href="{% url 'core:logout' %}" class="dropdown-item dropdown-item-logout"><i class="fas fa-sign-out-alt"></i> Cerrar Sesion</a>
+                    <a href="{% url 'core:logout' %}" class="dropdown-item dropdown-item-logout">
+                        <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+                    </a>
                 </div>
             </div>
         </div>

@@ -1,29 +1,40 @@
+/* ============================================================================
+   GESTIÓN DE PAGOS - VisualHD (Modo Claro Moderno)
+   ============================================================================ */
+
 .tabla-pagos td {
     vertical-align: middle;
 }
 
-.badge-estado {
-    padding: 0.35em 0.65em;
-    border-radius: 0.35rem;
-    font-size: 0.8rem;
+.btn-ver-pago {
+    background-color: #F0F9FF;
+    color: #0284C7 !important;
+    border: 1px solid #BAE6FD;
 }
 
-.badge-estado-pendiente {
-    background-color: #fff3cd;
-    color: #664d03;
+.btn-ver-pago:hover {
+    background-color: #0284C7;
+    color: #FFFFFF !important;
 }
 
-.badge-estado-pagado {
-    background-color: #d1e7dd;
-    color: #0f5132;
+.btn-editar-pago {
+    background-color: #FEF9EC;
+    color: #D4A017 !important;
+    border: 1px solid #F7E5B5;
 }
 
-#modalCrearPago .modal-header { background: #0d6efd !important; color: #fff; }
-#modalVerPago .modal-header { background: #17a2b8 !important; color: #fff; }
-#modalEditarPago .modal-header { background: #f0ad00 !important; color: #212529; }
-#modalEliminarPago .modal-content { border-top: 5px solid #dc3545; }
+.btn-editar-pago:hover {
+    background-color: #D4A017;
+    color: #FFFFFF !important;
+}
 
-.badge-estado-anulado {
-    background-color: #f8d7da;
-    color: #842029;
+.btn-eliminar-pago {
+    background-color: #FEF2F2;
+    color: #EF4444 !important;
+    border: 1px solid #FECACA;
+}
+
+.btn-eliminar-pago:hover {
+    background-color: #DC2626;
+    color: #FFFFFF !important;
 }

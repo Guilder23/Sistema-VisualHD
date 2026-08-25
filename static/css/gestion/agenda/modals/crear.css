@@ -1,2 +1,4 @@
-#modalCrearCita .modal-header { background: #0d6efd; color: #fff; }
-#modalCrearCita .modal-content { border-radius: 10px; overflow: hidden; }
+/* Modal Crear Cita */
+#modalCrearCita .modal-content {
+    border-radius: var(--radio-xl, 16px);
+}

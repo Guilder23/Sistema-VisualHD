@@ -1,2 +1,4 @@
-#modalCrearEvento .modal-header { background: #0d6efd; color: #fff; }
-#modalCrearEvento .modal-content { border-radius: 10px; overflow: hidden; }
+/* Modal Crear Evento */
+#modalCrearEvento .modal-content {
+    border-radius: var(--radio-xl, 16px);
+}

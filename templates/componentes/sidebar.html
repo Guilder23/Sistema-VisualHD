@@ -1,10 +1,15 @@
 <aside class="sidebar" id="sidebar">
     <div class="sidebar-header">
         <div class="sidebar-brand">
-            <i class="fas fa-camera-retro"></i>
-            <span class="sidebar-brand-text">VisualHD</span>
+            <div class="sidebar-brand-icon">
+                <i class="fas fa-camera-retro"></i>
+            </div>
+            <div class="sidebar-brand-text">
+                <span class="brand-text-main">Visual</span><span class="brand-text-accent">HD</span>
+                <span class="brand-text-sub">PRODUCCIONES</span>
+            </div>
         </div>
-        <button class="sidebar-collapse-btn" id="sidebarCollapseBtn" title="Colapsar menu">
+        <button class="sidebar-collapse-btn" id="sidebarCollapseBtn" title="Colapsar menú">
             <i class="fas fa-angles-left"></i>
         </button>
     </div>
@@ -17,8 +22,9 @@
                     <i class="fas fa-chart-pie"></i><span>Dashboard</span>
                 </a>
             </li>
+
             <li class="sidebar-section">
-                <span class="sidebar-section-title">Gestión</span>
+                <span class="sidebar-section-title">Gestión Principal</span>
             </li>
             <li class="sidebar-item">
                 <a href="{% url 'clientes:listar_clientes' %}" class="sidebar-link {% if '/gestion/clientes/' in request.path %}active{% endif %}">
@@ -45,12 +51,13 @@
                     <i class="fas fa-money-bill-wave"></i><span>Pagos</span>
                 </a>
             </li>
+
             <li class="sidebar-section">
                 <span class="sidebar-section-title">Operaciones</span>
             </li>
             <li class="sidebar-item">
                 <a href="{% url 'agenda:listar_citas' %}" class="sidebar-link {% if '/gestion/agenda/' in request.path %}active{% endif %}">
-                    <i class="fas fa-calendar"></i><span>Agenda</span>
+                    <i class="fas fa-calendar-day"></i><span>Agenda</span>
                 </a>
             </li>
             <li class="sidebar-item">
@@ -58,17 +65,18 @@
                     <i class="fas fa-calendar-alt"></i><span>Eventos</span>
                 </a>
             </li>
+
             <li class="sidebar-section">
-                <span class="sidebar-section-title">Financiero</span>
+                <span class="sidebar-section-title">Finanzas y Reportes</span>
             </li>
             <li class="sidebar-item">
-                <a href="{% url 'finanzas:finanzas_dashboard' %}" class="sidebar-link {% if '/gestion/finanzas/' in request.path %}active{% endif %}">
-                    <i class="fas fa-coins"></i><span>Finanzas y gastos</span>
+                <a href="{% url 'finanzas:finanzas_dashboard' %}" class="sidebar-link {% if '/gestion/finanzas/' in request.path and '/pagos-empleados/' not in request.path %}active{% endif %}">
+                    <i class="fas fa-coins"></i><span>Finanzas y Gastos</span>
                 </a>
             </li>
             <li class="sidebar-item">
                 <a href="{% url 'finanzas:listar_pagos_empleados' %}" class="sidebar-link {% if '/gestion/finanzas/pagos-empleados/' in request.path %}active{% endif %}">
-                    <i class="fas fa-hand-holding-dollar"></i><span>Pagos a empleados</span>
+                    <i class="fas fa-hand-holding-dollar"></i><span>Pagos a Empleados</span>
                 </a>
             </li>
             <li class="sidebar-item">
@@ -76,12 +84,13 @@
                     <i class="fas fa-chart-bar"></i><span>Reportes</span>
                 </a>
             </li>
+
             <li class="sidebar-section">
                 <span class="sidebar-section-title">Administración</span>
             </li>
             <li class="sidebar-item">
                 <a href="{% url 'permisos:listar_usuarios' %}" class="sidebar-link {% if '/gestion/permisos/usuarios/' in request.path %}active{% endif %}">
-                    <i class="fas fa-user-shield"></i><span>Usuarios y roles</span>
+                    <i class="fas fa-user-shield"></i><span>Usuarios y Roles</span>
                 </a>
             </li>
             <li class="sidebar-item">
@@ -90,8 +99,9 @@
                 </a>
             </li>
             {% endif %}
+
             <li class="sidebar-section">
-                <span class="sidebar-section-title">Cuenta</span>
+                <span class="sidebar-section-title">Mi Cuenta</span>
             </li>
             <li class="sidebar-item">
                 <a href="{% url 'core:perfil' %}" class="sidebar-link {% if '/perfil/' in request.path %}active{% endif %}">
@@ -105,7 +115,7 @@
         <div class="sidebar-user">
             <div class="sidebar-user-avatar">
                 {% if user_profile.foto %}
-                    <img src="{{ user_profile.foto.url }}" alt="avatar" style="width:40px;height:40px;border-radius:50%;object-fit:cover;"/>
+                    <img src="{{ user_profile.foto.url }}" alt="avatar"/>
                 {% else %}
                     <i class="fas fa-user"></i>
                 {% endif %}

@@ -1,2 +1,4 @@
-#modalVerCita .modal-header { background: #17a2b8; color: #fff; }
-#modalVerCita .modal-content { border-radius: 10px; overflow: hidden; }
+/* Modal Ver Cita */
+#modalVerCita .modal-content {
+    border-radius: var(--radio-xl, 16px);
+}

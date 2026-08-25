@@ -1,30 +1,29 @@
-/* Finanzas */
-.card {
-    border: none;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+/* ============================================================================
+   FINANZAS - VisualHD (Modo Claro Moderno)
+   ============================================================================ */
+
+.card-finanzas {
+    border: 1px solid var(--border-color, #E2E8F0);
+    border-radius: var(--radio-lg, 12px);
+    box-shadow: var(--sombra);
 }
 
 .card-body h3 {
-    font-weight: 700;
+    font-weight: 800;
     margin: 0;
 }
 
-.card-title {
-    font-size: 0.9rem;
-    font-weight: 600;
-}
-
 .gastos-card .card-header {
-    background: #fff;
-    border-bottom: 1px solid #e9ecef;
+    background: #FFFFFF;
+    border-bottom: 1px solid var(--border-color, #E2E8F0);
 }
 
 .gastos-card .table th {
     white-space: nowrap;
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     text-transform: uppercase;
-    color: #6c757d;
+    color: #475569;
+    background-color: #F8FAFC;
 }
 
 @media (max-width: 576px) {
@@ -34,9 +33,3 @@
         gap: 0.35rem;
     }
 }
-
-/* Modales de Finanzas: crear azul, ver celeste, editar amarillo, eliminar rojo. */
-#modalCrearEgreso .modal-header, #modalPagoEmpleado .modal-header { background: #0d6efd; color: #fff; }
-#modalVerEgreso .modal-header { background: #17a2b8; color: #fff; }
-#modalEditarEgreso .modal-header { background: #f0ad00; color: #212529; }
-#modalEliminarEgreso .modal-content { border-top: 5px solid #dc3545; }

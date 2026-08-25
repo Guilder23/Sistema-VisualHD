@@ -1,2 +1,4 @@
-#modalEditarCita .modal-header { background: #f0ad00; color: #212529; }
-#modalEditarCita .modal-content { border-radius: 10px; overflow: hidden; }
+/* Modal Editar Cita */
+#modalEditarCita .modal-content {
+    border-radius: var(--radio-xl, 16px);
+}
