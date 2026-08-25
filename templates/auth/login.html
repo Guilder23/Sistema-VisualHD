@@ -4,85 +4,113 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iniciar sesion - VisualHD</title>
+    <title>Acceso al Sistema | Visual HD Producciones</title>
     <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" type="image/png" href="{% static 'img/visualhd/hero_logo.png' %}">
+
+    <!-- Google Fonts & Font Awesome -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="{% static 'css/componentes/navbar-inicio.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="{% static 'css/auth/login.css' %}">
 </head>
 <body class="login-body">
 
-    <nav class="navbar-inicio navbar navbar-expand-lg">
-        <div class="container-fluid navbar-inicio-container">
-            <div class="navbar-left">
-                <a class="navbar-brand-inicio" href="{% url 'core:inicio' %}">
-                    <i class="fas fa-camera-retro navbar-logo" style="font-size:2.5rem;color:#0d6efd;"></i>
-                    <span class="navbar-brand-text">
-                        <span class="brand-american">Visual</span><span class="brand-outlet">HD</span>
-                    </span>
-                </a>
-            </div>
-            <div class="navbar-right-icons">
-                <a href="{% url 'core:inicio' %}" class="nav-icon-btn" title="Volver al inicio" aria-label="Volver al inicio">
-                    <i class="fas fa-arrow-left"></i>
-                </a>
-            </div>
+    <!-- Fondo Cinemático con Destello Radial -->
+    <div class="login-bg-glow"></div>
+
+    <!-- Barra Superior de Navegación -->
+    <nav class="navbar-login">
+        <div class="container-fluid login-nav-container">
+            <a class="login-brand" href="{% url 'core:inicio' %}" title="Visual HD Producciones">
+                <img src="{% static 'img/visualhd/hero_logo.png' %}" alt="Visual HD Logo" class="login-nav-logo">
+            </a>
+            <a href="{% url 'core:inicio' %}" class="login-back-btn" title="Volver al inicio">
+                <i class="fas fa-arrow-left"></i>
+                <span>Volver al sitio web</span>
+            </a>
         </div>
     </nav>
 
-    <div class="login-shell">
+    <!-- Contenedor Principal de Login -->
+    <main class="login-shell">
         <div class="login-wrapper">
             <div class="login-card">
+                
+                <!-- Encabezado de la Tarjeta -->
                 <div class="login-card-header">
-                    <span class="login-badge">VisualHD</span>
-                    <i class="fas fa-camera-retro login-logo" style="font-size:2.5rem;color:#0d6efd;"></i>
-                    <h2>Acceso al sistema</h2>
+                    <div class="login-badge">
+                        <i class="fas fa-shield-halved mr-1"></i> SISTEMA VISUAL HD
+                    </div>
+                    <div class="login-logo-wrap">
+                        <img src="{% static 'img/visualhd/hero_logo.png' %}" alt="Visual HD Producciones" class="login-card-logo">
+                    </div>
+                    <h2>Acceso al Sistema</h2>
+                    <p class="login-subtitle">Panel de administración y gestión de estudio</p>
                 </div>
+
+                <!-- Formulario -->
                 <form method="post" autocomplete="on" class="login-form">
                     {% csrf_token %}
+
                     <div class="login-field">
-                        <label for="id_username" class="login-field-label">Usuario</label>
-                        <div class="form-group input-group">
+                        <label for="id_username" class="login-field-label">
+                            <i class="fas fa-user-circle mr-1"></i> Usuario
+                        </label>
+                        <div class="input-group login-input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-user"></i></span>
                             </div>
-                            <input type="text" name="username" id="id_username" class="form-control" placeholder="Ingresa tu usuario" autocomplete="username" required autofocus>
+                            <input type="text" name="username" id="id_username" class="form-control login-input" placeholder="Ingresa tu usuario" autocomplete="username" required autofocus>
                         </div>
                     </div>
+
                     <div class="login-field">
                         <div class="login-field-row">
-                            <label for="id_password" class="login-field-label">Contrasena</label>
-                            <span class="login-field-hint">Acceso seguro</span>
+                            <label for="id_password" class="login-field-label">
+                                <i class="fas fa-key mr-1"></i> Contraseña
+                            </label>
+                            <span class="login-field-hint"><i class="fas fa-lock mr-1"></i> Acceso seguro</span>
                         </div>
-                        <div class="form-group input-group">
+                        <div class="input-group login-input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-lock"></i></span>
                             </div>
-                            <input type="password" name="password" id="id_password" class="form-control" placeholder="Ingresa tu contrasena" autocomplete="current-password" required>
+                            <input type="password" name="password" id="id_password" class="form-control login-input" placeholder="Ingresa tu contraseña" autocomplete="current-password" required>
                             <div class="input-group-append">
-                                <button type="button" class="btn btn-outline-secondary password-toggle-btn" id="togglePassword" aria-label="Mostrar contrasena" aria-pressed="false">
+                                <button type="button" class="btn password-toggle-btn" id="togglePassword" aria-label="Mostrar contraseña" aria-pressed="false" tabindex="-1">
                                     <i class="fas fa-eye" id="eyeIcon" aria-hidden="true"></i>
                                 </button>
                             </div>
                         </div>
                     </div>
+
                     {% if messages %}
                         <div class="login-alerts">
-                        {% for message in messages %}
-                        <div class="alert alert-danger py-2 mb-2">{{ message }}</div>
-                        {% endfor %}
+                            {% for message in messages %}
+                                <div class="alert alert-danger">
+                                    <i class="fas fa-circle-exclamation mr-2"></i> {{ message }}
+                                </div>
+                            {% endfor %}
                         </div>
                     {% endif %}
-                    <button class="btn btn-primary btn-block" type="submit">Entrar</button>
+
+                    <button class="btn btn-login-submit" type="submit">
+                        <i class="fas fa-right-to-bracket mr-2"></i> Iniciar Sesión
+                    </button>
+
                     <div class="login-security-note">
-                        <i class="fas fa-shield-alt" aria-hidden="true"></i>
-                        <span>Solo personal autorizado. Tus credenciales se validan de forma segura.</span>
+                        <i class="fas fa-shield-check" aria-hidden="true"></i>
+                        <span>Solo personal autorizado. Tus credenciales se validan con encriptación de alta seguridad.</span>
                     </div>
                 </form>
+
             </div>
         </div>
-    </div>
+    </main>
+
     <script src="{% static 'js/auth/login.js' %}"></script>
 </body>
 </html>
