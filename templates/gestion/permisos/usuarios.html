@@ -1,0 +1,45 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block titulo %}Usuarios - VisualHD{% endblock %}
+
+{% block contenido %}
+<div class="container-fluid py-4">
+    <h2 class="mb-3"><i class="fas fa-users"></i> Gestión de Usuarios</h2>
+    
+    <div class="alert alert-info">
+        <p><strong>Total de Usuarios de Staff:</strong> {{ usuarios.count }}</p>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Usuario</th>
+                    <th>Email</th>
+                    <th>Rol Actual</th>
+                    <th>Activo</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for usuario in usuarios %}
+                <tr>
+                    <td>{{ usuario.username }}</td>
+                    <td>{{ usuario.email }}</td>
+                    <td>{{ usuario.rol_usuario.rol.nombre|default:"-" }}</td>
+                    <td>
+                        {% if usuario.is_active %}
+                        <span class="badge badge-success">Sí</span>
+                        {% else %}
+                        <span class="badge badge-danger">No</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="4" class="text-center">Sin usuarios de staff</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

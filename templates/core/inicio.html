@@ -1,10 +1,11 @@
 {% extends 'base/base.html' %}
 {% load static %}
 
-{% block titulo %}VisualHD - Estudio Fotográfico{% endblock %}
+{% block titulo %}Visual HD Producciones | Fotografía profesional en San Julián{% endblock %}
 
 {% block seo %}
-<meta name="description" content="VisualHD: estudio fotográfico. Gestión de clientes, servicios y sesiones fotográficas.">
+<meta name="description" content="Visual HD Producciones: fotografía profesional, paquetes de promoción Kinder 2026, eventos y sesiones en estudio en San Julián, Bolivia.">
+<meta name="keywords" content="Visual HD Producciones, fotografía Kinder 2026, sesiones fotográficas, eventos, San Julián Bolivia">
 <meta name="robots" content="index, follow">
 {% endblock %}
 
@@ -17,64 +18,52 @@
 {% block contenido %}
 {% include 'componentes/navbar-inicio.html' %}
 
-<section class="hero-portada" id="inicio">
+<section class="hero-promocional" id="inicio">
     <div class="hero-portada-overlay"></div>
     <div class="hero-portada-inner">
-        <div class="container py-5">
-            <div class="row align-items-center">
-                <div class="col-lg-8 text-white">
-                    <span class="hero-kicker hero-anim hero-anim-1"><i class="fas fa-camera-retro"></i> Estudio fotográfico</span>
-                    <h1 class="hero-portada-title hero-anim hero-anim-2">VisualHD, capturamos tus mejores momentos.</h1>
-                    <div class="hero-portada-desc hero-anim hero-anim-3">
-                        <p>Gestionamos sesiones fotográficas, servicios y clientes de forma sencilla y profesional.</p>
-                    </div>
-                    <div class="hero-actions hero-anim hero-anim-5">
-                        <a href="{% url 'core:login' %}" class="btn btn-primary btn-lg mt-3 hero-btn-glow">
-                            <i class="fas fa-sign-in-alt mr-2"></i>Acceder al sistema
-                        </a>
-                        <a href="#servicios" class="btn btn-outline-light btn-lg mt-3 ml-2 hero-btn-float">Ver servicios</a>
-                    </div>
-                </div>
-                <div class="col-lg-4 hero-brand-visual hero-anim hero-anim-5 text-center">
-                    <i class="fas fa-camera-retro" style="font-size:10rem;color:#ffffff;"></i>
-                </div>
-            </div>
+        <span class="hero-kicker"><i class="fas fa-camera-retro mr-2"></i>Visual HD Producciones</span>
+        <h1 class="hero-portada-title">Paquete de Promoción Kinder 2026</h1>
+        <p class="hero-portada-desc">Indumentaria personalizada, papelería, sesión de fotos en estudio profesional y fotografías digitales para cada estudiante.</p>
+        <p class="hero-location"><i class="fas fa-map-marker-alt mr-2"></i>San Julián, Bolivia</p>
+        <div class="hero-actions">
+            <a href="#promocion" class="btn btn-promo">Conocer el paquete</a>
+            <a href="#contacto" class="btn btn-outline-light">Solicitar información</a>
         </div>
+        <div class="hero-camera-mark"><i class="fas fa-camera-retro"></i></div>
     </div>
 </section>
 
-<div class="container py-5">
-    <section id="servicios" class="mb-5">
-        <div class="section-heading reveal">
-            <span class="section-eyebrow"><i class="fas fa-gem"></i> Servicios</span>
-            <h2>¿Qué ofrecemos?</h2>
+<main class="inicio-publico">
+    <section id="promocion" class="promo-section">
+        <div class="promo-copy">
+            <span class="section-eyebrow">Una celebración para recordar</span>
+            <h2>Todo lo que necesita tu promoción Kinder 2026</h2>
+            <p>Diseñamos una experiencia completa para que cada estudiante conserve un recuerdo especial de esta etapa.</p>
         </div>
-        <div class="row align-items-center">
-            <div class="col-lg-4 mb-4">
-                <div class="card p-4 h-100 shadow-sm border-0 servicio-card-modern reveal">
-                    <div class="servicio-icono"><i class="fas fa-portrait"></i></div>
-                    <h4>Sesiones de retrato</h4>
-                    <p>Fotografía profesional individual, familiar y de estudio.</p>
-                </div>
-            </div>
-            <div class="col-lg-4 mb-4">
-                <div class="card p-4 h-100 shadow-sm border-0 servicio-card-modern reveal">
-                    <div class="servicio-icono"><i class="fas fa-heart"></i></div>
-                    <h4>Eventos y bodas</h4>
-                    <p>Cobertura fotográfica completa para tus eventos especiales.</p>
-                </div>
-            </div>
-            <div class="col-lg-4 mb-4">
-                <div class="card p-4 h-100 shadow-sm border-0 servicio-card-modern reveal">
-                    <div class="servicio-icono"><i class="fas fa-building"></i></div>
-                    <h4>Fotografía comercial</h4>
-                    <p>Contenido visual profesional para productos y negocios.</p>
-                </div>
-            </div>
+        <div class="promo-grid">
+            <article class="promo-item"><i class="fas fa-user-graduate"></i><h3>Indumentaria</h3><p>Toga, banda o túnica preparada para la ocasión.</p></article>
+            <article class="promo-item"><i class="fas fa-file-alt"></i><h3>Papelería</h3><p>Detalles impresos para acompañar la celebración.</p></article>
+            <article class="promo-item"><i class="fas fa-camera"></i><h3>Sesión en estudio</h3><p>Retratos con iluminación y dirección profesional.</p></article>
+            <article class="promo-item"><i class="fas fa-images"></i><h3>Fotos digitales</h3><p>Entrega digital para compartir en familia.</p></article>
         </div>
     </section>
-</div>
 
+    <section id="servicios" class="services-section">
+        <div class="section-heading"><span class="section-eyebrow">Fotografía para cada historia</span><h2>Servicios Visual HD</h2><p>Producción visual con atención al detalle para personas, familias, instituciones y negocios.</p></div>
+        <div class="services-grid">
+            <article class="service-item"><i class="fas fa-portrait"></i><h3>Retratos y sesiones</h3><p>Sesiones individuales, familiares y de estudio.</p></article>
+            <article class="service-item"><i class="fas fa-heart"></i><h3>Eventos especiales</h3><p>Bodas, cumpleaños, promociones y celebraciones.</p></article>
+            <article class="service-item"><i class="fas fa-building"></i><h3>Fotografía comercial</h3><p>Contenido para productos, marcas y negocios.</p></article>
+        </div>
+    </section>
+
+    <section id="enmarcaciones" class="framing-section">
+        <div><span class="section-eyebrow">Presenta tus recuerdos</span><h2>Enmarcaciones y acabados</h2><p>Complementa tus fotografías con opciones pensadas para conservarlas y exhibirlas.</p></div>
+        <div class="framing-list"><span><i class="fas fa-border-style"></i> Marcos personalizados</span><span><i class="fas fa-image"></i> Impresiones de calidad</span><span><i class="fas fa-gift"></i> Regalos para ocasiones especiales</span></div>
+    </section>
+</main>
+
+<section id="contacto" class="contact-section"><span class="section-eyebrow">Hablemos de tu proyecto</span><h2>Reserva tu fecha con Visual HD</h2><p><i class="fas fa-phone mr-2"></i>+591 67863880 &nbsp; <i class="fas fa-phone mr-2"></i>+591 67886732</p><a class="btn btn-promo" href="tel:+59167863880">Contactar ahora</a></section>
 {% include 'componentes/footer-inicio.html' %}
 {% endblock %}
 

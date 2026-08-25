@@ -1,0 +1,69 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block titulo %}Eventos - VisualHD{% endblock %}
+
+{% block estilos_extra %}
+<link rel="stylesheet" href="{% static 'css/gestion/eventos/eventos.css' %}">
+{% endblock %}
+
+{% block contenido %}
+<div class="container-fluid py-4">
+    <h2 class="mb-3"><i class="fas fa-calendar-alt"></i> Eventos</h2>
+    
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <input type="text" id="searchInput" class="form-control" placeholder="Buscar por nombre..." value="{{ q }}">
+        </div>
+        <div class="col-md-6">
+            <button class="btn btn-primary" data-toggle="modal" data-target="#modalCrearEvento">
+                <i class="fas fa-plus"></i> Nuevo evento
+            </button>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Cliente</th>
+                    <th>Tipo</th>
+                    <th>Fecha</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for evento in page_obj %}
+                <tr>
+                    <td>{{ evento.nombre }}</td>
+                    <td>{{ evento.cliente.nombre }}</td>
+                    <td><span class="badge badge-primary">{{ evento.get_tipo_display }}</span></td>
+                    <td>{{ evento.fecha_inicio|date:"d/m/Y" }}</td>
+                    <td><span class="badge badge-{{ evento.estado }}">{{ evento.get_estado_display }}</span></td>
+                    <td>
+                        <button class="btn btn-sm btn-info" data-toggle="modal" data-target="#modalVerEvento" data-id="{{ evento.id }}" data-nombre="{{ evento.nombre }}" data-cliente="{{ evento.cliente }}" data-tipo="{{ evento.tipo }}" data-estado="{{ evento.estado }}" data-presupuesto="{{ evento.presupuesto }}" data-descripcion="{{ evento.descripcion }}">Ver</button>
+                        <button class="btn btn-sm btn-warning" data-toggle="modal" data-target="#modalEditarEvento" data-id="{{ evento.id }}" data-action="{% url 'eventos:editar_evento' evento.id %}">Editar</button>
+                        <button class="btn btn-sm btn-danger" onclick="confirmarEliminar('{% url 'eventos:eliminar_evento' evento.id %}')">Eliminar</button>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="6" class="text-center">No hay eventos registrados</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    {% include 'componentes/pagination.html' %}
+</div>
+
+{% include 'gestion/eventos/modals/crear.html' %}
+{% include 'gestion/eventos/modals/ver.html' %}
+{% include 'gestion/eventos/modals/editar.html' %}
+{% include 'gestion/eventos/modals/eliminar.html' %}
+{% endblock %}
+
+{% block scripts_extra %}
+<script src="{% static 'js/gestion/eventos/eventos.js' %}"></script>
+{% endblock %}

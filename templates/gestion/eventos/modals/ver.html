@@ -1,0 +1,33 @@
+<div class="modal fade" id="modalVerEvento" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Detalles del Evento</h5>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p><strong>Nombre:</strong> <span id="verNombre"></span></p>
+                <p><strong>Cliente:</strong> <span id="verClienteEvento"></span></p>
+                <p><strong>Tipo:</strong> <span id="verTipo"></span></p>
+                <p><strong>Estado:</strong> <span id="verEstadoEvento"></span></p>
+                <p><strong>Presupuesto:</strong> Bs. <span id="verPresupuesto"></span></p>
+                <p><strong>Descripción:</strong> <span id="verDescripcionEvento"></span></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+$('#modalVerEvento').on('show.bs.modal', function(e) {
+    const btn = $(e.relatedTarget);
+    $('#verNombre').text(btn.data('nombre'));
+    $('#verClienteEvento').text(btn.data('cliente'));
+    $('#verTipo').text(btn.data('tipo'));
+    $('#verEstadoEvento').text(btn.data('estado'));
+    $('#verPresupuesto').text(btn.data('presupuesto') || '0.00');
+    $('#verDescripcionEvento').text(btn.data('descripcion') || '-');
+});
+</script>

@@ -1,0 +1,45 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block titulo %}Reporte Financiero - VisualHD{% endblock %}
+
+{% block contenido %}
+<div class="container-fluid py-4">
+    <h2 class="mb-4"><i class="fas fa-chart-pie"></i> Reporte Financiero</h2>
+
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card border-success">
+                <div class="card-body">
+                    <h6 class="card-title text-muted">Total Ingresos</h6>
+                    <h3 class="text-success">Bs. {{ total_ingresos|floatformat:2 }}</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-danger">
+                <div class="card-body">
+                    <h6 class="card-title text-muted">Total Egresos</h6>
+                    <h3 class="text-danger">Bs. {{ total_egresos|floatformat:2 }}</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-primary">
+                <div class="card-body">
+                    <h6 class="card-title text-muted">Saldo Neto</h6>
+                    <h3 class="{% if saldo_neto >= 0 %}text-success{% else %}text-danger{% endif %}">Bs. {{ saldo_neto|floatformat:2 }}</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-warning">
+                <div class="card-body">
+                    <h6 class="card-title text-muted">Pagos Pendientes</h6>
+                    <h3 class="text-warning">Bs. {{ pagos_pendientes|floatformat:2 }}</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

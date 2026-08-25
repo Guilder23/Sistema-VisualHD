@@ -1,0 +1,36 @@
+/* Finanzas */
+.card {
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.card-body h3 {
+    font-weight: 700;
+    margin: 0;
+}
+
+.card-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.gastos-card .card-header {
+    background: #fff;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.gastos-card .table th {
+    white-space: nowrap;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    color: #6c757d;
+}
+
+@media (max-width: 576px) {
+    .gastos-card .card-header {
+        align-items: flex-start !important;
+        flex-direction: column;
+        gap: 0.35rem;
+    }
+}

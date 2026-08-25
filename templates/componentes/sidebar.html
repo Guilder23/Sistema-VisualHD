@@ -46,11 +46,42 @@
                 </a>
             </li>
             <li class="sidebar-section">
+                <span class="sidebar-section-title">Operaciones</span>
+            </li>
+            <li class="sidebar-item">
+                <a href="{% url 'agenda:listar_citas' %}" class="sidebar-link {% if '/gestion/agenda/' in request.path %}active{% endif %}">
+                    <i class="fas fa-calendar"></i><span>Agenda</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a href="{% url 'eventos:listar_eventos' %}" class="sidebar-link {% if '/gestion/eventos/' in request.path %}active{% endif %}">
+                    <i class="fas fa-calendar-alt"></i><span>Eventos</span>
+                </a>
+            </li>
+            <li class="sidebar-section">
+                <span class="sidebar-section-title">Financiero</span>
+            </li>
+            <li class="sidebar-item">
+                <a href="{% url 'finanzas:finanzas_dashboard' %}" class="sidebar-link {% if '/gestion/finanzas/' in request.path %}active{% endif %}">
+                    <i class="fas fa-coins"></i><span>Finanzas y gastos</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a href="{% url 'reportes:reportes_inicio' %}" class="sidebar-link {% if '/gestion/reportes/' in request.path %}active{% endif %}">
+                    <i class="fas fa-chart-bar"></i><span>Reportes</span>
+                </a>
+            </li>
+            <li class="sidebar-section">
                 <span class="sidebar-section-title">Administración</span>
             </li>
             <li class="sidebar-item">
-                <a href="{% url 'core:registro' %}" class="sidebar-link {% if '/registro/' in request.path %}active{% endif %}">
-                    <i class="fas fa-user-shield"></i><span>Usuarios</span>
+                <a href="{% url 'permisos:listar_usuarios' %}" class="sidebar-link {% if '/gestion/permisos/usuarios/' in request.path %}active{% endif %}">
+                    <i class="fas fa-user-shield"></i><span>Usuarios y roles</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a href="{% url 'permisos:listar_roles' %}" class="sidebar-link {% if '/gestion/permisos/roles/' in request.path %}active{% endif %}">
+                    <i class="fas fa-key"></i><span>Permisos</span>
                 </a>
             </li>
             {% endif %}

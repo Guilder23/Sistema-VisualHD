@@ -1,0 +1,75 @@
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.db.models import Sum, Q
+from django.core.paginator import Paginator
+from django.shortcuts import get_object_or_404, redirect, render
+from django.utils import timezone
+
+from .models import Ingreso, Egreso, Caja, PagoEmpleado, ServicioBasico
+
+
+@login_required
+@user_passes_test(lambda u: u.is_staff, login_url='/login/')
+def finanzas_dashboard(request):
+    hoy = timezone.now().date()
+    mes_actual = hoy.strftime('%m/%Y')
+
+    total_ingresos_mes = Ingreso.objects.filter(fecha__month=hoy.month, fecha__year=hoy.year).aggregate(Sum('monto'))['monto__sum'] or 0
+    total_egresos_mes = Egreso.objects.filter(fecha__month=hoy.month, fecha__year=hoy.year).aggregate(Sum('monto'))['monto__sum'] or 0
+    saldo_mes = total_ingresos_mes - total_egresos_mes
+
+    pagos_pendientes = PagoEmpleado.objects.filter(estado__in=['pendiente', 'parcial']).aggregate(Sum('total_a_pagar'))['total_a_pagar__sum'] or 0
+
+    egresos = Egreso.objects.order_by('-fecha', '-id')
+    paginator = Paginator(egresos, 10)
+
+    return render(request, 'gestion/finanzas/finanzas.html', {
+        'total_ingresos_mes': total_ingresos_mes,
+        'total_egresos_mes': total_egresos_mes,
+        'saldo_mes': saldo_mes,
+        'pagos_pendientes': pagos_pendientes,
+        'mes_actual': mes_actual,
+        'page_obj': paginator.get_page(request.GET.get('page')),
+        'categorias_egreso': Egreso.CATEGORIA_CHOICES,
+    })
+
+
+@login_required
+@user_passes_test(lambda u: u.is_staff, login_url='/login/')
+def crear_egreso(request):
+    if request.method == 'POST':
+        concepto = request.POST.get('concepto', '').strip()
+        monto = request.POST.get('monto', '').strip()
+        if concepto and monto:
+            Egreso.objects.create(
+                categoria=request.POST.get('categoria', 'otro'),
+                concepto=concepto,
+                monto=monto,
+                fecha=request.POST.get('fecha') or timezone.now().date(),
+                comprobante=request.POST.get('comprobante', '').strip(),
+                notas=request.POST.get('notas', '').strip(),
+            )
+    return redirect('finanzas:finanzas_dashboard')
+
+
+@login_required
+@user_passes_test(lambda u: u.is_staff, login_url='/login/')
+def editar_egreso(request, pk):
+    egreso = get_object_or_404(Egreso, pk=pk)
+    if request.method == 'POST':
+        egreso.categoria = request.POST.get('categoria', egreso.categoria)
+        egreso.concepto = request.POST.get('concepto', egreso.concepto).strip()
+        egreso.monto = request.POST.get('monto', egreso.monto)
+        egreso.fecha = request.POST.get('fecha') or egreso.fecha
+        egreso.comprobante = request.POST.get('comprobante', '').strip()
+        egreso.notas = request.POST.get('notas', '').strip()
+        egreso.save()
+    return redirect('finanzas:finanzas_dashboard')
+
+
+@login_required
+@user_passes_test(lambda u: u.is_staff, login_url='/login/')
+def eliminar_egreso(request, pk):
+    egreso = get_object_or_404(Egreso, pk=pk)
+    if request.method == 'POST':
+        egreso.delete()
+    return redirect('finanzas:finanzas_dashboard')

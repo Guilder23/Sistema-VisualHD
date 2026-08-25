@@ -1,0 +1,41 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block titulo %}Reporte de Empleados - VisualHD{% endblock %}
+
+{% block contenido %}
+<div class="container-fluid py-4">
+    <h2 class="mb-3"><i class="fas fa-user-tie"></i> Reporte de Empleados</h2>
+    
+    <div class="alert alert-info">
+        <h5>Total Empleados: {{ total_empleados }}</h5>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Email</th>
+                    <th>Especialidad</th>
+                    <th>Citas</th>
+                    <th>Eventos</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for empleado in empleados %}
+                <tr>
+                    <td>{{ empleado.nombre }} {{ empleado.apellido }}</td>
+                    <td>{{ empleado.email }}</td>
+                    <td>{{ empleado.especialidad }}</td>
+                    <td>{{ empleado.total_citas|default:0 }}</td>
+                    <td>{{ empleado.total_eventos|default:0 }}</td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="5" class="text-center">Sin registros</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,35 @@
+<div class="modal fade" id="modalVerCita" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Detalles de la Cita</h5>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p><strong>Cliente:</strong> <span id="verCliente"></span></p>
+                <p><strong>Fecha/Hora:</strong> <span id="verFecha"></span></p>
+                <p><strong>Empleado:</strong> <span id="verEmpleado"></span></p>
+                <p><strong>Duración:</strong> <span id="verDuracion"></span> minutos</p>
+                <p><strong>Descripción:</strong> <span id="verDescripcion"></span></p>
+                <p><strong>Ubicación:</strong> <span id="verUbicacion"></span></p>
+                <p><strong>Estado:</strong> <span id="verEstado"></span></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+$('#modalVerCita').on('show.bs.modal', function(e) {
+    const btn = $(e.relatedTarget);
+    $('#verCliente').text(btn.data('cliente'));
+    $('#verFecha').text(btn.data('fecha'));
+    $('#verEmpleado').text(btn.data('empleado') || '-');
+    $('#verDuracion').text(btn.data('duracion'));
+    $('#verDescripcion').text(btn.data('descripcion') || '-');
+    $('#verUbicacion').text(btn.data('ubicacion') || '-');
+    $('#verEstado').text(btn.data('estado'));
+});
+</script>

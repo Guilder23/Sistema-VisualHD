@@ -1,0 +1,76 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block titulo %}Reportes - VisualHD{% endblock %}
+
+{% block estilos_extra %}
+<link rel="stylesheet" href="{% static 'css/gestion/reportes/reportes.css' %}">
+{% endblock %}
+
+{% block contenido %}
+<div class="container-fluid py-4">
+    <h2 class="mb-4"><i class="fas fa-chart-bar"></i> Reportes</h2>
+
+    <div class="row">
+        <div class="col-md-4 mb-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <i class="fas fa-money-bill-wave text-success" style="font-size:2rem;"></i>
+                    <h5 class="card-title mt-2">Ingresos</h5>
+                    <a href="{% url 'reportes:reporte_ingresos' %}" class="btn btn-sm btn-success">Ver reporte</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <i class="fas fa-credit-card text-danger" style="font-size:2rem;"></i>
+                    <h5 class="card-title mt-2">Egresos</h5>
+                    <a href="{% url 'reportes:reporte_egresos' %}" class="btn btn-sm btn-danger">Ver reporte</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <i class="fas fa-user-tie text-primary" style="font-size:2rem;"></i>
+                    <h5 class="card-title mt-2">Clientes</h5>
+                    <a href="{% url 'reportes:reporte_clientes' %}" class="btn btn-sm btn-primary">Ver reporte</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <i class="fas fa-calendar-check text-info" style="font-size:2rem;"></i>
+                    <h5 class="card-title mt-2">Citas</h5>
+                    <a href="{% url 'reportes:reporte_citas' %}" class="btn btn-sm btn-info">Ver reporte</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <i class="fas fa-users text-warning" style="font-size:2rem;"></i>
+                    <h5 class="card-title mt-2">Empleados</h5>
+                    <a href="{% url 'reportes:reporte_empleados' %}" class="btn btn-sm btn-warning">Ver reporte</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <i class="fas fa-chart-pie text-secondary" style="font-size:2rem;"></i>
+                    <h5 class="card-title mt-2">Financiero</h5>
+                    <a href="{% url 'reportes:reporte_financiero' %}" class="btn btn-sm btn-secondary">Ver reporte</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

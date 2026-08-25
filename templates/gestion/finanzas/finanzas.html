@@ -1,0 +1,167 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block titulo %}Finanzas - VisualHD{% endblock %}
+
+{% block estilos_extra %}
+<link rel="stylesheet" href="{% static 'css/gestion/finanzas/finanzas.css' %}">
+{% endblock %}
+
+{% block contenido %}
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
+        <div>
+            <h2 class="mb-1"><i class="fas fa-coins"></i> Finanzas</h2>
+            <p class="text-muted mb-0">Controla los ingresos y los gastos de la tienda y el foto estudio.</p>
+        </div>
+        <button class="btn btn-primary mt-2 mt-md-0" data-toggle="modal" data-target="#modalCrearEgreso">
+            <i class="fas fa-plus mr-1"></i> Registrar gasto
+        </button>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title text-muted">Ingresos ({{ mes_actual }})</h6>
+                    <h3 class="text-success">Bs. {{ total_ingresos_mes|floatformat:2 }}</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title text-muted">Egresos ({{ mes_actual }})</h6>
+                    <h3 class="text-danger">Bs. {{ total_egresos_mes|floatformat:2 }}</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title text-muted">Saldo Neto</h6>
+                    <h3 class="{% if saldo_mes >= 0 %}text-success{% else %}text-danger{% endif %}">Bs. {{ saldo_mes|floatformat:2 }}</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title text-muted">Pagos Pendientes</h6>
+                    <h3 class="text-warning">Bs. {{ pagos_pendientes|floatformat:2 }}</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5><i class="fas fa-arrow-up text-success"></i> Ingresos</h5>
+                </div>
+                <div class="card-body">
+                    <a href="{% url 'reportes:reporte_ingresos' %}" class="btn btn-sm btn-success">Ver reporte</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5><i class="fas fa-arrow-down text-danger"></i> Egresos</h5>
+                </div>
+                <div class="card-body">
+                    <a href="{% url 'reportes:reporte_egresos' %}" class="btn btn-sm btn-danger">Ver reporte</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card gastos-card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0"><i class="fas fa-receipt text-danger mr-2"></i>Gastos registrados</h5>
+            <span class="text-muted small">Servicios y operación</span>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead>
+                    <tr><th>Fecha</th><th>Concepto</th><th>Categoría</th><th>Comprobante</th><th class="text-right">Monto</th><th></th></tr>
+                </thead>
+                <tbody>
+                    {% for egreso in page_obj %}
+                    <tr>
+                        <td>{{ egreso.fecha|date:"d/m/Y" }}</td>
+                        <td>{{ egreso.concepto }}</td>
+                        <td><span class="badge badge-light">{{ egreso.get_categoria_display }}</span></td>
+                        <td>{{ egreso.comprobante|default:"-" }}</td>
+                        <td class="text-right font-weight-bold">Bs. {{ egreso.monto|floatformat:2 }}</td>
+                        <td class="text-right text-nowrap">
+                            <button class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#modalEditarEgreso" data-action="{% url 'finanzas:editar_egreso' egreso.id %}" data-categoria="{{ egreso.categoria }}" data-concepto="{{ egreso.concepto }}" data-monto="{{ egreso.monto }}" data-fecha="{{ egreso.fecha|date:'Y-m-d' }}" data-comprobante="{{ egreso.comprobante }}" data-notas="{{ egreso.notas }}" title="Editar"><i class="fas fa-pen"></i></button>
+                            <form method="post" action="{% url 'finanzas:eliminar_egreso' egreso.id %}" class="d-inline" onsubmit="return confirm('¿Eliminar este gasto?');">
+                                {% csrf_token %}<button class="btn btn-sm btn-outline-danger" title="Eliminar"><i class="fas fa-trash"></i></button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="6" class="text-center text-muted py-4">Todavía no hay gastos registrados.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% if page_obj.has_other_pages %}
+        <div class="card-footer">
+            {% include 'componentes/pagination.html' %}
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<div class="modal fade" id="modalCrearEgreso" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg"><div class="modal-content">
+        <div class="modal-header"><h5 class="modal-title">Registrar gasto operativo</h5><button type="button" class="close" data-dismiss="modal">&times;</button></div>
+        <form method="post" action="{% url 'finanzas:crear_egreso' %}">{% csrf_token %}
+            <div class="modal-body"><div class="form-row">
+                <div class="form-group col-md-6"><label for="categoria">Tipo de gasto</label><select name="categoria" id="categoria" class="form-control" required>{% for valor, etiqueta in categorias_egreso %}<option value="{{ valor }}">{{ etiqueta }}</option>{% endfor %}</select></div>
+                <div class="form-group col-md-6"><label for="fecha">Fecha</label><input type="date" name="fecha" id="fecha" class="form-control" required></div>
+                <div class="form-group col-md-8"><label for="concepto">Concepto</label><input type="text" name="concepto" id="concepto" class="form-control" placeholder="Ej. Pago mensual de WiFi" required></div>
+                <div class="form-group col-md-4"><label for="monto">Monto (Bs.)</label><input type="number" name="monto" id="monto" class="form-control" min="0.01" step="0.01" required></div>
+                <div class="form-group col-md-6"><label for="comprobante">N.° de comprobante</label><input type="text" name="comprobante" id="comprobante" class="form-control"></div>
+                <div class="form-group col-md-12"><label for="notas">Notas</label><textarea name="notas" id="notas" class="form-control" rows="3"></textarea></div>
+            </div></div>
+            <div class="modal-footer"><button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button><button type="submit" class="btn btn-primary"><i class="fas fa-save mr-1"></i>Guardar gasto</button></div>
+        </form>
+    </div></div>
+</div>
+
+<div class="modal fade" id="modalEditarEgreso" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg"><div class="modal-content">
+        <div class="modal-header"><h5 class="modal-title">Editar gasto</h5><button type="button" class="close" data-dismiss="modal">&times;</button></div>
+        <form method="post" id="formEditarEgreso">{% csrf_token %}
+            <div class="modal-body"><div class="form-row">
+                <div class="form-group col-md-6"><label for="editarCategoria">Tipo de gasto</label><select name="categoria" id="editarCategoria" class="form-control">{% for valor, etiqueta in categorias_egreso %}<option value="{{ valor }}">{{ etiqueta }}</option>{% endfor %}</select></div>
+                <div class="form-group col-md-6"><label for="editarFecha">Fecha</label><input type="date" name="fecha" id="editarFecha" class="form-control"></div>
+                <div class="form-group col-md-8"><label for="editarConcepto">Concepto</label><input type="text" name="concepto" id="editarConcepto" class="form-control" required></div>
+                <div class="form-group col-md-4"><label for="editarMonto">Monto (Bs.)</label><input type="number" name="monto" id="editarMonto" class="form-control" min="0.01" step="0.01" required></div>
+                <div class="form-group col-md-6"><label for="editarComprobante">N.° de comprobante</label><input type="text" name="comprobante" id="editarComprobante" class="form-control"></div>
+                <div class="form-group col-md-12"><label for="editarNotas">Notas</label><textarea name="notas" id="editarNotas" class="form-control" rows="3"></textarea></div>
+            </div></div>
+            <div class="modal-footer"><button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button><button type="submit" class="btn btn-primary">Guardar cambios</button></div>
+        </form>
+    </div></div>
+</div>
+{% endblock %}
+
+{% block scripts_extra %}
+<script>
+$('#modalEditarEgreso').on('show.bs.modal', function (event) {
+    const button = $(event.relatedTarget);
+    $('#formEditarEgreso').attr('action', button.data('action'));
+    $('#editarCategoria').val(button.data('categoria'));
+    $('#editarFecha').val(button.data('fecha'));
+    $('#editarConcepto').val(button.data('concepto'));
+    $('#editarMonto').val(button.data('monto'));
+    $('#editarComprobante').val(button.data('comprobante'));
+    $('#editarNotas').val(button.data('notas'));
+});
+</script>
+{% endblock %}

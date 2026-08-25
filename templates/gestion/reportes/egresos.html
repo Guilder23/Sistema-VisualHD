@@ -1,0 +1,59 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block titulo %}Reporte de Egresos - VisualHD{% endblock %}
+
+{% block contenido %}
+<div class="container-fluid py-4">
+    <h2 class="mb-3"><i class="fas fa-arrow-down text-danger"></i> Reporte de Egresos</h2>
+    
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <input type="date" id="fechaInicio" class="form-control" value="{{ fecha_inicio }}" placeholder="Fecha inicio">
+        </div>
+        <div class="col-md-4">
+            <input type="date" id="fechaFin" class="form-control" value="{{ fecha_fin }}" placeholder="Fecha fin">
+        </div>
+        <div class="col-md-4">
+            <button class="btn btn-primary" onclick="filtrar()">Filtrar</button>
+        </div>
+    </div>
+
+    <div class="alert alert-danger">
+        <h5>Total Egresos: Bs. {{ total|floatformat:2 }}</h5>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Concepto</th>
+                    <th>Categoría</th>
+                    <th>Monto (Bs.)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for egreso in egresos %}
+                <tr>
+                    <td>{{ egreso.fecha|date:"d/m/Y" }}</td>
+                    <td>{{ egreso.concepto }}</td>
+                    <td>{{ egreso.get_categoria_display }}</td>
+                    <td class="text-right">Bs. {{ egreso.monto|floatformat:2 }}</td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="4" class="text-center">Sin registros</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+function filtrar() {
+    const inicio = document.getElementById('fechaInicio').value;
+    const fin = document.getElementById('fechaFin').value;
+    window.location.href = `?fecha_inicio=${inicio}&fecha_fin=${fin}`;
+}
+</script>
+{% endblock %}

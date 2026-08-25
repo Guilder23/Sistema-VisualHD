@@ -1,0 +1,6 @@
+/* Agenda */
+.badge-programada { background-color: #0066cc; color: white; }
+.badge-confirmada { background-color: #28a745; color: white; }
+.badge-completada { background-color: #17a2b8; color: white; }
+.badge-cancelada { background-color: #dc3545; color: white; }
+.badge-reprogramada { background-color: #ffc107; color: #333; }

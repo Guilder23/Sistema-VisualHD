@@ -1,0 +1,41 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block titulo %}Reporte de Citas - VisualHD{% endblock %}
+
+{% block contenido %}
+<div class="container-fluid py-4">
+    <h2 class="mb-3"><i class="fas fa-calendar-check"></i> Reporte de Citas</h2>
+    
+    <div class="alert alert-info">
+        <h5>Total Citas: {{ total }}</h5>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Cliente</th>
+                    <th>Fecha</th>
+                    <th>Empleado</th>
+                    <th>Duración</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for cita in citas %}
+                <tr>
+                    <td>{{ cita.cliente.nombre }} {{ cita.cliente.apellido }}</td>
+                    <td>{{ cita.fecha|date:"d/m/Y H:i" }}</td>
+                    <td>{{ cita.empleado.nombre|default:"-" }}</td>
+                    <td>{{ cita.duracion_minutos }} min</td>
+                    <td><span class="badge badge-info">{{ cita.get_estado_display }}</span></td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="5" class="text-center">Sin registros</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

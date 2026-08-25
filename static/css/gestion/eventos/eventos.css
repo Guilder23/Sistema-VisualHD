@@ -1,0 +1,6 @@
+/* Eventos */
+.badge-planificado { background-color: #6c757d; color: white; }
+.badge-confirmado { background-color: #28a745; color: white; }
+.badge-en_progreso { background-color: #0066cc; color: white; }
+.badge-completado { background-color: #17a2b8; color: white; }
+.badge-cancelado { background-color: #dc3545; color: white; }

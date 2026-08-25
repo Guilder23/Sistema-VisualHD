@@ -53,6 +53,11 @@ INSTALLED_APPS = [
     'apps.gestion.empleados.apps.EmpleadosConfig',
     'apps.gestion.sesiones.apps.SesionesConfig',
     'apps.gestion.pagos.apps.PagosConfig',
+    'apps.gestion.agenda.apps.AgendaConfig',
+    'apps.gestion.eventos.apps.EventosConfig',
+    'apps.gestion.finanzas.apps.FinanzasConfig',
+    'apps.gestion.reportes.apps.ReportesConfig',
+    'apps.gestion.permisos.apps.PermisosConfig',
 ]
 
 MIDDLEWARE = [

@@ -27,6 +27,11 @@ urlpatterns = [
     path('gestion/empleados/', include(('apps.gestion.empleados.urls', 'empleados'), namespace='empleados')),
     path('gestion/sesiones/', include(('apps.gestion.sesiones.urls', 'sesiones'), namespace='sesiones')),
     path('gestion/pagos/', include(('apps.gestion.pagos.urls', 'pagos'), namespace='pagos')),
+    path('gestion/agenda/', include(('apps.gestion.agenda.urls', 'agenda'), namespace='agenda')),
+    path('gestion/eventos/', include(('apps.gestion.eventos.urls', 'eventos'), namespace='eventos')),
+    path('gestion/finanzas/', include(('apps.gestion.finanzas.urls', 'finanzas'), namespace='finanzas')),
+    path('gestion/reportes/', include(('apps.gestion.reportes.urls', 'reportes'), namespace='reportes')),
+    path('gestion/permisos/', include(('apps.gestion.permisos.urls', 'permisos'), namespace='permisos')),
     path('secret-admin/', admin.site.urls),
 ]
 

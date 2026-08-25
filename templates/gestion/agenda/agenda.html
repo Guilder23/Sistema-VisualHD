@@ -1,0 +1,69 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block titulo %}Agenda - VisualHD{% endblock %}
+
+{% block estilos_extra %}
+<link rel="stylesheet" href="{% static 'css/gestion/agenda/agenda.css' %}">
+{% endblock %}
+
+{% block contenido %}
+<div class="container-fluid py-4">
+    <h2 class="mb-3"><i class="fas fa-calendar"></i> Agenda de Citas</h2>
+    
+    <div class="row mb-3">
+        <div class="col-md-8">
+            <input type="text" id="searchInput" class="form-control" placeholder="Buscar por cliente..." value="{{ q }}">
+        </div>
+        <div class="col-md-4">
+            <button class="btn btn-primary" data-toggle="modal" data-target="#modalCrearCita">
+                <i class="fas fa-plus"></i> Nueva cita
+            </button>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Cliente</th>
+                    <th>Fecha</th>
+                    <th>Empleado</th>
+                    <th>Duración</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for cita in page_obj %}
+                <tr>
+                    <td>{{ cita.cliente.nombre }} {{ cita.cliente.apellido }}</td>
+                    <td>{{ cita.fecha|date:"d/m/Y H:i" }}</td>
+                    <td>{{ cita.empleado.nombre|default:"-" }}</td>
+                    <td>{{ cita.duracion_minutos }} min</td>
+                    <td><span class="badge badge-{{ cita.estado }}">{{ cita.get_estado_display }}</span></td>
+                    <td>
+                        <button class="btn btn-sm btn-info" data-toggle="modal" data-target="#modalVerCita" data-id="{{ cita.id }}" data-cliente="{{ cita.cliente }}" data-fecha="{{ cita.fecha|date:'Y-m-dTH:i' }}" data-empleado="{{ cita.empleado.id|default:'' }}" data-estado="{{ cita.estado }}" data-duracion="{{ cita.duracion_minutos }}" data-descripcion="{{ cita.descripcion }}" data-ubicacion="{{ cita.ubicacion }}" data-notas="{{ cita.notas }}">Ver</button>
+                        <button class="btn btn-sm btn-warning" data-toggle="modal" data-target="#modalEditarCita" data-id="{{ cita.id }}" data-action="{% url 'agenda:editar_cita' cita.id %}">Editar</button>
+                        <button class="btn btn-sm btn-danger" onclick="confirmarEliminar('{% url 'agenda:eliminar_cita' cita.id %}')">Eliminar</button>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="6" class="text-center">No hay citas registradas</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    {% include 'componentes/pagination.html' %}
+</div>
+
+{% include 'gestion/agenda/modals/crear.html' %}
+{% include 'gestion/agenda/modals/ver.html' %}
+{% include 'gestion/agenda/modals/editar.html' %}
+{% include 'gestion/agenda/modals/eliminar.html' %}
+{% endblock %}
+
+{% block scripts_extra %}
+<script src="{% static 'js/gestion/agenda/agenda.js' %}"></script>
+{% endblock %}

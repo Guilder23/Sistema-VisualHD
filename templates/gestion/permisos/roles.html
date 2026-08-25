@@ -1,0 +1,43 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block titulo %}Roles - VisualHD{% endblock %}
+
+{% block contenido %}
+<div class="container-fluid py-4">
+    <h2 class="mb-3"><i class="fas fa-lock"></i> Gestión de Roles</h2>
+    
+    <div class="alert alert-info">
+        <p><strong>Total de Roles:</strong> {{ roles.count }}</p>
+        <p>Acceder a <a href="{% url 'admin:permisos_rol_changelist' %}">Django Admin</a> para crear/editar roles.</p>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Permisos</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for rol in roles %}
+                <tr>
+                    <td>{{ rol.nombre }}</td>
+                    <td>{{ rol.descripcion|truncatewords:10 }}</td>
+                    <td>
+                        {% if rol.puede_ver_dashboard %}<span class="badge badge-secondary">Dashboard</span>{% endif %}
+                        {% if rol.puede_gestionar_clientes %}<span class="badge badge-secondary">Clientes</span>{% endif %}
+                        {% if rol.puede_ver_finanzas %}<span class="badge badge-secondary">Finanzas</span>{% endif %}
+                        {% if rol.puede_ver_reportes %}<span class="badge badge-secondary">Reportes</span>{% endif %}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="3" class="text-center">Sin roles registrados</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
