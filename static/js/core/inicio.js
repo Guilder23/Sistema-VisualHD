@@ -5,16 +5,35 @@
 // Mobile Menu Toggle
 const mobileBtn = document.getElementById('mobileMenuBtn');
 const mobileMenu = document.getElementById('mobileMenu');
+const mobileMenuClose = document.getElementById('mobileMenuClose');
+const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
 
 if (mobileBtn && mobileMenu) {
+    const closeMobileMenu = () => {
+        mobileMenu.classList.remove('open');
+        mobileMenuOverlay?.classList.remove('open');
+        document.body.classList.remove('mobile-menu-locked');
+    };
+
     mobileBtn.addEventListener('click', () => {
-        mobileMenu.classList.toggle('open');
+        mobileMenu.classList.add('open');
+        mobileMenuOverlay?.classList.add('open');
+        document.body.classList.add('mobile-menu-locked');
     });
 
+    mobileMenuClose?.addEventListener('click', closeMobileMenu);
+    mobileMenuOverlay?.addEventListener('click', closeMobileMenu);
+
     document.querySelectorAll('.mobile-link').forEach(link => {
-        link.addEventListener('click', () => {
-            mobileMenu.classList.remove('open');
-        });
+        link.addEventListener('click', closeMobileMenu);
+    });
+
+    document.addEventListener('keydown', event => {
+        if (event.key === 'Escape') closeMobileMenu();
+    });
+
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 768) closeMobileMenu();
     });
 }
 

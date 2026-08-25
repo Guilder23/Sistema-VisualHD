@@ -240,33 +240,84 @@ img {
 /* Mobile Menu */
 .mobile-menu {
     position: fixed;
-    top: 78px;
+    top: 0;
     left: 0;
-    width: 100%;
-    background: rgba(10, 5, 8, 0.98);
-    backdrop-filter: blur(25px);
-    border-bottom: 2px solid var(--crimson);
-    padding: 24px;
+    width: min(320px, 86vw);
+    height: 100vh;
+    background: #10070c;
+    border-right: 2px solid var(--crimson);
+    padding: 22px 20px 28px;
     display: flex;
     flex-direction: column;
-    gap: 16px;
-    transform: translateY(-150%);
-    opacity: 0;
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    z-index: 999;
+    gap: 4px;
+    transform: translateX(-105%);
+    opacity: 1;
+    visibility: hidden;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s ease;
+    z-index: 1100;
+    overflow-y: auto;
 }
 
 .mobile-menu.open {
-    transform: translateY(0);
+    transform: translateX(0);
+    visibility: visible;
+}
+
+.mobile-menu-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 18px;
+    margin-bottom: 8px;
+    border-bottom: 1px solid rgba(255, 255, 255, .12);
+}
+
+.mobile-menu-title {
+    color: var(--gold-light);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.mobile-menu-close {
+    width: 34px;
+    height: 34px;
+    border: 1px solid rgba(255, 255, 255, .3);
+    border-radius: 7px;
+    background: rgba(255, 255, 255, .06);
+    color: #fff;
+    cursor: pointer;
+}
+
+.mobile-menu-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, .68);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .3s ease, visibility .3s ease;
+    z-index: 1090;
+}
+
+.mobile-menu-overlay.open {
     opacity: 1;
+    visibility: visible;
 }
 
 .mobile-link {
     font-size: 16px;
     font-weight: 600;
     color: var(--text-light);
-    padding: 10px 0;
+    padding: 12px 0;
     border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+body.mobile-menu-locked { overflow: hidden; }
+
+@media (min-width: 769px) {
+    .mobile-menu,
+    .mobile-menu-overlay { display: none; }
 }
 
 .mobile-link:hover {

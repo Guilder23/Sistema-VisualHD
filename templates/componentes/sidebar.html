@@ -1,19 +1,4 @@
 <aside class="sidebar" id="sidebar">
-    <div class="sidebar-header">
-        <div class="sidebar-brand">
-            <div class="sidebar-brand-icon">
-                <i class="fas fa-camera-retro"></i>
-            </div>
-            <div class="sidebar-brand-text">
-                <span class="brand-text-main">Visual</span><span class="brand-text-accent">HD</span>
-                <span class="brand-text-sub">PRODUCCIONES</span>
-            </div>
-        </div>
-        <button class="sidebar-collapse-btn" id="sidebarCollapseBtn" title="Colapsar menú">
-            <i class="fas fa-angles-left"></i>
-        </button>
-    </div>
-
     <nav class="sidebar-nav">
         <ul class="sidebar-menu">
             {% if request.user.is_staff %}

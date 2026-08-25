@@ -137,12 +137,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 // En desktop, cerrar mobile view
                 closeSidebarMobile();
             } else {
-                // En mobile, remover estado colapsado y asegurar que no esté activo
+                // En mobile se remueve el modo colapsado, pero el panel conserva su estado.
                 sidebar.classList.remove('collapsed');
-                sidebar.classList.remove('active');
                 body.classList.remove('sidebar-collapsed');
-                sidebarOverlay.classList.remove('active');
-                body.style.overflow = '';
             }
         }, 250);
     });
