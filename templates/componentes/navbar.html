@@ -18,10 +18,10 @@
         </div>
 
         <div class="navbar-right">
-            <a href="{% url 'core:inicio' %}" class="navbar-web-link" title="Ver sitio web público" target="_blank">
+            {% comment %} <a href="{% url 'core:inicio' %}" class="navbar-web-link" title="Ver sitio web público" target="_blank">
                 <i class="fas fa-globe"></i>
                 <span class="d-none d-md-inline">Ver Sitio Web</span>
-            </a>
+            </a> {% endcomment %}
 
             <div class="navbar-usuario">
                 <button class="navbar-user-btn" id="usuarioBtn" title="Mi cuenta" aria-expanded="false">
@@ -44,9 +44,9 @@
                         <span>{{ user.email|default:'Visual HD' }}</span>
                     </div>
                     <div class="dropdown-divider"></div>
-                    <a href="{% url 'core:perfil' %}" class="dropdown-item">
+                    {% comment %} <a href="{% url 'core:perfil' %}" class="dropdown-item">
                         <i class="fas fa-user-circle"></i> Mi Perfil
-                    </a>
+                    </a> {% endcomment %}
                     {% if user.is_staff %}
                     <a href="{% url 'dashboard:dashboard' %}" class="dropdown-item">
                         <i class="fas fa-chart-pie"></i> Dashboard
