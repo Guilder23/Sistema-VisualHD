@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
             form.querySelector('#editar_fecha').value = this.dataset.fecha || '';
             form.querySelector('#editar_hora').value = this.dataset.hora || '';
             form.querySelector('#editar_lugar').value = this.dataset.lugar || '';
+            form.querySelector('#editar_precio').value = this.dataset.precio || '0';
             form.querySelector('#editar_estado').value = this.dataset.estado || 'pendiente';
             form.querySelector('#editar_observacion').value = this.dataset.observacion || '';
         });

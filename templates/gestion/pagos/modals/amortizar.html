@@ -1,0 +1,49 @@
+{% load static %}
+<div class="modal fade" id="modalAmortizar" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form method="post" id="formAmortizar" action="{% url 'pagos:amortizar_pago' %}">
+                {% csrf_token %}
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-hand-holding-usd"></i> Amortizar Pago</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="amortizar_tipo" name="tipo" value="">
+                    <input type="hidden" id="amortizar_objeto_id" name="objeto_id" value="">
+                    <div class="mb-3">
+                        <p><strong id="amortizar-nombre"></strong></p>
+                        <p>Total a pagar: <strong id="amortizar-total"></strong></p>
+                        <p>Monto pagado: <strong id="amortizar-pagado"></strong></p>
+                        <p>Pendiente: <strong id="amortizar-pendiente"></strong></p>
+                    </div>
+                    <div class="form-group">
+                        <label for="amortizar_monto">Monto a amortizar (Bs)</label>
+                        <input type="number" step="0.01" min="0" id="amortizar_monto" name="monto_amortizar" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="amortizar_metodo">Método de pago</label>
+                        <select id="amortizar_metodo" name="metodo_pago" class="form-control">
+                            <option value="efectivo">Efectivo</option>
+                            <option value="tarjeta">Tarjeta</option>
+                            <option value="transferencia">Transferencia</option>
+                            <option value="qr">QR</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="amortizar_fecha">Fecha de amortización</label>
+                        <input type="date" id="amortizar_fecha" name="fecha_amortizacion" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="amortizar_observacion">Observación</label>
+                        <textarea id="amortizar_observacion" name="observacion" class="form-control" rows="2"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-success">Amortizar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

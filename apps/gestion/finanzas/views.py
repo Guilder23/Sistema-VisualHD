@@ -3,9 +3,19 @@ from django.db.models import Sum, Q
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
+from decimal import Decimal, InvalidOperation
 
 from .models import Ingreso, Egreso, Caja, PagoEmpleado, ServicioBasico
 from apps.gestion.empleados.models import Empleado
+
+
+def to_decimal(value, default=Decimal('0')):
+    if value in (None, '',):
+        return default
+    try:
+        return Decimal(str(value))
+    except (InvalidOperation, TypeError, ValueError):
+        return default
 
 
 @login_required
@@ -146,7 +156,7 @@ def anular_pago_empleado(request, pk):
 def amortizar_pago_empleado(request, pk):
     pago = get_object_or_404(PagoEmpleado, pk=pk)
     if request.method == 'POST':
-        monto_amortizar = float(request.POST.get('monto_amortizar') or 0)
+        monto_amortizar = to_decimal(request.POST.get('monto_amortizar'))
         pago.monto_pagado += monto_amortizar
         pago.fecha_pago = request.POST.get('fecha_amortizacion') or pago.fecha_pago
         if pago.monto_pagado >= pago.total_a_pagar:

@@ -46,6 +46,7 @@ def crear_sesion(request):
         fecha = request.POST.get('fecha')
         hora = request.POST.get('hora')
         lugar = request.POST.get('lugar', '').strip()
+        precio = request.POST.get('precio') or 0
         observacion = request.POST.get('observacion', '').strip()
 
         cliente = Cliente.objects.filter(id=cliente_id).first()
@@ -60,6 +61,7 @@ def crear_sesion(request):
             fecha=fecha,
             hora=hora,
             lugar=lugar,
+            precio=precio,
             observacion=observacion,
         )
         messages.success(request, 'Sesión registrada correctamente.')
@@ -82,6 +84,7 @@ def editar_sesion(request, pk):
         sesion.fecha = request.POST.get('fecha') or sesion.fecha
         sesion.hora = request.POST.get('hora') or sesion.hora
         sesion.lugar = request.POST.get('lugar', sesion.lugar).strip()
+        sesion.precio = request.POST.get('precio') or sesion.precio
         sesion.estado = request.POST.get('estado', sesion.estado)
         sesion.observacion = request.POST.get('observacion', sesion.observacion).strip()
         sesion.save()

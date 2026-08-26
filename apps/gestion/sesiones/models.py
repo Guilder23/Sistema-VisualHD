@@ -15,6 +15,7 @@ class Sesion(models.Model):
     fecha = models.DateField(verbose_name='Fecha de la sesión')
     hora = models.TimeField(verbose_name='Hora de la sesión')
     lugar = models.CharField(max_length=250, blank=True, default='', verbose_name='Lugar')
+    precio = models.DecimalField(max_digits=12, decimal_places=2, default=0, verbose_name='Precio (Bs)')
     estado = models.CharField(max_length=20, choices=ESTADO_CHOICES, default='pendiente')
     observacion = models.TextField(blank=True, default='', verbose_name='Observación')
     creado = models.DateTimeField(auto_now_add=True)
