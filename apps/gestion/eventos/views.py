@@ -6,6 +6,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from .models import Evento
 from apps.gestion.clientes.models import Cliente
 from apps.gestion.empleados.models import Empleado
+from apps.gestion.servicios.models import Servicio
 
 
 @login_required
@@ -32,6 +33,7 @@ def listar_eventos(request):
         'estado': estado,
         'clientes': Cliente.objects.filter(estado='activo'),
         'empleados': Empleado.objects.filter(estado='activo'),
+        'servicios': Servicio.objects.filter(estado='activo').order_by('nombre'),
     })
 
 

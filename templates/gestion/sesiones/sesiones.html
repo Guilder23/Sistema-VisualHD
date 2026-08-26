@@ -50,7 +50,7 @@
         <div class="table-responsive">
             <table class="table table-sm mb-0 tabla-sesiones">
                 <thead>
-                    <tr><th>Cliente</th><th>Servicio</th><th>Fotógrafo</th><th>Fecha</th><th>Hora</th><th>Estado</th><th class="text-center">Acciones</th></tr>
+                    <tr><th>Cliente</th><th>Servicio</th><th>Fotógrafo</th><th>Precio</th><th>Fecha</th><th>Hora</th><th>Estado</th><th class="text-center">Acciones</th></tr>
                 </thead>
                 <tbody>
                     {% for sesion in page_obj %}
@@ -58,6 +58,7 @@
                         <td>{{ sesion.cliente }}</td>
                         <td>{{ sesion.servicio|default:'-' }}</td>
                         <td>{{ sesion.empleado|default:'-' }}</td>
+                        <td>Bs. {{ sesion.precio|floatformat:2 }}</td>
                         <td>{{ sesion.fecha|date:'d/m/Y' }}</td>
                         <td>{{ sesion.hora|time:'H:i' }}</td>
                         <td>
@@ -83,7 +84,7 @@
                         </td>
                     </tr>
                     {% empty %}
-                    <tr><td colspan="7" class="text-center py-4">No hay sesiones registradas.</td></tr>
+                    <tr><td colspan="8" class="text-center py-4">No hay sesiones registradas.</td></tr>
                     {% endfor %}
                 </tbody>
             </table>
