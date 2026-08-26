@@ -1401,6 +1401,67 @@ footer {
     box-shadow: 0 20px 50px rgba(212, 160, 23, 0.25);
 }
 
+.light-section .album-block,
+.album-block.light-section {
+    background: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+}
+
+.light-section .album-header {
+    border-bottom-color: rgba(0, 0, 0, 0.08);
+}
+
+.light-section .album-title-wrap h3 {
+    color: #1A0B0F;
+}
+
+.light-section .feature-box {
+    background: #FBF6F4;
+    border-color: rgba(0, 0, 0, 0.08);
+}
+
+.light-section .feature-box h4 {
+    color: #1A0B0F;
+}
+
+.light-section .feature-box p {
+    color: #6B5B62;
+}
+
+.light-section .gallery-item {
+    border-color: rgba(0, 0, 0, 0.08);
+}
+
+/* Invierte el orden: imagen a la derecha, texto a la izquierda */
+.album-promo-content.reverse .flyer-card {
+    order: 2;
+}
+
+.album-promo-content.reverse .album-features-list {
+    order: 1;
+}
+
+.light-section .cta-box {
+    background: #FBF6F4;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+}
+
+.light-section .cta-box h2 {
+    color: #1A0B0F;
+}
+
+.light-section .cta-box p {
+    color: #6B5B62;
+}
+
+/* Fondo blanco de la sección, sin alterar el estilo oscuro del card interno */
+.section-white-bg {
+    background: #FFFFFF !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06) !important;
+}
+
 /* =========================================================
    FLOATING BACK TO TOP BUTTON (IMAGE 1 STYLE)
 ========================================================= */
