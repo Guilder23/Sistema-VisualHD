@@ -1,0 +1,15 @@
+/* Estilos para la página principal de pagos a empleados */
+.pagos-empleados-card {
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.pagos-empleados-card .table th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+}
+
+.pagos-empleados-card .badge {
+    font-size: 0.85em;
+    padding: 0.35em 0.65em;
+}

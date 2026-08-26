@@ -1,0 +1,26 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/gestion/finanzas/pagos_empleados/modals/anular.css' %}">
+
+<div class="modal fade" id="modalAnularPagoEmpleado" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" id="formAnularPagoEmpleado">
+                {% csrf_token %}
+                <div class="modal-header">
+                    <h5 class="modal-title">Anular pago a empleado</h5>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p>¿Está seguro de que desea anular el pago de <strong id="anular-nombre"></strong>?</p>
+                    <p class="text-muted small">Esta acción marcará el pago como anulado y no se podrá deshacer.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-danger">Anular pago</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'js/gestion/finanzas/pagos_empleados/modals/anular.js' %}"></script>

@@ -80,7 +80,7 @@ def eliminar_egreso(request, pk):
 @user_passes_test(lambda u: u.is_staff, login_url='/login/')
 def listar_pagos_empleados(request):
     pagos = PagoEmpleado.objects.select_related('empleado').all()
-    return render(request, 'gestion/finanzas/pagos_empleados.html', {
+    return render(request, 'gestion/finanzas/pagos_empleados/pagos_empleados.html', {
         'pagos': pagos,
         'empleados': Empleado.objects.filter(estado='activo').order_by('nombre', 'apellido'),
         'estados': PagoEmpleado.ESTADO_CHOICES,
@@ -108,4 +108,50 @@ def crear_pago_empleado(request):
             comprobante=request.POST.get('comprobante', '').strip(),
             notas=request.POST.get('notas', '').strip(),
         )
+    return redirect('finanzas:listar_pagos_empleados')
+
+
+@login_required
+@user_passes_test(lambda u: u.is_staff, login_url='/login/')
+def editar_pago_empleado(request, pk):
+    pago = get_object_or_404(PagoEmpleado, pk=pk)
+    if request.method == 'POST':
+        pago.empleado_id = request.POST.get('empleado_id')
+        pago.mes_año = request.POST.get('mes_año', '').strip()
+        pago.monto_base = request.POST.get('monto_base') or 0
+        pago.bonificación = request.POST.get('bonificacion') or 0
+        pago.descuentos = request.POST.get('descuentos') or 0
+        pago.total_a_pagar = request.POST.get('total_a_pagar') or 0
+        pago.monto_pagado = request.POST.get('monto_pagado') or 0
+        pago.fecha_pago = request.POST.get('fecha_pago') or None
+        pago.estado = request.POST.get('estado', 'pendiente')
+        pago.comprobante = request.POST.get('comprobante', '').strip()
+        pago.notas = request.POST.get('notas', '').strip()
+        pago.save()
+    return redirect('finanzas:listar_pagos_empleados')
+
+
+@login_required
+@user_passes_test(lambda u: u.is_staff, login_url='/login/')
+def anular_pago_empleado(request, pk):
+    pago = get_object_or_404(PagoEmpleado, pk=pk)
+    if request.method == 'POST':
+        pago.estado = 'anulado'
+        pago.save()
+    return redirect('finanzas:listar_pagos_empleados')
+
+
+@login_required
+@user_passes_test(lambda u: u.is_staff, login_url='/login/')
+def amortizar_pago_empleado(request, pk):
+    pago = get_object_or_404(PagoEmpleado, pk=pk)
+    if request.method == 'POST':
+        monto_amortizar = float(request.POST.get('monto_amortizar') or 0)
+        pago.monto_pagado += monto_amortizar
+        pago.fecha_pago = request.POST.get('fecha_amortizacion') or pago.fecha_pago
+        if pago.monto_pagado >= pago.total_a_pagar:
+            pago.estado = 'pagado'
+        elif pago.monto_pagado > 0:
+            pago.estado = 'parcial'
+        pago.save()
     return redirect('finanzas:listar_pagos_empleados')

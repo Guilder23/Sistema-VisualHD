@@ -1,0 +1,14 @@
+/* Estilos para el modal de anular pago a empleado */
+#modalAnularPagoEmpleado .modal-content {
+    border-radius: 8px;
+}
+
+#modalAnularPagoEmpleado .modal-header {
+    background-color: #dc3545;
+    color: white;
+    border-radius: 8px 8px 0 0;
+}
+
+#modalAnularPagoEmpleado .close {
+    color: white;
+}
