@@ -1314,6 +1314,94 @@ footer {
 }
 
 /* =========================================================
+   LIGHT SECTIONS (VARIANTE CLARA / BLANCA)
+========================================================= */
+.light-section {
+    background: #FFFFFF !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06) !important;
+}
+
+.light-section .section-tag {
+    background: rgba(200, 29, 49, 0.08);
+    border-color: rgba(200, 29, 49, 0.25);
+}
+
+.light-section .section-heading h2 {
+    color: #1A0B0F;
+}
+
+.light-section .section-heading p {
+    color: #6B5B62;
+}
+
+.light-section .service-card {
+    background: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+}
+
+.light-section .service-card:hover {
+    border-color: rgba(200, 29, 49, 0.35);
+    box-shadow: 0 20px 45px rgba(200, 29, 49, 0.12);
+}
+
+.light-section .service-card-body h3 {
+    color: #1A0B0F;
+}
+
+.light-section .service-card-body p {
+    color: #6B5B62;
+}
+
+.light-section .studio-content h2 {
+    color: #1A0B0F;
+}
+
+.light-section .studio-content p {
+    color: #6B5B62;
+}
+
+.light-section .studio-point {
+    color: #3A2A30;
+}
+
+.light-section .studio-image-wrap {
+    border-color: rgba(200, 29, 49, 0.2);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
+}
+
+.light-section .package-card {
+    background: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+}
+
+.light-section .package-card h3 {
+    color: #1A0B0F;
+}
+
+.light-section .package-card p {
+    color: #6B5B62;
+}
+
+.light-section .package-price {
+    color: #1A0B0F;
+}
+
+.light-section .package-price span {
+    color: #6B5B62;
+}
+
+.light-section .package-features li {
+    color: #3A2A30;
+    border-bottom-color: rgba(0, 0, 0, 0.06);
+}
+
+.light-section .package-card.featured {
+    box-shadow: 0 20px 50px rgba(212, 160, 23, 0.25);
+}
+
+/* =========================================================
    FLOATING BACK TO TOP BUTTON (IMAGE 1 STYLE)
 ========================================================= */
 .back-to-top-btn {
