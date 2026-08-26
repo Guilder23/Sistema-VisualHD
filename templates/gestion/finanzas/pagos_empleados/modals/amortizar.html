@@ -1,0 +1,38 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/gestion/finanzas/pagos_empleados/modals/amortizar.css' %}">
+
+<div class="modal fade" id="modalAmortizarPagoEmpleado" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" id="formAmortizarPagoEmpleado">
+                {% csrf_token %}
+                <div class="modal-header">
+                    <h5 class="modal-title">Amortizar pago a empleado</h5>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <p>Pago: <strong id="amortizar-nombre"></strong></p>
+                        <p>Total a pagar: <strong id="amortizar-total"></strong></p>
+                        <p>Monto pagado: <strong id="amortizar-pagado"></strong></p>
+                        <p>Pendiente: <strong id="amortizar-pendiente"></strong></p>
+                    </div>
+                    <div class="form-group">
+                        <label>Monto a amortizar (Bs.)</label>
+                        <input type="number" name="monto_amortizar" step="0.01" min="0" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Fecha de amortización</label>
+                        <input type="date" name="fecha_amortizacion" class="form-control" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-success">Amortizar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'js/gestion/finanzas/pagos_empleados/modals/amortizar.js' %}"></script>

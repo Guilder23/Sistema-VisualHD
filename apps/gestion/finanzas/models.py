@@ -85,6 +85,7 @@ class PagoEmpleado(models.Model):
         ('pendiente', 'Pendiente'),
         ('pagado', 'Pagado'),
         ('parcial', 'Parcial'),
+        ('anulado', 'Anulado'),
     ]
 
     empleado = models.ForeignKey('empleados.Empleado', on_delete=models.CASCADE, related_name='pagos')

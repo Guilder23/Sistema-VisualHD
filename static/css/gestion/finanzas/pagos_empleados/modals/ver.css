@@ -1,0 +1,19 @@
+/* Estilos para el modal de ver pago a empleado */
+#modalVerPagoEmpleado .modal-content {
+    border-radius: 8px;
+}
+
+#modalVerPagoEmpleado .modal-header {
+    background-color: #17a2b8;
+    color: white;
+    border-radius: 8px 8px 0 0;
+}
+
+#modalVerPagoEmpleado .close {
+    color: white;
+}
+
+#modalVerPagoEmpleado strong {
+    color: #495057;
+    font-weight: 600;
+}

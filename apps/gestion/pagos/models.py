@@ -12,12 +12,15 @@ class Pago(models.Model):
     ESTADO_CHOICES = [
         ('pendiente', 'Pendiente'),
         ('pagado', 'Pagado'),
+        ('parcial', 'Parcial'),
         ('anulado', 'Anulado'),
     ]
 
     cliente = models.ForeignKey('clientes.Cliente', on_delete=models.CASCADE, related_name='pagos')
     sesion = models.ForeignKey('sesiones.Sesion', on_delete=models.SET_NULL, null=True, blank=True, related_name='pagos')
-    monto = models.DecimalField(max_digits=10, decimal_places=2, default=0, verbose_name='Monto (Bs)')
+    evento = models.ForeignKey('eventos.Evento', on_delete=models.SET_NULL, null=True, blank=True, related_name='pagos')
+    monto = models.DecimalField(max_digits=12, decimal_places=2, default=0, verbose_name='Monto total (Bs)')
+    monto_pagado = models.DecimalField(max_digits=12, decimal_places=2, default=0, verbose_name='Monto pagado (Bs)')
     metodo_pago = models.CharField(max_length=20, choices=METODO_CHOICES, default='efectivo')
     estado = models.CharField(max_length=20, choices=ESTADO_CHOICES, default='pendiente')
     fecha_pago = models.DateField(default=timezone.now, verbose_name='Fecha de pago')

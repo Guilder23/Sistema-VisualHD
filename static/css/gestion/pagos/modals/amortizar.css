@@ -1,0 +1,8 @@
+#modalAmortizar .modal-header {
+    background-color: #28a745;
+    color: white;
+}
+
+#modalAmortizar .close {
+    color: white;
+}

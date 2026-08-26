@@ -1,0 +1,66 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/gestion/finanzas/pagos_empleados/modals/ver.css' %}">
+
+<div class="modal fade" id="modalVerPagoEmpleado" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Ver pago a empleado</h5>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <strong>Empleado:</strong>
+                        <p id="ver-empleado" class="mb-0"></p>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <strong>Mes / Año:</strong>
+                        <p id="ver-mes-año" class="mb-0"></p>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <strong>Monto base:</strong>
+                        <p id="ver-monto-base" class="mb-0"></p>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <strong>Bonificación:</strong>
+                        <p id="ver-bonificacion" class="mb-0"></p>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <strong>Descuentos:</strong>
+                        <p id="ver-descuentos" class="mb-0"></p>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <strong>Total a pagar:</strong>
+                        <p id="ver-total" class="mb-0"></p>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <strong>Monto pagado:</strong>
+                        <p id="ver-pagado" class="mb-0"></p>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <strong>Estado:</strong>
+                        <p id="ver-estado" class="mb-0"></p>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <strong>Fecha de pago:</strong>
+                        <p id="ver-fecha" class="mb-0"></p>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <strong>Comprobante:</strong>
+                        <p id="ver-comprobante" class="mb-0"></p>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <strong>Notas:</strong>
+                        <p id="ver-notas" class="mb-0"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'js/gestion/finanzas/pagos_empleados/modals/ver.js' %}"></script>

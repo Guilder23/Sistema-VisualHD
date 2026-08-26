@@ -1,0 +1,57 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block titulo %}Pagos a empleados - VisualHD{% endblock %}
+
+{% block estilos_extra %}
+<link rel="stylesheet" href="{% static 'css/gestion/finanzas/pagos_empleados/pagos_empleados.css' %}">
+{% endblock %}
+
+{% block contenido %}
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
+        <div><h2 class="mb-1"><i class="fas fa-hand-holding-dollar"></i> Pagos a empleados</h2><p class="text-muted mb-0">Control de nómina y pagos del personal.</p></div>
+        <button class="btn btn-primary mt-2 mt-md-0" data-toggle="modal" data-target="#modalPagoEmpleado"><i class="fas fa-plus mr-1"></i>Registrar pago</button>
+    </div>
+    <div class="card gastos-card pagos-empleados-card"><div class="table-responsive"><table class="table table-hover mb-0">
+        <thead><tr><th>Empleado</th><th>Mes / Año</th><th>Total a pagar</th><th>Pagado</th><th>Estado</th><th>Fecha de pago</th><th class="text-center">Acciones</th></tr></thead>
+        <tbody>{% for pago in pagos %}<tr><td>{{ pago.empleado }}</td><td>{{ pago.mes_año }}</td><td>Bs. {{ pago.total_a_pagar|floatformat:2 }}</td><td>Bs. {{ pago.monto_pagado|floatformat:2 }}</td>
+                        <td><span class="badge badge-{% if pago.estado == 'pagado' %}success{% elif pago.estado == 'parcial' %}warning{% elif pago.estado == 'anulado' %}danger{% else %}secondary{% endif %}">{{ pago.get_estado_display }}</span></td><td>{{ pago.fecha_pago|date:'d/m/Y'|default:'-' }}</td><td class="text-center">
+                            <button type="button" class="btn btn-info btn-sm btn-ver-pago" data-toggle="modal" data-target="#modalVerPagoEmpleado"
+                                data-empleado="{{ pago.empleado }}" data-mes-año="{{ pago.mes_año }}" data-monto-base="{{ pago.monto_base|floatformat:2 }}"
+                                data-bonificacion="{{ pago.bonificación|floatformat:2 }}" data-descuentos="{{ pago.descuentos|floatformat:2 }}"
+                                data-total="{{ pago.total_a_pagar|floatformat:2 }}" data-pagado="{{ pago.monto_pagado|floatformat:2 }}"
+                                data-estado="{{ pago.get_estado_display }}" data-fecha="{{ pago.fecha_pago|date:'d/m/Y'|default:'-' }}"
+                                data-comprobante="{{ pago.comprobante }}" data-notas="{{ pago.notas }}">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button type="button" class="btn btn-warning btn-sm btn-editar-pago" data-toggle="modal" data-target="#modalEditarPagoEmpleado"
+                                data-action="{% url 'finanzas:editar_pago_empleado' pago.pk %}" data-empleado-id="{{ pago.empleado_id }}" data-mes-año="{{ pago.mes_año }}"
+                                data-monto-base="{{ pago.monto_base }}" data-bonificacion="{{ pago.bonificación }}" data-descuentos="{{ pago.descuentos }}"
+                                data-total="{{ pago.total_a_pagar }}" data-pagado="{{ pago.monto_pagado }}" data-estado="{{ pago.estado }}"
+                                data-fecha="{{ pago.fecha_pago|date:'Y-m-d'|default:'' }}" data-comprobante="{{ pago.comprobante }}" data-notas="{{ pago.notas }}">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button type="button" class="btn btn-danger btn-sm btn-anular-pago" data-toggle="modal" data-target="#modalAnularPagoEmpleado"
+                                data-action="{% url 'finanzas:anular_pago_empleado' pago.pk %}" data-nombre="{{ pago.empleado }} - {{ pago.mes_año }}">
+                                <i class="fas fa-ban"></i>
+                            </button>
+                            <button type="button" class="btn btn-success btn-sm btn-amortizar-pago" data-toggle="modal" data-target="#modalAmortizarPagoEmpleado"
+                                data-action="{% url 'finanzas:amortizar_pago_empleado' pago.pk %}" data-nombre="{{ pago.empleado }} - {{ pago.mes_año }}"
+                                data-total="{{ pago.total_a_pagar|floatformat:2 }}" data-pagado="{{ pago.monto_pagado|floatformat:2 }}">
+                                <i class="fas fa-hand-holding-usd"></i>
+                            </button>
+                        </td></tr>{% empty %}<tr><td colspan="7" class="text-center text-muted py-4">No hay pagos a empleados registrados.</td></tr>{% endfor %}</tbody>
+    </table></div></div>
+</div>
+
+{% include 'gestion/finanzas/pagos_empleados/modals/crear.html' %}
+{% include 'gestion/finanzas/pagos_empleados/modals/ver.html' %}
+{% include 'gestion/finanzas/pagos_empleados/modals/editar.html' %}
+{% include 'gestion/finanzas/pagos_empleados/modals/anular.html' %}
+{% include 'gestion/finanzas/pagos_empleados/modals/amortizar.html' %}
+{% endblock %}
+
+{% block scripts_extra %}
+<script src="{% static 'js/gestion/finanzas/pagos_empleados/pagos_empleados.js' %}"></script>
+{% endblock %}

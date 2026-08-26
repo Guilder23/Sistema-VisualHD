@@ -78,21 +78,21 @@
                     <i class="fas fa-user-shield"></i><span>Usuarios y Roles</span>
                 </a>
             </li>
-            <li class="sidebar-item">
+            {% comment %} <li class="sidebar-item">
                 <a href="{% url 'permisos:listar_roles' %}" class="sidebar-link {% if '/gestion/permisos/roles/' in request.path %}active{% endif %}">
                     <i class="fas fa-key"></i><span>Permisos</span>
                 </a>
-            </li>
+            </li> {% endcomment %}
             {% endif %}
 
-            <li class="sidebar-section">
+            {% comment %} <li class="sidebar-section">
                 <span class="sidebar-section-title">Mi Cuenta</span>
             </li>
             <li class="sidebar-item">
                 <a href="{% url 'core:perfil' %}" class="sidebar-link {% if '/perfil/' in request.path %}active{% endif %}">
                     <i class="fas fa-user-circle"></i><span>Mi Perfil</span>
                 </a>
-            </li>
+            </li> {% endcomment %}
         </ul>
     </nav>
 

@@ -1,0 +1,14 @@
+/* Estilos para el modal de amortizar pago a empleado */
+#modalAmortizarPagoEmpleado .modal-content {
+    border-radius: 8px;
+}
+
+#modalAmortizarPagoEmpleado .modal-header {
+    background-color: #28a745;
+    color: white;
+    border-radius: 8px 8px 0 0;
+}
+
+#modalAmortizarPagoEmpleado .close {
+    color: white;
+}

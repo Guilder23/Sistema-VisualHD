@@ -8,7 +8,59 @@
             <form method="POST" id="formEditarEvento">
                 {% csrf_token %}
                 <div class="modal-body">
-                    <p>Cargando datos...</p>
+                    <div class="form-group">
+                        <label>Cliente</label>
+                        <select name="cliente_id" id="editar_evento_cliente" class="form-control" required>
+                            <option value="">Seleccionar...</option>
+                            {% for cliente in clientes %}
+                            <option value="{{ cliente.id }}">{{ cliente.nombre }} {{ cliente.apellido }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Nombre del Evento</label>
+                        <input type="text" name="nombre" id="editar_evento_nombre" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Tipo / Servicio</label>
+                        <select name="tipo" id="editar_evento_tipo" class="form-control" required>
+                            {% for servicio in servicios %}
+                            <option value="{{ servicio.nombre }}">{{ servicio.nombre }} - Bs. {{ servicio.precio|floatformat:2 }}</option>
+                            {% empty %}
+                            <option value="otro">Otro</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Fecha Inicio</label>
+                        <input type="datetime-local" name="fecha_inicio" id="editar_evento_fecha_inicio" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Fecha Fin</label>
+                        <input type="datetime-local" name="fecha_fin" id="editar_evento_fecha_fin" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Ubicación</label>
+                        <input type="text" name="ubicacion" id="editar_evento_ubicacion" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Presupuesto (Bs.)</label>
+                        <input type="number" name="presupuesto" id="editar_evento_presupuesto" step="0.01" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Estado</label>
+                        <select name="estado" id="editar_evento_estado" class="form-control">
+                            <option value="planificado">Planificado</option>
+                            <option value="confirmado">Confirmado</option>
+                            <option value="en_progreso">En progreso</option>
+                            <option value="completado">Completado</option>
+                            <option value="cancelado">Cancelado</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Descripción</label>
+                        <textarea name="descripcion" id="editar_evento_descripcion" class="form-control"></textarea>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>

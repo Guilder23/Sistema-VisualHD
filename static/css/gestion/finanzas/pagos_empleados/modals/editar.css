@@ -1,0 +1,14 @@
+/* Estilos para el modal de editar pago a empleado */
+#modalEditarPagoEmpleado .modal-content {
+    border-radius: 8px;
+}
+
+#modalEditarPagoEmpleado .modal-header {
+    background-color: #ffc107;
+    color: #212529;
+    border-radius: 8px 8px 0 0;
+}
+
+#modalEditarPagoEmpleado .close {
+    color: #212529;
+}

@@ -1,0 +1,14 @@
+/* Estilos para el modal de crear pago a empleado */
+#modalPagoEmpleado .modal-content {
+    border-radius: 8px;
+}
+
+#modalPagoEmpleado .modal-header {
+    background-color: #007bff;
+    color: white;
+    border-radius: 8px 8px 0 0;
+}
+
+#modalPagoEmpleado .close {
+    color: white;
+}
