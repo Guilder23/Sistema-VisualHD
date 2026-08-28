@@ -5,11 +5,26 @@ from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 import json
 
-from .models import Evento
+from .models import Evento, AdicionalEvento
 from apps.gestion.clientes.models import Cliente
 from apps.gestion.empleados.models import Empleado
 from apps.gestion.servicios.models import Servicio
 from apps.gestion.paquetes.models import Paquete
+
+
+def _guardar_adicionales(evento, adicionales_json):
+    evento.adicionales.all().delete()
+    try:
+        adicionales = json.loads(adicionales_json or '[]')
+        for item in adicionales:
+            AdicionalEvento.objects.create(
+                evento=evento,
+                descripcion=item['descripcion'],
+                cantidad=item['cantidad'],
+                precio_unitario=item['precio_unitario']
+            )
+    except (json.JSONDecodeError, KeyError, TypeError):
+        pass
 
 
 @login_required
@@ -18,17 +33,29 @@ def listar_eventos(request):
     q = request.GET.get('q', '').strip()
     tipo = request.GET.get('tipo', '').strip()
     estado = request.GET.get('estado', '').strip()
+    servicio_id = request.GET.get('servicio_id', '').strip()
+    paquete_id = request.GET.get('paquete_id', '').strip()
+    orden = request.GET.get('orden', 'fecha_desc').strip()
 
-    eventos = Evento.objects.select_related('cliente', 'servicio', 'paquete', 'paquete__servicio_principal').prefetch_related('empleados_asignados').all()
+    eventos = Evento.objects.select_related('cliente', 'servicio', 'paquete', 'paquete__servicio_principal').prefetch_related('empleados_asignados', 'adicionales').all()
     if q:
         eventos = eventos.filter(Q(nombre__icontains=q) | Q(cliente__nombre__icontains=q))
     if tipo:
         eventos = eventos.filter(tipo=tipo)
     if estado:
         eventos = eventos.filter(estado=estado)
+    if servicio_id:
+        eventos = eventos.filter(servicio_id=servicio_id)
+    if paquete_id:
+        eventos = eventos.filter(paquete_id=paquete_id)
+
+    eventos = eventos.order_by('fecha_inicio' if orden == 'fecha_asc' else '-fecha_inicio')
 
     paginator = Paginator(eventos, 10)
     page_obj = paginator.get_page(request.GET.get('page'))
+
+    qs_sin_page = request.GET.copy()
+    qs_sin_page.pop('page', None)
 
     paquetes_qs = Paquete.objects.filter(estado='activo').select_related('servicio_principal').order_by('nombre')
     paquetes_serializados = []
@@ -47,6 +74,10 @@ def listar_eventos(request):
         'q': q,
         'tipo': tipo,
         'estado': estado,
+        'servicio_id': servicio_id,
+        'paquete_id': paquete_id,
+        'orden': orden,
+        'querystring': qs_sin_page.urlencode(),
         'clientes': Cliente.objects.filter(estado='activo'),
         'empleados': Empleado.objects.filter(estado='activo'),
         'servicios': Servicio.objects.filter(estado='activo').order_by('nombre'),
@@ -68,8 +99,8 @@ def crear_evento(request):
         fecha_fin = request.POST.get('fecha_fin')
         ubicacion = request.POST.get('ubicacion', '').strip()
         descripcion = request.POST.get('descripcion', '').strip()
-        presupuesto = request.POST.get('presupuesto') or 0
         notas = request.POST.get('notas', '').strip()
+        adicionales_json = request.POST.get('adicionales_json', '[]')
 
         cliente = Cliente.objects.filter(id=cliente_id).first()
         if not cliente:
@@ -88,9 +119,11 @@ def crear_evento(request):
             fecha_fin=fecha_fin,
             ubicacion=ubicacion,
             descripcion=descripcion,
-            presupuesto=presupuesto,
             notas=notas,
         )
+        _guardar_adicionales(evento, adicionales_json)
+        evento.presupuesto = evento.total_general()
+        evento.save(update_fields=['presupuesto'])
     return redirect('eventos:listar_eventos')
 
 
@@ -112,10 +145,12 @@ def editar_evento(request, pk):
         evento.fecha_fin = request.POST.get('fecha_fin') or evento.fecha_fin
         evento.ubicacion = request.POST.get('ubicacion', evento.ubicacion).strip()
         evento.descripcion = request.POST.get('descripcion', evento.descripcion).strip()
-        evento.presupuesto = request.POST.get('presupuesto', evento.presupuesto)
         evento.estado = request.POST.get('estado', evento.estado)
         evento.notas = request.POST.get('notas', evento.notas).strip()
         evento.save()
+        _guardar_adicionales(evento, request.POST.get('adicionales_json', '[]'))
+        evento.presupuesto = evento.total_general()
+        evento.save(update_fields=['presupuesto'])
     return redirect('eventos:listar_eventos')
 
 
@@ -178,3 +213,34 @@ def obtener_detalle_paquete(request):
         'precio_total': float(paquete.precio_total),
         'nombre': paquete.nombre
     })
+
+
+ESTADO_COLORES = {
+    'planificado': '#64748B',
+    'confirmado': '#059669',
+    'en_progreso': '#C81D31',
+    'completado': '#0284C7',
+    'cancelado': '#DC2626',
+}
+
+
+@login_required
+@user_passes_test(lambda u: u.is_staff, login_url='/login/')
+def obtener_eventos_calendario(request):
+    eventos = Evento.objects.select_related('cliente', 'servicio', 'paquete').all()
+    data = []
+    for evento in eventos:
+        data.append({
+            'id': evento.id,
+            'title': evento.nombre,
+            'start': evento.fecha_inicio.isoformat(),
+            'end': evento.fecha_fin.isoformat(),
+            'color': ESTADO_COLORES.get(evento.estado, '#64748B'),
+            'extendedProps': {
+                'cliente': f'{evento.cliente.nombre} {evento.cliente.apellido}',
+                'servicio': evento.servicio.nombre if evento.servicio else '-',
+                'estado': evento.get_estado_display(),
+                'ubicacion': evento.ubicacion,
+            }
+        })
+    return JsonResponse({'eventos': data})

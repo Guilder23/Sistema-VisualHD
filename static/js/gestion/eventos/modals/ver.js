@@ -8,7 +8,6 @@ document.addEventListener('DOMContentLoaded', function () {
         $('#verFechaFin').text(button.data('fechaFin') || '-');
         $('#verUbicacion').text(button.data('ubicacion') || '-');
         $('#verEstadoEvento').text(button.data('estado') || '-');
-        $('#verPresupuesto').text(button.data('presupuesto') || '0.00');
         $('#verDescripcionEvento').text(button.data('descripcion') || '-');
         
         const paqueteId = button.data('paqueteId');
@@ -16,6 +15,9 @@ document.addEventListener('DOMContentLoaded', function () {
         
         if (typeof mostrarPaqueteVer === 'function') {
             mostrarPaqueteVer(paqueteId, paqueteNombre);
+        }
+        if (typeof mostrarAdicionalesVer === 'function') {
+            mostrarAdicionalesVer(button.data('adicionales') || '');
         }
     });
 });

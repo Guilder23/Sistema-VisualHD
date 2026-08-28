@@ -4,6 +4,7 @@
 {% block titulo %}Eventos - VisualHD{% endblock %}
 
 {% block estilos_extra %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.css">
 <link rel="stylesheet" href="{% static 'css/gestion/eventos/eventos.css' %}">
 <link rel="stylesheet" href="{% static 'css/gestion/eventos/modals/crear.css' %}">
 <link rel="stylesheet" href="{% static 'css/gestion/eventos/modals/ver.css' %}">
@@ -13,93 +14,158 @@
 
 {% block contenido %}
 <div class="container-fluid py-4">
-    <h2 class="mb-3"><i class="fas fa-calendar-alt"></i> Eventos</h2>
-    
-    <div class="row mb-3">
-        <div class="col-md-6">
-            <input type="text" id="searchInput" class="form-control" placeholder="Buscar por nombre..." value="{{ q }}">
-        </div>
-        <div class="col-md-6">
-            <button class="btn btn-primary" data-toggle="modal" data-target="#modalCrearEvento">
-                <i class="fas fa-plus"></i> Nuevo evento
-            </button>
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
+        <h2 class="mb-2"><i class="fas fa-calendar-alt"></i> Eventos</h2>
+        <button class="btn btn-primary" data-toggle="modal" data-target="#modalCrearEvento">
+            <i class="fas fa-plus"></i> Nuevo evento
+        </button>
+    </div>
+
+    <div class="card card-filtros mb-3">
+        <div class="card-body py-3">
+            <form method="get" class="row align-items-center" id="formFiltrosEventos">
+                <div class="col-md-3 mb-2 mb-md-0">
+                    <input type="text" class="form-control form-control-sm" name="q" value="{{ q }}" placeholder="Buscar por nombre o cliente...">
+                </div>
+                <div class="col-md-2 mb-2 mb-md-0">
+                    <select name="servicio_id" class="form-control form-control-sm">
+                        <option value="">Todos los servicios</option>
+                        {% for servicio in servicios %}
+                        <option value="{{ servicio.id }}" {% if servicio_id == servicio.id|stringformat:'s' %}selected{% endif %}>{{ servicio.nombre }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-2 mb-2 mb-md-0">
+                    <select name="paquete_id" class="form-control form-control-sm">
+                        <option value="">Todos los paquetes</option>
+                        {% for paquete in paquetes %}
+                        <option value="{{ paquete.id }}" {% if paquete_id == paquete.id|stringformat:'s' %}selected{% endif %}>{{ paquete.nombre }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-2 mb-2 mb-md-0">
+                    <select name="estado" class="form-control form-control-sm">
+                        <option value="">Todos los estados</option>
+                        <option value="planificado" {% if estado == 'planificado' %}selected{% endif %}>Planificado</option>
+                        <option value="confirmado" {% if estado == 'confirmado' %}selected{% endif %}>Confirmado</option>
+                        <option value="en_progreso" {% if estado == 'en_progreso' %}selected{% endif %}>En progreso</option>
+                        <option value="completado" {% if estado == 'completado' %}selected{% endif %}>Completado</option>
+                        <option value="cancelado" {% if estado == 'cancelado' %}selected{% endif %}>Cancelado</option>
+                    </select>
+                </div>
+                <div class="col-md-2 mb-2 mb-md-0">
+                    <select name="orden" class="form-control form-control-sm">
+                        <option value="fecha_desc" {% if orden == 'fecha_desc' %}selected{% endif %}>Fecha: más reciente</option>
+                        <option value="fecha_asc" {% if orden == 'fecha_asc' %}selected{% endif %}>Fecha: más antigua</option>
+                    </select>
+                </div>
+                <div class="col-md-1">
+                    <button type="submit" class="btn btn-outline-secondary btn-sm btn-block">Filtrar</button>
+                </div>
+            </form>
         </div>
     </div>
 
-    <div class="table-responsive">
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th>Nombre</th>
-                    <th>Cliente</th>
-                    <th>Servicio</th>
-                    <th>Precio</th>
-                    <th>Fecha</th>
-                    <th>Estado</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for evento in page_obj %}
-                <tr>
-                    <td>{{ evento.nombre }}</td>
-                    <td>{{ evento.cliente.nombre }} {{ evento.cliente.apellido }}</td>
-                    <td>
-                        {% if evento.servicio %}
-                        {{ evento.servicio.nombre }}
-                        {% else %}
-                        -
-                        {% endif %}
-                    </td>
-                    <td>
-                        {% if evento.paquete %}
-                        Bs. {{ evento.paquete.precio_total|floatformat:2 }}
-                        {% else %}
-                        Bs. {{ evento.presupuesto|floatformat:2 }}
-                        {% endif %}
-                    </td>
-                    <td>{{ evento.fecha_inicio|date:"d/m/Y H:i" }}</td>
-                    <td><span class="badge badge-{{ evento.estado }}">{{ evento.get_estado_display }}</span></td>
-                    <td>
-                        <button class="btn btn-sm btn-info" data-toggle="modal" data-target="#modalVerEvento"
-                            data-id="{{ evento.id }}"
-                            data-nombre="{{ evento.nombre }}"
-                            data-cliente="{{ evento.cliente.nombre }} {{ evento.cliente.apellido }}"
-                            data-servicio="{% if evento.servicio %}{{ evento.servicio.nombre }} - Bs. {{ evento.servicio.precio|floatformat:2 }}{% else %}-{% endif %}"
-                            data-fecha-inicio="{{ evento.fecha_inicio|date:'d/m/Y H:i' }}"
-                            data-fecha-fin="{{ evento.fecha_fin|date:'d/m/Y H:i' }}"
-                            data-ubicacion="{{ evento.ubicacion|default:'-' }}"
-                            data-estado="{{ evento.get_estado_display }}"
-                            data-presupuesto="{{ evento.presupuesto|floatformat:2 }}"
-                            data-descripcion="{{ evento.descripcion|default:'-' }}"
-                            data-paquete-id="{{ evento.paquete.id|default:'' }}"
-                            data-paquete-nombre="{{ evento.paquete.nombre|default:'No asignado' }}">Ver</button>
-                        <button class="btn btn-sm btn-warning" data-toggle="modal" data-target="#modalEditarEvento"
-                            data-id="{{ evento.id }}"
-                            data-action="{% url 'eventos:editar_evento' evento.id %}"
-                            data-nombre="{{ evento.nombre }}"
-                            data-cliente-id="{{ evento.cliente_id }}"
-                            data-servicio-id="{{ evento.servicio.id|default:'' }}"
-                            data-paquete-id="{{ evento.paquete.id|default:'' }}"
-                            data-fecha-inicio="{{ evento.fecha_inicio|date:'Y-m-d\TH:i' }}"
-                            data-fecha-fin="{{ evento.fecha_fin|date:'Y-m-d\TH:i' }}"
-                            data-ubicacion="{{ evento.ubicacion }}"
-                            data-presupuesto="{{ evento.presupuesto }}"
-                            data-descripcion="{{ evento.descripcion }}"
-                            data-estado="{{ evento.estado }}">Editar</button>
-                        <button class="btn btn-sm btn-danger btn-eliminar-evento" data-toggle="modal" data-target="#modalEliminarEvento"
-                            data-action="{% url 'eventos:eliminar_evento' evento.id %}"
-                            data-nombre="{{ evento.nombre }}">Eliminar</button>
-                    </td>
-                </tr>
-                {% empty %}
-                <tr><td colspan="7" class="text-center">No hay eventos registrados</td></tr>
-                {% endfor %}
-            </tbody>
-        </table>
+    <ul class="nav nav-pills mb-3" id="eventosVistaTabs">
+        <li class="nav-item"><a class="nav-link active" data-vista="lista" href="#">Lista</a></li>
+        <li class="nav-item"><a class="nav-link" data-vista="dayGridMonth" href="#">Mes</a></li>
+        <li class="nav-item"><a class="nav-link" data-vista="timeGridWeek" href="#">Semana</a></li>
+        <li class="nav-item"><a class="nav-link" data-vista="timeGridDay" href="#">Día</a></li>
+    </ul>
+
+    <div id="eventosVistaLista">
+        <div class="table-responsive">
+            <table class="table table-hover tabla-eventos">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Cliente</th>
+                        <th>Servicio</th>
+                        <th>Paquete</th>
+                        <th>Total</th>
+                        <th>Fecha</th>
+                        <th>Estado</th>
+                        <th class="text-center">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for evento in page_obj %}
+                    <tr>
+                        <td>{{ evento.nombre }}</td>
+                        <td>{{ evento.cliente.nombre }} {{ evento.cliente.apellido }}</td>
+                        <td>
+                            {% if evento.servicio %}
+                            {{ evento.servicio.nombre }}
+                            {% else %}
+                            -
+                            {% endif %}
+                        </td>
+                        <td>{{ evento.paquete.nombre|default:'-' }}</td>
+                        <td>Bs. {{ evento.presupuesto|floatformat:2 }}</td>
+                        <td>{{ evento.fecha_inicio|date:"d/m/Y H:i" }}</td>
+                        <td><span class="badge badge-{{ evento.estado }}">{{ evento.get_estado_display }}</span></td>
+                        <td class="text-center">
+                            <div class="acciones-eventos">
+                                <button type="button" class="btn btn-sm btn-ver-evento" data-toggle="modal" data-target="#modalVerEvento"
+                                    data-id="{{ evento.id }}"
+                                    data-nombre="{{ evento.nombre }}"
+                                    data-cliente="{{ evento.cliente.nombre }} {{ evento.cliente.apellido }}"
+                                    data-servicio="{% if evento.servicio %}{{ evento.servicio.nombre }} - Bs. {{ evento.servicio.precio|floatformat:2 }}{% else %}-{% endif %}"
+                                    data-fecha-inicio="{{ evento.fecha_inicio|date:'d/m/Y H:i' }}"
+                                    data-fecha-fin="{{ evento.fecha_fin|date:'d/m/Y H:i' }}"
+                                    data-ubicacion="{{ evento.ubicacion|default:'-' }}"
+                                    data-estado="{{ evento.get_estado_display }}"
+                                    data-descripcion="{{ evento.descripcion|default:'-' }}"
+                                    data-paquete-id="{{ evento.paquete.id|default:'' }}"
+                                    data-paquete-nombre="{{ evento.paquete.nombre|default:'No asignado' }}"
+                                    data-adicionales="{% for a in evento.adicionales.all %}{{ a.descripcion }}|{{ a.precio_unitario }}|{{ a.cantidad }}{% if not forloop.last %};{% endif %}{% endfor %}"
+                                    title="Ver"><i class="fas fa-eye"></i></button>
+                                <button type="button" class="btn btn-sm btn-editar-evento" data-toggle="modal" data-target="#modalEditarEvento"
+                                    data-id="{{ evento.id }}"
+                                    data-action="{% url 'eventos:editar_evento' evento.id %}"
+                                    data-nombre="{{ evento.nombre }}"
+                                    data-cliente-id="{{ evento.cliente_id }}"
+                                    data-servicio-id="{{ evento.servicio.id|default:'' }}"
+                                    data-paquete-id="{{ evento.paquete.id|default:'' }}"
+                                    data-fecha-inicio="{{ evento.fecha_inicio|date:'Y-m-d\TH:i' }}"
+                                    data-fecha-fin="{{ evento.fecha_fin|date:'Y-m-d\TH:i' }}"
+                                    data-ubicacion="{{ evento.ubicacion }}"
+                                    data-descripcion="{{ evento.descripcion }}"
+                                    data-estado="{{ evento.estado }}"
+                                    data-adicionales="{% for a in evento.adicionales.all %}{{ a.descripcion }}|{{ a.precio_unitario }}|{{ a.cantidad }}{% if not forloop.last %};{% endif %}{% endfor %}"
+                                    title="Editar"><i class="fas fa-edit"></i></button>
+                                <button type="button" class="btn btn-sm btn-eliminar-evento" data-toggle="modal" data-target="#modalEliminarEvento"
+                                    data-action="{% url 'eventos:eliminar_evento' evento.id %}"
+                                    data-nombre="{{ evento.nombre }}"
+                                    title="Eliminar"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="8" class="text-center">No hay eventos registrados</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        {% if page_obj.has_other_pages %}
+        <nav class="mt-4 mb-2" aria-label="Paginación">
+            <ul class="pagination pagination-sm justify-content-center mb-0">
+                {% if page_obj.has_previous %}
+                <li class="page-item"><a class="page-link" href="?{{ querystring }}&page={{ page_obj.previous_page_number }}"><i class="fas fa-chevron-left mr-1"></i> Anterior</a></li>
+                {% endif %}
+                <li class="page-item active"><span class="page-link">{{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span></li>
+                {% if page_obj.has_next %}
+                <li class="page-item"><a class="page-link" href="?{{ querystring }}&page={{ page_obj.next_page_number }}">Siguiente <i class="fas fa-chevron-right ml-1"></i></a></li>
+                {% endif %}
+            </ul>
+        </nav>
+        {% endif %}
     </div>
 
-    {% include 'componentes/pagination.html' %}
+    <div id="eventosVistaCalendario" style="display: none;">
+        <div id="calendarioEventos"></div>
+    </div>
 </div>
 
 {% include 'gestion/eventos/modals/crear.html' %}
@@ -111,8 +177,12 @@
 {% block scripts_extra %}
 <script>
 window.PAQUETES_GLOBALES = {{ paquetes_json|safe }};
+window.EVENTOS_CALENDARIO_URL = "{% url 'eventos:api_calendario' %}";
 </script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/locales/es.global.min.js"></script>
 <script src="{% static 'js/gestion/eventos/eventos.js' %}"></script>
+<script src="{% static 'js/gestion/eventos/calendario.js' %}"></script>
 <script src="{% static 'js/gestion/eventos/modals/crear.js' %}"></script>
 <script src="{% static 'js/gestion/eventos/modals/ver.js' %}"></script>
 <script src="{% static 'js/gestion/eventos/modals/editar.js' %}"></script>

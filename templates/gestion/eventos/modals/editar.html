@@ -1,5 +1,5 @@
 <div class="modal fade" id="modalEditarEvento" tabindex="-1">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Editar Evento</h5>
@@ -57,6 +57,57 @@
                         </table>
                         <strong>Precio Total: Bs. <span id="editar_paquete_precio_total"></span></strong>
                     </div>
+
+                    <hr>
+                    <h6 class="mb-3"><i class="fas fa-plus-circle"></i> Adicionales</h6>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <input type="text" id="editar_evento_adicional_descripcion" class="form-control" placeholder="Descripción del adicional (ej: Dron)">
+                        </div>
+                        <div class="col-md-2">
+                            <input type="number" id="editar_evento_adicional_precio" class="form-control" placeholder="Precio" step="0.01" min="0">
+                        </div>
+                        <div class="col-md-2">
+                            <input type="number" id="editar_evento_adicional_cantidad" class="form-control" placeholder="Cant." value="1" min="1">
+                        </div>
+                        <div class="col-md-2">
+                            <button type="button" id="editar_evento_btn_agregar_adicional" class="btn btn-success btn-block">
+                                <i class="fas fa-plus"></i> Agregar
+                            </button>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-sm table-bordered">
+                            <thead class="bg-light">
+                                <tr>
+                                    <th>Descripción</th>
+                                    <th style="width: 100px;">Precio Unit.</th>
+                                    <th style="width: 80px;">Cant.</th>
+                                    <th style="width: 120px;">Subtotal</th>
+                                    <th style="width: 60px;"></th>
+                                </tr>
+                            </thead>
+                            <tbody id="editar_evento_adicionales_body"></tbody>
+                        </table>
+                    </div>
+                    <input type="hidden" name="adicionales_json" id="editar_evento_adicionales_json">
+
+                    <div class="row mt-3">
+                        <div class="col-md-6 offset-md-6">
+                            <div class="card bg-light">
+                                <div class="card-body py-2">
+                                    <div class="d-flex justify-content-between"><span>Total Paquete:</span> <span>Bs. <span id="editar_evento_total_paquete">0.00</span></span></div>
+                                    <div class="d-flex justify-content-between"><span>Total Adicionales:</span> <span>Bs. <span id="editar_evento_total_adicionales">0.00</span></span></div>
+                                    <hr class="my-1">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <strong>Total General:</strong>
+                                        <span class="h4 mb-0">Bs. <span id="editar_evento_total_general">0.00</span></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
@@ -80,14 +131,6 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Presupuesto (Bs.)</label>
-                                <input type="number" name="presupuesto" id="editar_evento_presupuesto" step="0.01" class="form-control">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
                                 <label>Estado</label>
                                 <select name="estado" id="editar_evento_estado" class="form-control">
                                     <option value="planificado">Planificado</option>
@@ -98,7 +141,6 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-6"></div>
                     </div>
                     <div class="form-group">
                         <label>Descripción</label>
