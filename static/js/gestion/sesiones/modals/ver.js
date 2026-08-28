@@ -7,9 +7,12 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('ver_fecha').textContent = this.dataset.fecha || '-';
             document.getElementById('ver_hora').textContent = this.dataset.hora || '-';
             document.getElementById('ver_lugar').textContent = this.dataset.lugar || '-';
-            document.getElementById('ver_precio').textContent = 'Bs. ' + (this.dataset.precio || '0');
             document.getElementById('ver_estado').textContent = this.dataset.estado || '-';
             document.getElementById('ver_observacion').textContent = this.dataset.observacion || '-';
+
+            if (typeof window.mostrarItemsVerSesion === 'function') {
+                window.mostrarItemsVerSesion(this.dataset.adicionales || '', this.dataset.total || '0');
+            }
         });
     });
 });

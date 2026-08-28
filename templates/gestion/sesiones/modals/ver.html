@@ -1,6 +1,6 @@
 {% load static %}
 <div class="modal fade" id="modalVerSesion" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title"><i class="fas fa-calendar-check"></i> Detalle de la Sesión</h5>
@@ -14,10 +14,38 @@
                     <dt class="col-sm-3">Fecha</dt><dd class="col-sm-9" id="ver_fecha"></dd>
                     <dt class="col-sm-3">Hora</dt><dd class="col-sm-9" id="ver_hora"></dd>
                     <dt class="col-sm-3">Lugar</dt><dd class="col-sm-9" id="ver_lugar"></dd>
-                    <dt class="col-sm-3">Precio (Bs)</dt><dd class="col-sm-9" id="ver_precio"></dd>
                     <dt class="col-sm-3">Estado</dt><dd class="col-sm-9" id="ver_estado"></dd>
                     <dt class="col-sm-3">Observación</dt><dd class="col-sm-9" id="ver_observacion"></dd>
                 </dl>
+
+                <div id="verSesionItemsDetalles">
+                    <h6 class="mb-2"><i class="fas fa-list"></i> Servicios e ítems</h6>
+                    <div class="table-responsive">
+                        <table class="table table-sm table-bordered">
+                            <thead class="bg-light">
+                                <tr>
+                                    <th>Descripción</th>
+                                    <th>Precio Unit.</th>
+                                    <th>Cant.</th>
+                                    <th>Subtotal</th>
+                                </tr>
+                            </thead>
+                            <tbody id="verSesionItemsDetallesBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row mt-2 mb-3">
+                    <div class="col-md-6 offset-md-6">
+                        <div class="card bg-light">
+                            <div class="card-body py-2">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <strong>Total:</strong>
+                                    <span class="h4 mb-0">Bs. <span id="verSesionTotal">0.00</span></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cerrar</button>

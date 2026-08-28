@@ -3,5 +3,8 @@ document.addEventListener('DOMContentLoaded', function () {
     if (!modal) return;
     modal.addEventListener('hidden.bs.modal', function () {
         modal.querySelector('form').reset();
+        if (typeof window.gestorAdicionalesCrearSesion !== 'undefined') {
+            window.gestorAdicionalesCrearSesion.reset();
+        }
     });
 });

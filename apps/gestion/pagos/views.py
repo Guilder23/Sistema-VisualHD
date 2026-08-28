@@ -55,16 +55,17 @@ def listar_pagos(request):
 
     # Obtener sesiones pendientes de pago
     sesiones_pendientes = []
-    for sesion in Sesion.objects.select_related('cliente').all():
+    for sesion in Sesion.objects.select_related('cliente').prefetch_related('adicionales').all():
         pagos_sesion = Pago.objects.filter(sesion=sesion)
         total_pagado = sum(p.monto_pagado for p in pagos_sesion)
-        pendiente = sesion.precio - total_pagado
+        total_sesion = sesion.total_general()
+        pendiente = total_sesion - total_pagado
         if pendiente > 0:
             sesiones_pendientes.append({
                 'tipo': 'sesion',
                 'objeto': sesion,
                 'cliente': sesion.cliente,
-                'total': sesion.precio,
+                'total': total_sesion,
                 'pagado': total_pagado,
                 'pendiente': pendiente,
                 'pagos': pagos_sesion,
@@ -212,7 +213,7 @@ def amortizar_pago(request):
                 pago = Pago.objects.create(
                     cliente=sesion.cliente,
                     sesion=sesion,
-                    monto=sesion.precio,
+                    monto=sesion.total_general(),
                     monto_pagado=Decimal('0'),
                     metodo_pago=metodo_pago,
                     fecha_pago=fecha_amortizacion,
