@@ -134,6 +134,9 @@
                                     data-estado="{{ evento.estado }}"
                                     data-adicionales="{% for a in evento.adicionales.all %}{{ a.descripcion }}|{{ a.precio_unitario }}|{{ a.cantidad }}{% if not forloop.last %};{% endif %}{% endfor %}"
                                     title="Editar"><i class="fas fa-edit"></i></button>
+                                <a href="{% url 'eventos:pdf_evento' evento.id %}" class="btn btn-secondary btn-sm" target="_blank" title="Generar PDF">
+                                    <i class="fas fa-file-pdf"></i>
+                                </a>
                                 <button type="button" class="btn btn-sm btn-eliminar-evento" data-toggle="modal" data-target="#modalEliminarEvento"
                                     data-action="{% url 'eventos:eliminar_evento' evento.id %}"
                                     data-nombre="{{ evento.nombre }}"

@@ -1,11 +1,12 @@
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.core.paginator import Paginator
 from django.db.models import Q
-from django.http import JsonResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 import json
 
 from .models import Evento, AdicionalEvento
+from .pdf import generar_pdf_evento
 from apps.gestion.clientes.models import Cliente
 from apps.gestion.empleados.models import Empleado
 from apps.gestion.servicios.models import Servicio
@@ -244,3 +245,19 @@ def obtener_eventos_calendario(request):
             }
         })
     return JsonResponse({'eventos': data})
+
+
+@login_required
+@user_passes_test(lambda u: u.is_staff, login_url='/login/')
+def pdf_evento(request, pk):
+    evento = get_object_or_404(
+        Evento.objects.select_related('cliente', 'servicio', 'paquete').prefetch_related(
+            'empleados_asignados', 'adicionales'
+        ),
+        pk=pk,
+    )
+    buffer = generar_pdf_evento(evento)
+    nombre = f'cotizacion_evento_{evento.pk}.pdf'
+    response = HttpResponse(buffer.getvalue(), content_type='application/pdf')
+    response['Content-Disposition'] = f'inline; filename="{nombre}"'
+    return response

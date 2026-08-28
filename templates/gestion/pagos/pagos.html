@@ -13,13 +13,35 @@
     <div class="page-header">
         <div class="page-header-content">
             <h1 class="page-title"><i class="fas fa-money-bill-wave"></i> Gestión de Cobros</h1>
-            <p class="page-subtitle">Pagos pendientes de clientes</p>
+            <p class="page-subtitle">
+                {% if tab == 'completados' %}
+                Cobros completados de clientes
+                {% else %}
+                Pagos pendientes de clientes
+                {% endif %}
+            </p>
         </div>
     </div>
+
+    <ul class="nav nav-pills mb-3 pagos-tabs" id="pagosTabs">
+        <li class="nav-item">
+            <a class="nav-link {% if tab == 'pendientes' %}active{% endif %}"
+               href="?tab=pendientes{% if q %}&q={{ q }}{% endif %}{% if tipo %}&tipo={{ tipo }}{% endif %}">
+                Pendientes
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if tab == 'completados' %}active{% endif %}"
+               href="?tab=completados{% if q %}&q={{ q }}{% endif %}{% if tipo %}&tipo={{ tipo }}{% endif %}">
+                Completados
+            </a>
+        </li>
+    </ul>
 
     <div class="card card-filtros mb-3">
         <div class="card-body py-3">
             <form method="get" class="row align-items-center">
+                <input type="hidden" name="tab" value="{{ tab }}">
                 <div class="col-md-6 mb-2 mb-md-0">
                     <input type="text" class="form-control form-control-sm" name="q" value="{{ q }}" placeholder="Buscar por cliente...">
                 </div>
@@ -38,11 +60,21 @@
     </div>
 
     <div class="card card-tabla">
-        <div class="card-header bg-light"><strong>Pagos pendientes</strong></div>
+        <div class="card-header bg-light">
+            <strong>{% if tab == 'completados' %}Cobros completados{% else %}Pagos pendientes{% endif %}</strong>
+        </div>
         <div class="table-responsive">
             <table class="table table-sm mb-0 tabla-pagos">
                 <thead>
-                    <tr><th>Cliente</th><th>Tipo</th><th>Detalle</th><th>Total (Bs)</th><th>Pagado (Bs)</th><th>Pendiente (Bs)</th><th class="text-center">Acciones</th></tr>
+                    <tr>
+                        <th>Cliente</th>
+                        <th>Tipo</th>
+                        <th>Detalle</th>
+                        <th>Total (Bs)</th>
+                        <th>Pagado (Bs)</th>
+                        <th>Pendiente (Bs)</th>
+                        <th class="text-center">Acciones</th>
+                    </tr>
                 </thead>
                 <tbody>
                     {% for item in page_obj %}
@@ -58,8 +90,19 @@
                         <td>{{ item.objeto }}</td>
                         <td>{{ item.total }}</td>
                         <td>{{ item.pagado }}</td>
-                        <td><strong>{{ item.pendiente }}</strong></td>
-                        <td class="text-center">
+                        <td>
+                            {% if tab == 'completados' %}
+                                <span class="text-success">0.00</span>
+                            {% else %}
+                                <strong>{{ item.pendiente }}</strong>
+                            {% endif %}
+                        </td>
+                        <td class="text-center acciones-pagos">
+                            <a href="{% url 'pagos:pdf_cobro' item.tipo item.objeto.pk %}"
+                               class="btn btn-secondary btn-sm" target="_blank" title="Generar PDF">
+                                <i class="fas fa-file-pdf"></i>
+                            </a>
+                            {% if tab == 'pendientes' %}
                             <button type="button" class="btn btn-success btn-sm btn-amortizar" data-toggle="modal" data-target="#modalAmortizar"
                                 data-tipo="{{ item.tipo }}" data-id="{{ item.objeto.pk }}"
                                 data-nombre="{{ item.cliente }} - {{ item.objeto }}"
@@ -67,22 +110,56 @@
                                 data-pendiente="{{ item.pendiente }}">
                                 <i class="fas fa-hand-holding-usd"></i> Amortizar
                             </button>
+                            {% endif %}
                         </td>
                     </tr>
                     {% empty %}
-                    <tr><td colspan="7" class="text-center py-4">No hay pagos pendientes.</td></tr>
+                    <tr>
+                        <td colspan="7" class="text-center py-4">
+                            {% if tab == 'completados' %}
+                            No hay cobros completados.
+                            {% else %}
+                            No hay pagos pendientes.
+                            {% endif %}
+                        </td>
+                    </tr>
                     {% endfor %}
                 </tbody>
             </table>
         </div>
     </div>
 
-    {% include 'componentes/paginacion.html' %}
+    {% if page_obj.has_other_pages %}
+    <nav class="mt-4 mb-2" aria-label="Paginación">
+        <ul class="pagination pagination-sm justify-content-center mb-0">
+            {% if page_obj.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?{{ querystring }}&page={{ page_obj.previous_page_number }}">
+                    <i class="fas fa-chevron-left mr-1"></i> Anterior
+                </a>
+            </li>
+            {% endif %}
+            <li class="page-item active">
+                <span class="page-link">{{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
+            </li>
+            {% if page_obj.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?{{ querystring }}&page={{ page_obj.next_page_number }}">
+                    Siguiente <i class="fas fa-chevron-right ml-1"></i>
+                </a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+    {% endif %}
 </div>
 
 {% include 'gestion/pagos/modals/amortizar.html' %}
 {% endblock %}
 
 {% block scripts_extra %}
+<script>
+window.PAGOS_TAB = "{{ tab }}";
+</script>
 <script src="{% static 'js/gestion/pagos/pagos.js' %}"></script>
 {% endblock %}

@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const form = document.querySelector('#formAmortizar');
             document.getElementById('amortizar_tipo').value = this.dataset.tipo;
             document.getElementById('amortizar_objeto_id').value = this.dataset.id;
+            document.getElementById('amortizar_tab').value = window.PAGOS_TAB || 'pendientes';
             document.getElementById('amortizar-nombre').textContent = this.dataset.nombre;
             document.getElementById('amortizar-total').textContent = 'Bs. ' + this.dataset.total;
             document.getElementById('amortizar-pagado').textContent = 'Bs. ' + this.dataset.pagado;

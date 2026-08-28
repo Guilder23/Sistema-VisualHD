@@ -2,11 +2,14 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.core.paginator import Paginator
 from django.db.models import Q
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse
 from django.utils import timezone
 from decimal import Decimal, InvalidOperation
 
 from .models import Pago
+from .pdf import generar_pdf_cobro
 from apps.gestion.clientes.models import Cliente
 from apps.gestion.sesiones.models import Sesion
 from apps.gestion.eventos.models import Evento
@@ -47,21 +50,17 @@ def sincronizar_ingreso(pago):
     return ingreso
 
 
-@login_required
-@user_passes_test(lambda u: u.is_staff, login_url='/login/')
-def listar_pagos(request):
-    q = request.GET.get('q', '').strip()
-    tipo = request.GET.get('tipo', '').strip()
+def _obtener_cobros(q='', tipo='', tab='pendientes'):
+    cobros = []
 
-    # Obtener sesiones pendientes de pago
-    sesiones_pendientes = []
     for sesion in Sesion.objects.select_related('cliente').prefetch_related('adicionales').all():
-        pagos_sesion = Pago.objects.filter(sesion=sesion)
+        pagos_sesion = Pago.objects.filter(sesion=sesion).order_by('-fecha_pago')
         total_pagado = sum(p.monto_pagado for p in pagos_sesion)
         total_sesion = sesion.total_general()
         pendiente = total_sesion - total_pagado
-        if pendiente > 0:
-            sesiones_pendientes.append({
+        es_pendiente = pendiente > 0
+        if (tab == 'pendientes' and es_pendiente) or (tab == 'completados' and not es_pendiente and total_pagado > 0):
+            cobros.append({
                 'tipo': 'sesion',
                 'objeto': sesion,
                 'cliente': sesion.cliente,
@@ -71,14 +70,13 @@ def listar_pagos(request):
                 'pagos': pagos_sesion,
             })
 
-    # Obtener eventos pendientes de pago
-    eventos_pendientes = []
     for evento in Evento.objects.select_related('cliente').all():
-        pagos_evento = Pago.objects.filter(evento=evento)
+        pagos_evento = Pago.objects.filter(evento=evento).order_by('-fecha_pago')
         total_pagado = sum(p.monto_pagado for p in pagos_evento)
         pendiente = evento.presupuesto - total_pagado
-        if pendiente > 0:
-            eventos_pendientes.append({
+        es_pendiente = pendiente > 0
+        if (tab == 'pendientes' and es_pendiente) or (tab == 'completados' and not es_pendiente and total_pagado > 0):
+            cobros.append({
                 'tipo': 'evento',
                 'objeto': evento,
                 'cliente': evento.cliente,
@@ -88,25 +86,43 @@ def listar_pagos(request):
                 'pagos': pagos_evento,
             })
 
-    # Combinar y filtrar
-    pendientes = sesiones_pendientes + eventos_pendientes
-    
     if q:
-        pendientes = [p for p in pendientes if q.lower() in str(p['cliente']).lower()]
-    
+        cobros = [p for p in cobros if q.lower() in str(p['cliente']).lower()]
+
     if tipo:
-        pendientes = [p for p in pendientes if p['tipo'] == tipo]
+        cobros = [p for p in cobros if p['tipo'] == tipo]
 
-    # Ordenar por pendiente descendente
-    pendientes.sort(key=lambda x: x['pendiente'], reverse=True)
+    if tab == 'pendientes':
+        cobros.sort(key=lambda x: x['pendiente'], reverse=True)
+    else:
+        cobros.sort(key=lambda x: x['pagado'], reverse=True)
 
-    paginator = Paginator(pendientes, 10)
+    return cobros
+
+
+@login_required
+@user_passes_test(lambda u: u.is_staff, login_url='/login/')
+def listar_pagos(request):
+    q = request.GET.get('q', '').strip()
+    tipo = request.GET.get('tipo', '').strip()
+    tab = request.GET.get('tab', 'pendientes').strip()
+    if tab not in ('pendientes', 'completados'):
+        tab = 'pendientes'
+
+    cobros = _obtener_cobros(q=q, tipo=tipo, tab=tab)
+
+    paginator = Paginator(cobros, 10)
     page_obj = paginator.get_page(request.GET.get('page'))
-    
+
+    qs_sin_page = request.GET.copy()
+    qs_sin_page.pop('page', None)
+
     return render(request, 'gestion/pagos/pagos.html', {
         'page_obj': page_obj,
         'q': q,
         'tipo': tipo,
+        'tab': tab,
+        'querystring': qs_sin_page.urlencode(),
     })
 
 
@@ -259,4 +275,31 @@ def amortizar_pago(request):
             pago.save()
             sincronizar_ingreso(pago)
             messages.success(request, 'Amortización registrada correctamente.')
-    return redirect('pagos:listar_pagos')
+    tab = request.POST.get('tab', 'pendientes')
+    return redirect(f"{reverse('pagos:listar_pagos')}?tab={tab}")
+
+
+@login_required
+@user_passes_test(lambda u: u.is_staff, login_url='/login/')
+def pdf_cobro(request, tipo, objeto_id):
+    if tipo == 'sesion':
+        objeto = get_object_or_404(
+            Sesion.objects.select_related('cliente').prefetch_related('adicionales'),
+            pk=objeto_id,
+        )
+        pagos = Pago.objects.filter(sesion=objeto).order_by('-fecha_pago')
+        total = objeto.total_general()
+    elif tipo == 'evento':
+        objeto = get_object_or_404(Evento.objects.select_related('cliente'), pk=objeto_id)
+        pagos = Pago.objects.filter(evento=objeto).order_by('-fecha_pago')
+        total = objeto.presupuesto
+    else:
+        return redirect('pagos:listar_pagos')
+
+    pagado = sum(p.monto_pagado for p in pagos)
+    pendiente = total - pagado
+    buffer = generar_pdf_cobro(tipo, objeto, pagos, total, pagado, pendiente)
+    nombre = f'resumen_cobro_{tipo}_{objeto_id}.pdf'
+    response = HttpResponse(buffer.getvalue(), content_type='application/pdf')
+    response['Content-Disposition'] = f'inline; filename="{nombre}"'
+    return response
