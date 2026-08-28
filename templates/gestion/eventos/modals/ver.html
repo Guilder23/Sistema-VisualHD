@@ -8,7 +8,28 @@
             <div class="modal-body">
                 <p><strong>Nombre:</strong> <span id="verNombre"></span></p>
                 <p><strong>Cliente:</strong> <span id="verClienteEvento"></span></p>
-                <p><strong>Tipo / Servicio:</strong> <span id="verTipo"></span></p>
+                <p><strong>Servicio:</strong> <span id="verServicio"></span></p>
+                <p><strong>Paquete:</strong> <span id="verPaquete"></span></p>
+                <div id="verPaqueteDetalles" style="display: none;">
+                    <div class="alert alert-info">
+                        <h6 id="verPaqueteNombre"></h6>
+                        <table class="table table-sm table-bordered">
+                            <thead class="bg-light">
+                                <tr>
+                                    <th>Descripción</th>
+                                    <th>Precio Unit.</th>
+                                    <th>Cant.</th>
+                                    <th>Subtotal</th>
+                                </tr>
+                            </thead>
+                            <tbody id="verPaqueteDetallesBody"></tbody>
+                        </table>
+                        <strong>Precio Total: Bs. <span id="verPaquetePrecioTotal"></span></strong>
+                    </div>
+                </div>
+                <p><strong>Fecha Inicio:</strong> <span id="verFechaInicio"></span></p>
+                <p><strong>Fecha Fin:</strong> <span id="verFechaFin"></span></p>
+                <p><strong>Ubicación:</strong> <span id="verUbicacion"></span></p>
                 <p><strong>Estado:</strong> <span id="verEstadoEvento"></span></p>
                 <p><strong>Presupuesto:</strong> Bs. <span id="verPresupuesto"></span></p>
                 <p><strong>Descripción:</strong> <span id="verDescripcionEvento"></span></p>
@@ -19,4 +40,3 @@
         </div>
     </div>
 </div>
-

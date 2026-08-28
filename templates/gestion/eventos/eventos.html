@@ -32,7 +32,7 @@
                 <tr>
                     <th>Nombre</th>
                     <th>Cliente</th>
-                    <th>Tipo / Servicio</th>
+                    <th>Servicio</th>
                     <th>Precio</th>
                     <th>Fecha</th>
                     <th>Estado</th>
@@ -43,15 +43,53 @@
                 {% for evento in page_obj %}
                 <tr>
                     <td>{{ evento.nombre }}</td>
-                    <td>{{ evento.cliente.nombre }}</td>
-                    <td><span class="badge badge-primary">{{ evento.tipo }}</span></td>
-                    <td>Bs. {{ evento.presupuesto|floatformat:2 }}</td>
-                    <td>{{ evento.fecha_inicio|date:"d/m/Y" }}</td>
+                    <td>{{ evento.cliente.nombre }} {{ evento.cliente.apellido }}</td>
+                    <td>
+                        {% if evento.servicio %}
+                        {{ evento.servicio.nombre }}
+                        {% else %}
+                        -
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if evento.paquete %}
+                        Bs. {{ evento.paquete.precio_total|floatformat:2 }}
+                        {% else %}
+                        Bs. {{ evento.presupuesto|floatformat:2 }}
+                        {% endif %}
+                    </td>
+                    <td>{{ evento.fecha_inicio|date:"d/m/Y H:i" }}</td>
                     <td><span class="badge badge-{{ evento.estado }}">{{ evento.get_estado_display }}</span></td>
                     <td>
-                        <button class="btn btn-sm btn-info" data-toggle="modal" data-target="#modalVerEvento" data-id="{{ evento.id }}" data-nombre="{{ evento.nombre }}" data-cliente="{{ evento.cliente }}" data-tipo="{{ evento.tipo }}" data-estado="{{ evento.estado }}" data-presupuesto="{{ evento.presupuesto }}" data-descripcion="{{ evento.descripcion }}">Ver</button>
-                        <button class="btn btn-sm btn-warning" data-toggle="modal" data-target="#modalEditarEvento" data-id="{{ evento.id }}" data-action="{% url 'eventos:editar_evento' evento.id %}" data-nombre="{{ evento.nombre }}" data-cliente-id="{{ evento.cliente_id }}" data-tipo="{{ evento.tipo }}" data-fecha-inicio="{{ evento.fecha_inicio|date:'Y-m-d\TH:i' }}" data-fecha-fin="{{ evento.fecha_fin|date:'Y-m-d\TH:i' }}" data-ubicacion="{{ evento.ubicacion }}" data-presupuesto="{{ evento.presupuesto }}" data-descripcion="{{ evento.descripcion }}" data-estado="{{ evento.estado }}">Editar</button>
-                        <button class="btn btn-sm btn-danger btn-eliminar-evento" data-toggle="modal" data-target="#modalEliminarEvento" data-action="{% url 'eventos:eliminar_evento' evento.id %}" data-nombre="{{ evento.nombre }}">Eliminar</button>
+                        <button class="btn btn-sm btn-info" data-toggle="modal" data-target="#modalVerEvento"
+                            data-id="{{ evento.id }}"
+                            data-nombre="{{ evento.nombre }}"
+                            data-cliente="{{ evento.cliente.nombre }} {{ evento.cliente.apellido }}"
+                            data-servicio="{% if evento.servicio %}{{ evento.servicio.nombre }} - Bs. {{ evento.servicio.precio|floatformat:2 }}{% else %}-{% endif %}"
+                            data-fecha-inicio="{{ evento.fecha_inicio|date:'d/m/Y H:i' }}"
+                            data-fecha-fin="{{ evento.fecha_fin|date:'d/m/Y H:i' }}"
+                            data-ubicacion="{{ evento.ubicacion|default:'-' }}"
+                            data-estado="{{ evento.get_estado_display }}"
+                            data-presupuesto="{{ evento.presupuesto|floatformat:2 }}"
+                            data-descripcion="{{ evento.descripcion|default:'-' }}"
+                            data-paquete-id="{{ evento.paquete.id|default:'' }}"
+                            data-paquete-nombre="{{ evento.paquete.nombre|default:'No asignado' }}">Ver</button>
+                        <button class="btn btn-sm btn-warning" data-toggle="modal" data-target="#modalEditarEvento"
+                            data-id="{{ evento.id }}"
+                            data-action="{% url 'eventos:editar_evento' evento.id %}"
+                            data-nombre="{{ evento.nombre }}"
+                            data-cliente-id="{{ evento.cliente_id }}"
+                            data-servicio-id="{{ evento.servicio.id|default:'' }}"
+                            data-paquete-id="{{ evento.paquete.id|default:'' }}"
+                            data-fecha-inicio="{{ evento.fecha_inicio|date:'Y-m-d\TH:i' }}"
+                            data-fecha-fin="{{ evento.fecha_fin|date:'Y-m-d\TH:i' }}"
+                            data-ubicacion="{{ evento.ubicacion }}"
+                            data-presupuesto="{{ evento.presupuesto }}"
+                            data-descripcion="{{ evento.descripcion }}"
+                            data-estado="{{ evento.estado }}">Editar</button>
+                        <button class="btn btn-sm btn-danger btn-eliminar-evento" data-toggle="modal" data-target="#modalEliminarEvento"
+                            data-action="{% url 'eventos:eliminar_evento' evento.id %}"
+                            data-nombre="{{ evento.nombre }}">Eliminar</button>
                     </td>
                 </tr>
                 {% empty %}
@@ -71,6 +109,9 @@
 {% endblock %}
 
 {% block scripts_extra %}
+<script>
+window.PAQUETES_GLOBALES = {{ paquetes_json|safe }};
+</script>
 <script src="{% static 'js/gestion/eventos/eventos.js' %}"></script>
 <script src="{% static 'js/gestion/eventos/modals/crear.js' %}"></script>
 <script src="{% static 'js/gestion/eventos/modals/ver.js' %}"></script>

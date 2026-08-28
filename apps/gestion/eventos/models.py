@@ -1,4 +1,6 @@
 from django.db import models
+from apps.gestion.paquetes.models import Paquete
+from apps.gestion.servicios.models import Servicio
 
 
 class Evento(models.Model):
@@ -21,6 +23,8 @@ class Evento(models.Model):
     cliente = models.ForeignKey('clientes.Cliente', on_delete=models.CASCADE, related_name='eventos')
     nombre = models.CharField(max_length=255, verbose_name='Nombre del evento')
     tipo = models.CharField(max_length=50, choices=TIPO_CHOICES, default='otro')
+    servicio = models.ForeignKey(Servicio, on_delete=models.SET_NULL, null=True, blank=True, related_name='eventos', verbose_name='Servicio')
+    paquete = models.ForeignKey(Paquete, on_delete=models.SET_NULL, null=True, blank=True, related_name='eventos', verbose_name='Paquete')
     fecha_inicio = models.DateTimeField(verbose_name='Fecha y hora inicio')
     fecha_fin = models.DateTimeField(verbose_name='Fecha y hora fin')
     ubicacion = models.CharField(max_length=255, verbose_name='Ubicación')
