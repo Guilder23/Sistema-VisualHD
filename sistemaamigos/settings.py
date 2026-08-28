@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'apps.gestion.finanzas.apps.FinanzasConfig',
     'apps.gestion.reportes.apps.ReportesConfig',
     'apps.gestion.permisos.apps.PermisosConfig',
+    'apps.gestion.paquetes.apps.PaquetesConfig',
 ]
 
 MIDDLEWARE = [

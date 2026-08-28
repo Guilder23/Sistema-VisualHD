@@ -219,7 +219,7 @@ def amortizar_pago(request):
                     estado='pendiente',
                     observacion=observacion,
                 )
-            pago.monto_pagado += monto_amortizar
+            pago.monto_pagado = Decimal(str(pago.monto_pagado)) + monto_amortizar
             pago.metodo_pago = metodo_pago
             pago.fecha_pago = fecha_amortizacion
             if observacion:
@@ -246,7 +246,7 @@ def amortizar_pago(request):
                     estado='pendiente',
                     observacion=observacion,
                 )
-            pago.monto_pagado += monto_amortizar
+            pago.monto_pagado = Decimal(str(pago.monto_pagado)) + monto_amortizar
             pago.metodo_pago = metodo_pago
             pago.fecha_pago = fecha_amortizacion
             if observacion:

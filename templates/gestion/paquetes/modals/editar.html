@@ -1,0 +1,98 @@
+{% load static %}
+<div class="modal fade" id="modalEditarPaquete" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <form method="post" id="formEditarPaquete" action="">
+                {% csrf_token %}
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-edit"></i> Editar Paquete</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label for="editar_servicio_principal">Servicio Principal</label>
+                            <select id="editar_servicio_principal" name="servicio_principal" class="form-control">
+                                <option value="">Seleccione un servicio...</option>
+                                {% for servicio in servicios %}
+                                <option value="{{ servicio.pk }}">{{ servicio.nombre }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label for="editar_estado">Estado</label>
+                            <select id="editar_estado" name="estado" class="form-control">
+                                <option value="activo">Activo</option>
+                                <option value="inactivo">Inactivo</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="editar_nombre">Nombre del paquete</label>
+                        <input type="text" id="editar_nombre" name="nombre" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editar_descripcion">Descripción</label>
+                        <textarea id="editar_descripcion" name="descripcion" class="form-control" rows="2"></textarea>
+                    </div>
+
+                    <hr>
+                    <h6 class="mb-3"><i class="fas fa-list"></i> Detalle del Paquete</h6>
+                    
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <input type="text" id="editar_descripcion_detalle" class="form-control" placeholder="Descripción del item (ej: Registro Civil)">
+                        </div>
+                        <div class="col-md-2">
+                            <input type="number" id="editar_precio_detalle" class="form-control" placeholder="Precio" step="0.01" min="0">
+                        </div>
+                        <div class="col-md-2">
+                            <input type="number" id="editar_cantidad_detalle" class="form-control" placeholder="Cant." value="1" min="1">
+                        </div>
+                        <div class="col-md-2">
+                            <button type="button" id="btnAgregarDetalleEditar" class="btn btn-success btn-block">
+                                <i class="fas fa-plus"></i> Agregar
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-sm table-bordered" id="tablaDetallesEditar">
+                            <thead class="bg-light">
+                                <tr>
+                                    <th>Descripción</th>
+                                    <th style="width: 100px;">Precio Unit.</th>
+                                    <th style="width: 80px;">Cant.</th>
+                                    <th style="width: 120px;">Subtotal</th>
+                                    <th style="width: 60px;"></th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbodyDetallesEditar">
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="col-md-6 offset-md-6">
+                            <div class="card bg-light">
+                                <div class="card-body py-2">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <strong>Total:</strong>
+                                        <span class="h4 mb-0">Bs <span id="editar_total">0.00</span></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <input type="hidden" id="editar_precio_total" name="precio_total" value="0">
+                    <input type="hidden" name="detalles_json" id="editar_detalles_json">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

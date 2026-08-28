@@ -22,6 +22,11 @@
                 </a>
             </li>
             <li class="sidebar-item">
+                <a href="{% url 'paquetes:listar_paquetes' %}" class="sidebar-link {% if '/gestion/paquetes/' in request.path %}active{% endif %}">
+                    <i class="fas fa-box-open"></i><span>Paquetes</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
                 <a href="{% url 'sesiones:listar_sesiones' %}" class="sidebar-link {% if '/gestion/sesiones/' in request.path %}active{% endif %}">
                     <i class="fas fa-calendar-check"></i><span>Sesiones</span>
                 </a>
