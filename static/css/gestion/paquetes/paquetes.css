@@ -38,3 +38,39 @@
     background-color: #DC2626;
     color: #FFFFFF !important;
 }
+
+/* ============================================================================
+   MODO OSCURO - Dark Mode
+   ============================================================================ */
+body.dark-mode .btn-ver-paquete {
+    background-color: rgba(2, 132, 199, 0.1);
+    color: #38BDF8 !important;
+    border-color: rgba(2, 132, 199, 0.3);
+}
+
+body.dark-mode .btn-ver-paquete:hover {
+    background-color: #0284C7;
+    color: #FFFFFF !important;
+}
+
+body.dark-mode .btn-editar-paquete {
+    background-color: rgba(212, 160, 23, 0.1);
+    color: #FBBF24 !important;
+    border-color: rgba(212, 160, 23, 0.3);
+}
+
+body.dark-mode .btn-editar-paquete:hover {
+    background-color: #D4A017;
+    color: #FFFFFF !important;
+}
+
+body.dark-mode .btn-eliminar-paquete {
+    background-color: rgba(239, 68, 68, 0.1);
+    color: #F87171 !important;
+    border-color: rgba(239, 68, 68, 0.3);
+}
+
+body.dark-mode .btn-eliminar-paquete:hover {
+    background-color: #DC2626;
+    color: #FFFFFF !important;
+}

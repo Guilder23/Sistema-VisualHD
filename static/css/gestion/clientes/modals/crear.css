@@ -1,3 +1,7 @@
 #modalCrearCliente .modal-header {
     background-color: #f8f9fa;
 }
+
+body.dark-mode #modalCrearCliente .modal-header {
+    background-color: var(--dark-bg-card);
+}

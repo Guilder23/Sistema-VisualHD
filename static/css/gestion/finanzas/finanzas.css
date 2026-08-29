@@ -33,3 +33,20 @@
         gap: 0.35rem;
     }
 }
+
+/* ============================================================================
+   MODO OSCURO - Dark Mode
+   ============================================================================ */
+body.dark-mode .card-finanzas {
+    border-color: var(--dark-borde);
+}
+
+body.dark-mode .gastos-card .card-header {
+    background: var(--dark-bg-card);
+    border-bottom-color: var(--dark-borde);
+}
+
+body.dark-mode .gastos-card .table th {
+    color: var(--dark-texto-secundario);
+    background-color: var(--dark-table-header);
+}

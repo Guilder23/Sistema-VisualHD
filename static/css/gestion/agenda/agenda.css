@@ -32,6 +32,44 @@
     border: 1px solid #FDE68A !important;
 }
 
+body.dark-mode .badge-programada {
+    background-color: rgba(200, 29, 49, 0.1) !important;
+    color: #F87171 !important;
+    border: 1px solid rgba(200, 29, 49, 0.3) !important;
+}
+
+body.dark-mode .badge-confirmada {
+    background-color: rgba(16, 185, 129, 0.1) !important;
+    color: #34D399 !important;
+    border: 1px solid rgba(16, 185, 129, 0.3) !important;
+}
+
+body.dark-mode .badge-completada {
+    background-color: rgba(2, 132, 199, 0.1) !important;
+    color: #38BDF8 !important;
+    border: 1px solid rgba(2, 132, 199, 0.3) !important;
+}
+
+body.dark-mode .badge-cancelada {
+    background-color: rgba(239, 68, 68, 0.1) !important;
+    color: #F87171 !important;
+    border: 1px solid rgba(239, 68, 68, 0.3) !important;
+}
+
+body.dark-mode .badge-reprogramada {
+    background-color: rgba(245, 158, 11, 0.1) !important;
+    color: #FBBF24 !important;
+    border: 1px solid rgba(245, 158, 11, 0.3) !important;
+}
+
+body.dark-mode #calendarioCitas {
+    background-color: var(--dark-bg-card);
+}
+
+body.dark-mode .agenda-leyenda {
+    color: var(--dark-texto-muted);
+}
+
 #calendarioCitas {
     min-height: 540px;
     background-color: #FFFFFF;

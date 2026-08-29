@@ -164,3 +164,39 @@
 
 .status-ok { background-color: #10B981; }
 .status-warning { background-color: #F59E0B; }
+
+/* ============================================================================
+   MODO OSCURO - Dark Mode
+   ============================================================================ */
+body.dark-mode .stat-card {
+    border-color: var(--dark-borde);
+}
+
+body.dark-mode .stat-label {
+    color: var(--dark-texto-muted);
+}
+
+body.dark-mode .stat-value {
+    color: var(--dark-texto);
+}
+
+body.dark-mode .quick-card {
+    background-color: var(--dark-bg-muted);
+    border-color: var(--dark-borde);
+    color: var(--dark-texto);
+}
+
+body.dark-mode .quick-card:hover {
+    background-color: var(--dark-bg-card);
+    border-color: var(--crimson);
+    color: var(--crimson);
+}
+
+body.dark-mode .quick-card p {
+    color: var(--dark-texto-muted);
+}
+
+body.dark-mode .system-status-item {
+    background-color: var(--dark-bg-muted);
+    border-color: var(--dark-borde);
+}
