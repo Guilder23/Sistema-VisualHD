@@ -2,3 +2,7 @@
 #modalCrearEvento .modal-content {
     border-radius: var(--radio-xl, 16px);
 }
+
+body.dark-mode #modalCrearEvento .modal-content {
+    border-color: var(--dark-borde);
+}

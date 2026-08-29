@@ -15,3 +15,12 @@
 .tabla-usuarios td {
     vertical-align: middle;
 }
+
+/* ============================================================================
+   MODO OSCURO - Dark Mode
+   ============================================================================ */
+body.dark-mode .tabla-usuarios thead th {
+    background-color: var(--dark-table-header);
+    color: var(--dark-texto-secundario);
+    border-bottom-color: var(--dark-borde);
+}

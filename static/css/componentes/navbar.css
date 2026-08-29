@@ -310,3 +310,135 @@
         display: flex;
     }
 }
+
+/* ============================================================================
+   MODO OSCURO - Dark Mode
+   ============================================================================ */
+body.dark-mode .navbar-principal {
+    background-color: var(--dark-bg-surface);
+    border-bottom-color: var(--dark-borde);
+}
+
+body.dark-mode .sidebar-toggle-btn {
+    background: transparent;
+    border-color: var(--dark-borde);
+    color: var(--dark-texto-secundario);
+}
+
+body.dark-mode .sidebar-toggle-btn:hover {
+    background: rgba(200, 29, 49, 0.1);
+    color: var(--crimson);
+    border-color: var(--crimson);
+}
+
+body.dark-mode .navbar-brand-text .brand-primary {
+    color: var(--dark-texto);
+}
+
+body.dark-mode .navbar-web-link {
+    background-color: var(--dark-bg-muted);
+    border-color: var(--dark-borde);
+    color: var(--dark-texto-secundario);
+}
+
+body.dark-mode .navbar-web-link:hover {
+    background-color: rgba(200, 29, 49, 0.1);
+    border-color: var(--crimson);
+    color: var(--crimson);
+}
+
+body.dark-mode .navbar-user-btn {
+    background: var(--dark-bg-surface);
+    border-color: var(--dark-borde);
+    color: var(--dark-texto);
+}
+
+body.dark-mode .navbar-user-btn:hover,
+body.dark-mode .navbar-user-btn:focus {
+    border-color: var(--crimson);
+    background: var(--dark-bg-muted);
+}
+
+body.dark-mode .user-name {
+    color: var(--dark-texto);
+}
+
+body.dark-mode .user-role {
+    color: var(--dark-texto-muted);
+}
+
+body.dark-mode .user-chevron {
+    color: var(--dark-texto-muted);
+}
+
+body.dark-mode .navbar-dropdown {
+    background: var(--dark-dropdown-bg);
+    border-color: var(--dark-borde);
+}
+
+body.dark-mode .dropdown-header-user {
+    background-color: var(--dark-bg-muted);
+}
+
+body.dark-mode .dropdown-header-user strong {
+    color: var(--dark-texto);
+}
+
+body.dark-mode .dropdown-header-user span {
+    color: var(--dark-texto-muted);
+}
+
+body.dark-mode .dropdown-divider {
+    background-color: var(--dark-borde);
+}
+
+body.dark-mode .dropdown-item {
+    color: var(--dark-texto-secundario);
+}
+
+body.dark-mode .dropdown-item i {
+    color: var(--dark-texto-muted);
+}
+
+body.dark-mode .dropdown-item:hover {
+    background-color: rgba(200, 29, 49, 0.1);
+    color: var(--crimson);
+}
+
+body.dark-mode .dropdown-item:hover i {
+    color: var(--crimson);
+}
+
+/* Botón de modo oscuro */
+.dark-mode-toggle {
+    background: transparent;
+    border: 1px solid var(--border-color, #E2E8F0);
+    color: #475569;
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 0;
+    border-radius: var(--radio-md, 8px);
+    transition: var(--transicion, all 0.2s ease);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+}
+
+.dark-mode-toggle:hover {
+    background: var(--crimson-soft, #FDF2F4);
+    color: var(--crimson, #C81D31);
+    border-color: var(--crimson-border, #F5CCD2);
+}
+
+body.dark-mode .dark-mode-toggle {
+    border-color: var(--dark-borde);
+    color: var(--dark-texto-secundario);
+}
+
+body.dark-mode .dark-mode-toggle:hover {
+    background: rgba(200, 29, 49, 0.1);
+    color: var(--crimson);
+    border-color: var(--crimson);
+}

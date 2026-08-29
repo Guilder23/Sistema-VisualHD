@@ -32,6 +32,36 @@
     border: 1px solid #FECACA !important;
 }
 
+body.dark-mode .badge-planificado {
+    background-color: rgba(51, 65, 85, 0.3) !important;
+    color: #CBD5E1 !important;
+    border: 1px solid rgba(51, 65, 85, 0.5) !important;
+}
+
+body.dark-mode .badge-confirmado {
+    background-color: rgba(16, 185, 129, 0.1) !important;
+    color: #34D399 !important;
+    border: 1px solid rgba(16, 185, 129, 0.3) !important;
+}
+
+body.dark-mode .badge-en_progreso {
+    background-color: rgba(200, 29, 49, 0.1) !important;
+    color: #F87171 !important;
+    border: 1px solid rgba(200, 29, 49, 0.3) !important;
+}
+
+body.dark-mode .badge-completado {
+    background-color: rgba(2, 132, 199, 0.1) !important;
+    color: #38BDF8 !important;
+    border: 1px solid rgba(2, 132, 199, 0.3) !important;
+}
+
+body.dark-mode .badge-cancelado {
+    background-color: rgba(239, 68, 68, 0.1) !important;
+    color: #F87171 !important;
+    border: 1px solid rgba(239, 68, 68, 0.3) !important;
+}
+
 .tabla-eventos td {
     vertical-align: middle;
 }

@@ -351,3 +351,83 @@
     background: transparent;
     border-color: transparent;
 }
+
+/* ============================================================================
+   MODO OSCURO - Dark Mode
+   ============================================================================ */
+body.dark-mode .sidebar {
+    background-color: var(--dark-bg-surface);
+    border-right-color: var(--dark-borde);
+}
+
+body.dark-mode .sidebar-header {
+    background-color: var(--dark-bg-surface);
+    border-bottom-color: var(--dark-borde);
+}
+
+body.dark-mode .brand-text-main {
+    color: var(--dark-texto);
+}
+
+body.dark-mode .brand-text-sub {
+    color: var(--dark-texto-muted);
+}
+
+body.dark-mode .sidebar-collapse-btn {
+    background: var(--dark-bg-surface);
+    border-color: var(--dark-borde);
+    color: var(--dark-texto-muted);
+}
+
+body.dark-mode .sidebar-collapse-btn:hover {
+    background: rgba(200, 29, 49, 0.1);
+    color: var(--crimson);
+    border-color: var(--crimson);
+}
+
+body.dark-mode .sidebar-section-title {
+    color: var(--dark-texto-muted);
+}
+
+body.dark-mode .sidebar-link {
+    color: var(--dark-texto-secundario);
+}
+
+body.dark-mode .sidebar-link i {
+    color: var(--dark-texto-muted);
+}
+
+body.dark-mode .sidebar-link:hover {
+    background-color: rgba(200, 29, 49, 0.1);
+    color: var(--crimson);
+}
+
+body.dark-mode .sidebar-link:hover i {
+    color: var(--crimson);
+}
+
+body.dark-mode .sidebar-footer {
+    background-color: var(--dark-bg-surface);
+    border-top-color: var(--dark-borde);
+}
+
+body.dark-mode .sidebar-user {
+    background-color: var(--dark-bg-muted);
+    border-color: var(--dark-borde);
+}
+
+body.dark-mode .sidebar-user-info strong {
+    color: var(--dark-texto);
+}
+
+body.dark-mode .sidebar-user-info small {
+    color: var(--dark-texto-muted);
+}
+
+body.dark-mode .sidebar-nav::-webkit-scrollbar-thumb {
+    background: var(--dark-borde);
+}
+
+body.dark-mode .sidebar-nav::-webkit-scrollbar-thumb:hover {
+    background: var(--dark-texto-muted);
+}

@@ -87,3 +87,32 @@
         gap: 0.75rem;
     }
 }
+
+/* ============================================================================
+   MODO OSCURO - Dark Mode
+   ============================================================================ */
+body.dark-mode .footer {
+    background-color: var(--dark-bg-surface);
+    border-top-color: var(--dark-borde);
+    color: var(--dark-texto-muted);
+}
+
+body.dark-mode .footer-brand {
+    color: var(--dark-texto-secundario);
+}
+
+body.dark-mode .footer-copyright {
+    color: var(--dark-texto-muted);
+}
+
+body.dark-mode .footer-links a {
+    color: var(--dark-texto-muted);
+}
+
+body.dark-mode .footer-links a:hover {
+    color: var(--crimson);
+}
+
+body.dark-mode .footer-separator {
+    color: var(--dark-texto-muted);
+}

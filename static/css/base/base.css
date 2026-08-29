@@ -23,6 +23,46 @@ body.sidebar-collapsed .main-container {
     background-color: var(--bg-body, #F8F9FA);
 }
 
+/* ============================================================================
+   MODO OSCURO - Dark Mode
+   ============================================================================ */
+body.dark-mode .content {
+    background-color: var(--dark-bg-body);
+}
+
+body.dark-mode .sidebar-overlay {
+    background: rgba(0, 0, 0, 0.6);
+}
+
+body.dark-mode .alert-success {
+    background-color: rgba(16, 185, 129, 0.1);
+    color: #34D399;
+    border-color: rgba(16, 185, 129, 0.2);
+    border-left-color: #10B981;
+}
+
+body.dark-mode .alert-danger,
+body.dark-mode .alert-error {
+    background-color: rgba(239, 68, 68, 0.1);
+    color: #F87171;
+    border-color: rgba(239, 68, 68, 0.2);
+    border-left-color: #EF4444;
+}
+
+body.dark-mode .alert-warning {
+    background-color: rgba(245, 158, 11, 0.1);
+    color: #FBBF24;
+    border-color: rgba(245, 158, 11, 0.2);
+    border-left-color: #F59E0B;
+}
+
+body.dark-mode .alert-info {
+    background-color: rgba(2, 132, 199, 0.1);
+    color: #38BDF8;
+    border-color: rgba(2, 132, 199, 0.2);
+    border-left-color: #0284C7;
+}
+
 /* Overlay para dispositivos móviles */
 .sidebar-overlay {
     position: fixed;
