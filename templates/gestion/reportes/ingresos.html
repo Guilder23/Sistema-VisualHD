@@ -3,59 +3,74 @@
 
 {% block titulo %}Reporte de Ingresos - VisualHD{% endblock %}
 
+{% block estilos_extra %}
+<link rel="stylesheet" href="{% static 'css/gestion/reportes/reportes.css' %}">
+{% endblock %}
+
 {% block contenido %}
-<div class="container-fluid py-4">
-    <h2 class="mb-3"><i class="fas fa-arrow-up text-success"></i> Reporte de Ingresos</h2>
-    
-    <div class="row mb-3">
-        <div class="col-md-4">
-            <input type="date" id="fechaInicio" class="form-control" value="{{ fecha_inicio }}" placeholder="Fecha inicio">
-        </div>
-        <div class="col-md-4">
-            <input type="date" id="fechaFin" class="form-control" value="{{ fecha_fin }}" placeholder="Fecha fin">
-        </div>
-        <div class="col-md-4">
-            <button class="btn btn-primary" onclick="filtrar()">Filtrar</button>
+<div class="container-fluid py-4 reporte-detalle" data-tiene-monto="true">
+    <a href="{% url 'reportes:reportes_inicio' %}" class="reporte-volver"><i class="fas fa-arrow-left"></i> Volver a reportes</a>
+    <div class="page-header-reporte">
+        <h2><i class="fas fa-arrow-up text-success"></i> Reporte de Ingresos</h2>
+    </div>
+
+    <div class="card card-filtros-reporte">
+        <div class="card-body">
+            <form class="reporte-filtros-form" data-pdf-url="{% url pdf_url %}">
+                <input type="text" name="q" class="form-control form-control-sm filtro-busqueda" placeholder="Buscar concepto o cliente..." value="{{ filtros.q }}">
+                <input type="date" name="fecha_inicio" class="form-control form-control-sm" value="{{ filtros.fecha_inicio }}" title="Fecha inicio">
+                <input type="date" name="fecha_fin" class="form-control form-control-sm" value="{{ filtros.fecha_fin }}" title="Fecha fin">
+                <select name="categoria" class="form-control form-control-sm">
+                    <option value="">Todas las categorías</option>
+                    {% for val, label in categorias %}
+                    <option value="{{ val }}" {% if filtros.categoria == val %}selected{% endif %}>{{ label }}</option>
+                    {% endfor %}
+                </select>
+                <button type="button" class="btn btn-pdf-reporte" title="Descargar PDF"><i class="fas fa-file-pdf"></i></button>
+            </form>
         </div>
     </div>
 
-    <div class="alert alert-success">
-        <h5>Total Ingresos: Bs. {{ total|floatformat:2 }}</h5>
+    <div class="reporte-resumen">
+        <div class="resumen-card resumen-success">
+            <div class="resumen-label">Total ingresos</div>
+            <div class="resumen-valor" data-resumen-valor>Bs. {{ total|floatformat:2 }}</div>
+        </div>
+        <div class="resumen-card resumen-info">
+            <div class="resumen-label">Registros</div>
+            <div class="resumen-valor" data-resumen-registros>{{ ingresos|length }}</div>
+        </div>
     </div>
 
-    <div class="table-responsive">
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Fecha</th>
-                    <th>Concepto</th>
-                    <th>Categoría</th>
-                    <th>Cliente</th>
-                    <th>Monto (Bs.)</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for ingreso in ingresos %}
-                <tr>
-                    <td>{{ ingreso.fecha|date:"d/m/Y" }}</td>
-                    <td>{{ ingreso.concepto }}</td>
-                    <td>{{ ingreso.get_categoria_display }}</td>
-                    <td>{{ ingreso.cliente.nombre|default:"-" }}</td>
-                    <td class="text-right">Bs. {{ ingreso.monto|floatformat:2 }}</td>
-                </tr>
-                {% empty %}
-                <tr><td colspan="5" class="text-center">Sin registros</td></tr>
-                {% endfor %}
-            </tbody>
-        </table>
+    <div class="card card-tabla-reporte">
+        <div class="card-header">Detalle de ingresos</div>
+        <div class="table-responsive">
+            <table class="table table-sm tabla-reporte mb-0">
+                <thead>
+                    <tr><th>Fecha</th><th>Concepto</th><th>Categoría</th><th>Cliente</th><th class="text-right">Monto (Bs.)</th></tr>
+                </thead>
+                <tbody>
+                    {% for ingreso in ingresos %}
+                    <tr data-search="{{ ingreso.concepto|lower }} {{ ingreso.cliente|lower }}"
+                        data-categoria="{{ ingreso.categoria }}"
+                        data-fecha="{{ ingreso.fecha|date:'Y-m-d' }}"
+                        data-monto="{{ ingreso.monto }}">
+                        <td>{{ ingreso.fecha|date:"d/m/Y" }}</td>
+                        <td>{{ ingreso.concepto }}</td>
+                        <td>{{ ingreso.get_categoria_display }}</td>
+                        <td>{{ ingreso.cliente }}</td>
+                        <td class="text-right">Bs. {{ ingreso.monto|floatformat:2 }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="5" class="text-center py-4">Sin registros</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
+{% endblock %}
 
-<script>
-function filtrar() {
-    const inicio = document.getElementById('fechaInicio').value;
-    const fin = document.getElementById('fechaFin').value;
-    window.location.href = `?fecha_inicio=${inicio}&fecha_fin=${fin}`;
-}
-</script>
+{% block scripts_extra %}
+<script src="{% static 'js/gestion/reportes/reportes-detalle.js' %}"></script>
 {% endblock %}

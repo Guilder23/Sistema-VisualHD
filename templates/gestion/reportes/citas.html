@@ -3,39 +3,70 @@
 
 {% block titulo %}Reporte de Citas - VisualHD{% endblock %}
 
+{% block estilos_extra %}
+<link rel="stylesheet" href="{% static 'css/gestion/reportes/reportes.css' %}">
+{% endblock %}
+
 {% block contenido %}
-<div class="container-fluid py-4">
-    <h2 class="mb-3"><i class="fas fa-calendar-check"></i> Reporte de Citas</h2>
-    
-    <div class="alert alert-info">
-        <h5>Total Citas: {{ total }}</h5>
+<div class="container-fluid py-4 reporte-detalle" data-tiene-monto="false">
+    <a href="{% url 'reportes:reportes_inicio' %}" class="reporte-volver"><i class="fas fa-arrow-left"></i> Volver a reportes</a>
+    <div class="page-header-reporte">
+        <h2><i class="fas fa-calendar-check text-info"></i> Reporte de Citas</h2>
     </div>
 
-    <div class="table-responsive">
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Cliente</th>
-                    <th>Fecha</th>
-                    <th>Empleado</th>
-                    <th>Duración</th>
-                    <th>Estado</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for cita in citas %}
-                <tr>
-                    <td>{{ cita.cliente.nombre }} {{ cita.cliente.apellido }}</td>
-                    <td>{{ cita.fecha|date:"d/m/Y H:i" }}</td>
-                    <td>{{ cita.empleado.nombre|default:"-" }}</td>
-                    <td>{{ cita.duracion_minutos }} min</td>
-                    <td><span class="badge badge-info">{{ cita.get_estado_display }}</span></td>
-                </tr>
-                {% empty %}
-                <tr><td colspan="5" class="text-center">Sin registros</td></tr>
-                {% endfor %}
-            </tbody>
-        </table>
+    <div class="card card-filtros-reporte">
+        <div class="card-body">
+            <form class="reporte-filtros-form" data-pdf-url="{% url pdf_url %}">
+                <input type="text" name="q" class="form-control form-control-sm filtro-busqueda" placeholder="Buscar cliente o empleado..." value="{{ filtros.q }}">
+                <input type="date" name="fecha_inicio" class="form-control form-control-sm" value="{{ filtros.fecha_inicio }}">
+                <input type="date" name="fecha_fin" class="form-control form-control-sm" value="{{ filtros.fecha_fin }}">
+                <select name="estado" class="form-control form-control-sm">
+                    <option value="">Todos los estados</option>
+                    {% for val, label in estados %}
+                    <option value="{{ val }}" {% if filtros.estado == val %}selected{% endif %}>{{ label }}</option>
+                    {% endfor %}
+                </select>
+                <button type="button" class="btn btn-pdf-reporte" title="Descargar PDF"><i class="fas fa-file-pdf"></i></button>
+            </form>
+        </div>
+    </div>
+
+    <div class="reporte-resumen">
+        <div class="resumen-card resumen-info">
+            <div class="resumen-label">Total citas</div>
+            <div class="resumen-valor" data-resumen-registros>{{ total }}</div>
+        </div>
+    </div>
+
+    <div class="card card-tabla-reporte">
+        <div class="card-header">Listado de citas</div>
+        <div class="table-responsive">
+            <table class="table table-sm tabla-reporte mb-0">
+                <thead>
+                    <tr><th>Cliente</th><th>Fecha</th><th>Empleado</th><th>Duración</th><th>Ubicación</th><th>Estado</th></tr>
+                </thead>
+                <tbody>
+                    {% for cita in citas %}
+                    <tr data-search="{{ cita.cliente.nombre|lower }} {{ cita.cliente.apellido|lower }} {{ cita.empleado.nombre|default:''|lower }} {{ cita.ubicacion|lower }}"
+                        data-estado="{{ cita.estado }}"
+                        data-fecha="{{ cita.fecha|date:'Y-m-d' }}">
+                        <td>{{ cita.cliente }}</td>
+                        <td>{{ cita.fecha|date:"d/m/Y H:i" }}</td>
+                        <td>{{ cita.empleado|default:"-" }}</td>
+                        <td>{{ cita.duracion_minutos }} min</td>
+                        <td>{{ cita.ubicacion|default:"-" }}</td>
+                        <td><span class="badge badge-info">{{ cita.get_estado_display }}</span></td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="6" class="text-center py-4">Sin registros</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
+{% endblock %}
+
+{% block scripts_extra %}
+<script src="{% static 'js/gestion/reportes/reportes-detalle.js' %}"></script>
 {% endblock %}

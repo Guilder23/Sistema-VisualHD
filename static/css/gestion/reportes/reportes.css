@@ -1,23 +1,243 @@
 /* ============================================================================
-   REPORTES - VisualHD (Modo Claro Moderno)
+   REPORTES - VisualHD
    ============================================================================ */
 
-.card-reporte {
-    border: 1px solid var(--border-color, #E2E8F0);
-    border-radius: var(--radio-lg, 12px);
-    transition: var(--transicion, all 0.2s ease);
-    background-color: #FFFFFF;
+/* Hub */
+.reportes-grid .card-reporte {
+    border: 1px solid #E2E8F0;
+    border-radius: 12px;
+    transition: all 0.2s ease;
+    background: #fff;
+    height: 100%;
 }
 
-.card-reporte:hover {
+.reportes-grid .card-reporte:hover {
     transform: translateY(-4px);
-    box-shadow: var(--sombra-md);
-    border-color: var(--crimson-border, #F5CCD2);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    border-color: #F5CCD2;
 }
 
-.card-reporte .card-title {
+.reportes-grid .card-reporte .icono-reporte {
+    font-size: 2.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.reportes-grid .card-reporte .card-title {
     font-weight: 700;
     color: #1E293B;
-    margin-top: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+/* Detalle de reporte */
+.reporte-detalle .reporte-volver {
+    color: #64748B;
+    font-size: 0.9rem;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
     margin-bottom: 0.75rem;
 }
+
+.reporte-detalle .reporte-volver:hover {
+    color: #DC2626;
+}
+
+.reporte-detalle .page-header-reporte {
+    margin-bottom: 1.25rem;
+}
+
+.reporte-detalle .page-header-reporte h2 {
+    font-weight: 700;
+    color: #1E293B;
+    margin: 0;
+}
+
+.card-filtros-reporte {
+    border: 1px solid #E2E8F0;
+    border-radius: 12px;
+    background: #fff;
+    margin-bottom: 1rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.card-filtros-reporte .card-body {
+    padding: 0.75rem 1rem;
+    overflow-x: auto;
+}
+
+.reporte-filtros-form {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 0.5rem;
+    min-width: min-content;
+}
+
+.reporte-filtros-form .form-control,
+.reporte-filtros-form .form-control-sm {
+    border-radius: 8px;
+    border-color: #E2E8F0;
+    height: 36px;
+    flex: 0 0 auto;
+    width: auto;
+    min-width: 130px;
+    max-width: 200px;
+}
+
+.reporte-filtros-form .filtro-busqueda {
+    flex: 1 1 180px;
+    min-width: 180px;
+    max-width: 280px;
+}
+
+.reporte-filtros-form input[type="date"] {
+    min-width: 145px;
+    max-width: 155px;
+}
+
+.btn-pdf-reporte {
+    background: #DC2626;
+    color: #fff !important;
+    border: none;
+    border-radius: 8px;
+    padding: 0.45rem 0.75rem;
+    font-size: 1.1rem;
+    line-height: 1;
+    transition: background 0.2s;
+    flex: 0 0 auto;
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-pdf-reporte:hover {
+    background: #B91C1C;
+    color: #fff !important;
+}
+
+.reporte-resumen {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.reporte-resumen .resumen-card {
+    flex: 1;
+    min-width: 180px;
+    padding: 1rem 1.25rem;
+    border-radius: 12px;
+    border: 1px solid #E2E8F0;
+    background: #fff;
+}
+
+.reporte-resumen .resumen-card .resumen-label {
+    font-size: 0.8rem;
+    color: #64748B;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    margin-bottom: 0.25rem;
+}
+
+.reporte-resumen .resumen-card .resumen-valor {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1E293B;
+}
+
+.resumen-card.resumen-success { border-left: 4px solid #22C55E; }
+.resumen-card.resumen-danger { border-left: 4px solid #EF4444; }
+.resumen-card.resumen-info { border-left: 4px solid #3B82F6; }
+.resumen-card.resumen-warning { border-left: 4px solid #F59E0B; }
+.resumen-card.resumen-primary { border-left: 4px solid #8B5CF6; }
+
+.card-tabla-reporte {
+    border: 1px solid #E2E8F0;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.card-tabla-reporte .card-header {
+    background: #F8FAFC;
+    border-bottom: 1px solid #E2E8F0;
+    font-weight: 600;
+    color: #334155;
+    padding: 0.75rem 1.25rem;
+}
+
+.tabla-reporte {
+    margin: 0;
+}
+
+.tabla-reporte thead th {
+    background: #F1F5F9;
+    color: #475569;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    border-bottom: 1px solid #E2E8F0;
+    padding: 0.75rem 1rem;
+    white-space: nowrap;
+}
+
+.tabla-reporte tbody td {
+    padding: 0.7rem 1rem;
+    vertical-align: middle;
+    border-color: #F1F5F9;
+    font-size: 0.9rem;
+}
+
+.tabla-reporte tbody tr:hover {
+    background: #F8FAFC;
+}
+
+.tabla-reporte tbody tr.filtro-oculto {
+    display: none;
+}
+
+.badge-estado-reporte {
+    padding: 0.25rem 0.6rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.badge-activo { background: #DCFCE7; color: #166534; }
+.badge-inactivo { background: #FEE2E2; color: #991B1B; }
+
+/* Financiero */
+.financiero-cards .fin-card {
+    border-radius: 12px;
+    border: 1px solid #E2E8F0;
+    padding: 1.25rem;
+    background: #fff;
+    height: 100%;
+    transition: transform 0.2s;
+}
+
+.financiero-cards .fin-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.financiero-cards .fin-card .fin-label {
+    font-size: 0.8rem;
+    color: #64748B;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+}
+
+.financiero-cards .fin-card .fin-valor {
+    font-size: 1.6rem;
+    font-weight: 700;
+}
+
+.fin-valor-success { color: #16A34A; }
+.fin-valor-danger { color: #DC2626; }
+.fin-valor-primary { color: #2563EB; }
+.fin-valor-warning { color: #D97706; }
