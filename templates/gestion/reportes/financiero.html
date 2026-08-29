@@ -3,43 +3,56 @@
 
 {% block titulo %}Reporte Financiero - VisualHD{% endblock %}
 
-{% block contenido %}
-<div class="container-fluid py-4">
-    <h2 class="mb-4"><i class="fas fa-chart-pie"></i> Reporte Financiero</h2>
+{% block estilos_extra %}
+<link rel="stylesheet" href="{% static 'css/gestion/reportes/reportes.css' %}">
+{% endblock %}
 
-    <div class="row">
-        <div class="col-md-3">
-            <div class="card border-success">
-                <div class="card-body">
-                    <h6 class="card-title text-muted">Total Ingresos</h6>
-                    <h3 class="text-success">Bs. {{ total_ingresos|floatformat:2 }}</h3>
-                </div>
+{% block contenido %}
+<div class="container-fluid py-4 reporte-detalle" data-tipo="financiero">
+    <a href="{% url 'reportes:reportes_inicio' %}" class="reporte-volver"><i class="fas fa-arrow-left"></i> Volver a reportes</a>
+    <div class="page-header-reporte">
+        <h2><i class="fas fa-chart-pie text-secondary"></i> Reporte Financiero</h2>
+    </div>
+
+    <div class="card card-filtros-reporte">
+        <div class="card-body">
+            <form class="reporte-filtros-form" data-pdf-url="{% url pdf_url %}">
+                <input type="date" name="fecha_inicio" class="form-control form-control-sm" value="{{ filtros.fecha_inicio }}" title="Fecha inicio">
+                <input type="date" name="fecha_fin" class="form-control form-control-sm" value="{{ filtros.fecha_fin }}" title="Fecha fin">
+                <button type="button" class="btn btn-pdf-reporte" title="Descargar PDF"><i class="fas fa-file-pdf"></i></button>
+            </form>
+        </div>
+    </div>
+
+    <div class="row financiero-cards">
+        <div class="col-md-3 mb-3">
+            <div class="fin-card">
+                <div class="fin-label">Total Ingresos</div>
+                <div class="fin-valor fin-valor-success">Bs. {{ total_ingresos|floatformat:2 }}</div>
             </div>
         </div>
-        <div class="col-md-3">
-            <div class="card border-danger">
-                <div class="card-body">
-                    <h6 class="card-title text-muted">Total Egresos</h6>
-                    <h3 class="text-danger">Bs. {{ total_egresos|floatformat:2 }}</h3>
-                </div>
+        <div class="col-md-3 mb-3">
+            <div class="fin-card">
+                <div class="fin-label">Total Egresos</div>
+                <div class="fin-valor fin-valor-danger">Bs. {{ total_egresos|floatformat:2 }}</div>
             </div>
         </div>
-        <div class="col-md-3">
-            <div class="card border-primary">
-                <div class="card-body">
-                    <h6 class="card-title text-muted">Saldo Neto</h6>
-                    <h3 class="{% if saldo_neto >= 0 %}text-success{% else %}text-danger{% endif %}">Bs. {{ saldo_neto|floatformat:2 }}</h3>
-                </div>
+        <div class="col-md-3 mb-3">
+            <div class="fin-card">
+                <div class="fin-label">Saldo Neto</div>
+                <div class="fin-valor {% if saldo_neto >= 0 %}fin-valor-success{% else %}fin-valor-danger{% endif %}">Bs. {{ saldo_neto|floatformat:2 }}</div>
             </div>
         </div>
-        <div class="col-md-3">
-            <div class="card border-warning">
-                <div class="card-body">
-                    <h6 class="card-title text-muted">Pagos Pendientes</h6>
-                    <h3 class="text-warning">Bs. {{ pagos_pendientes|floatformat:2 }}</h3>
-                </div>
+        <div class="col-md-3 mb-3">
+            <div class="fin-card">
+                <div class="fin-label">Pagos Pendientes</div>
+                <div class="fin-valor fin-valor-warning">Bs. {{ pagos_pendientes|floatformat:2 }}</div>
             </div>
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block scripts_extra %}
+<script src="{% static 'js/gestion/reportes/reportes-detalle.js' %}"></script>
 {% endblock %}

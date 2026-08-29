@@ -2,12 +2,35 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.core.paginator import Paginator
 from django.db.models import Q
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
+import json
 
-from .models import Sesion
+from .models import Sesion, AdicionalSesion
+from .pdf import generar_pdf_sesion
 from apps.gestion.clientes.models import Cliente
 from apps.gestion.servicios.models import Servicio
 from apps.gestion.empleados.models import Empleado
+
+
+def _guardar_adicionales(sesion, adicionales_json):
+    sesion.adicionales.all().delete()
+    try:
+        adicionales = json.loads(adicionales_json or '[]')
+        for item in adicionales:
+            AdicionalSesion.objects.create(
+                sesion=sesion,
+                descripcion=item['descripcion'],
+                cantidad=item['cantidad'],
+                precio_unitario=item['precio_unitario']
+            )
+    except (json.JSONDecodeError, KeyError, TypeError):
+        pass
+
+
+def _actualizar_total(sesion):
+    sesion.precio = sesion.total_adicionales()
+    sesion.save(update_fields=['precio'])
 
 
 @login_required
@@ -16,7 +39,7 @@ def listar_sesiones(request):
     q = request.GET.get('q', '').strip()
     estado = request.GET.get('estado', '').strip()
 
-    sesiones = Sesion.objects.select_related('cliente', 'servicio', 'empleado').all()
+    sesiones = Sesion.objects.select_related('cliente', 'servicio', 'empleado').prefetch_related('adicionales').all()
     if q:
         sesiones = sesiones.filter(
             Q(cliente__nombre__icontains=q) | Q(cliente__apellido__icontains=q) | Q(lugar__icontains=q)
@@ -46,24 +69,26 @@ def crear_sesion(request):
         fecha = request.POST.get('fecha')
         hora = request.POST.get('hora')
         lugar = request.POST.get('lugar', '').strip()
-        precio = request.POST.get('precio') or 0
         observacion = request.POST.get('observacion', '').strip()
+        adicionales_json = request.POST.get('adicionales_json', '[]')
 
         cliente = Cliente.objects.filter(id=cliente_id).first()
         if not cliente or not fecha or not hora:
             messages.error(request, 'Cliente, fecha y hora son obligatorios.')
             return redirect('sesiones:listar_sesiones')
 
-        Sesion.objects.create(
+        sesion = Sesion.objects.create(
             cliente=cliente,
             servicio_id=servicio_id or None,
             empleado_id=empleado_id or None,
             fecha=fecha,
             hora=hora,
             lugar=lugar,
-            precio=precio,
+            precio=0,
             observacion=observacion,
         )
+        _guardar_adicionales(sesion, adicionales_json)
+        _actualizar_total(sesion)
         messages.success(request, 'Sesión registrada correctamente.')
     return redirect('sesiones:listar_sesiones')
 
@@ -84,10 +109,11 @@ def editar_sesion(request, pk):
         sesion.fecha = request.POST.get('fecha') or sesion.fecha
         sesion.hora = request.POST.get('hora') or sesion.hora
         sesion.lugar = request.POST.get('lugar', sesion.lugar).strip()
-        sesion.precio = request.POST.get('precio') or sesion.precio
         sesion.estado = request.POST.get('estado', sesion.estado)
         sesion.observacion = request.POST.get('observacion', sesion.observacion).strip()
         sesion.save()
+        _guardar_adicionales(sesion, request.POST.get('adicionales_json', '[]'))
+        _actualizar_total(sesion)
         messages.success(request, 'Sesión actualizada correctamente.')
     return redirect('sesiones:listar_sesiones')
 
@@ -100,3 +126,17 @@ def eliminar_sesion(request, pk):
         sesion.delete()
         messages.success(request, 'Sesión eliminada correctamente.')
     return redirect('sesiones:listar_sesiones')
+
+
+@login_required
+@user_passes_test(lambda u: u.is_staff, login_url='/login/')
+def pdf_sesion(request, pk):
+    sesion = get_object_or_404(
+        Sesion.objects.select_related('cliente', 'servicio', 'empleado').prefetch_related('adicionales'),
+        pk=pk,
+    )
+    buffer = generar_pdf_sesion(sesion)
+    nombre = f'cotizacion_sesion_{sesion.pk}.pdf'
+    response = HttpResponse(buffer.getvalue(), content_type='application/pdf')
+    response['Content-Disposition'] = f'inline; filename="{nombre}"'
+    return response

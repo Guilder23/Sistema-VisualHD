@@ -9,72 +9,66 @@
 
 {% block contenido %}
 <div class="container-fluid py-4">
-    <h2 class="mb-4"><i class="fas fa-chart-bar"></i> Reportes</h2>
+    <div class="page-header-content mb-4">
+        <h2 class="mb-1"><i class="fas fa-chart-bar text-danger"></i> Reportes</h2>
+        <p class="text-muted mb-0">Consulta y exporta reportes del sistema</p>
+    </div>
 
-    <div class="row">
+    <div class="row reportes-grid">
         <div class="col-md-4 mb-3">
-            <div class="card text-center">
-                <div class="card-body">
-                    <i class="fas fa-money-bill-wave text-success" style="font-size:2rem;"></i>
-                    <h5 class="card-title mt-2">Ingresos</h5>
+            <div class="card card-reporte text-center">
+                <div class="card-body py-4">
+                    <div class="icono-reporte text-success"><i class="fas fa-money-bill-wave"></i></div>
+                    <h5 class="card-title">Ingresos</h5>
                     <a href="{% url 'reportes:reporte_ingresos' %}" class="btn btn-sm btn-success">Ver reporte</a>
                 </div>
             </div>
         </div>
-
         <div class="col-md-4 mb-3">
-            <div class="card text-center">
-                <div class="card-body">
-                    <i class="fas fa-credit-card text-danger" style="font-size:2rem;"></i>
-                    <h5 class="card-title mt-2">Egresos</h5>
+            <div class="card card-reporte text-center">
+                <div class="card-body py-4">
+                    <div class="icono-reporte text-danger"><i class="fas fa-credit-card"></i></div>
+                    <h5 class="card-title">Egresos</h5>
                     <a href="{% url 'reportes:reporte_egresos' %}" class="btn btn-sm btn-danger">Ver reporte</a>
                 </div>
             </div>
         </div>
-
         <div class="col-md-4 mb-3">
-            <div class="card text-center">
-                <div class="card-body">
-                    <i class="fas fa-user-tie text-primary" style="font-size:2rem;"></i>
-                    <h5 class="card-title mt-2">Clientes</h5>
+            <div class="card card-reporte text-center">
+                <div class="card-body py-4">
+                    <div class="icono-reporte text-primary"><i class="fas fa-user-tie"></i></div>
+                    <h5 class="card-title">Clientes</h5>
                     <a href="{% url 'reportes:reporte_clientes' %}" class="btn btn-sm btn-primary">Ver reporte</a>
                 </div>
             </div>
         </div>
-
         <div class="col-md-4 mb-3">
-            <div class="card text-center">
-                <div class="card-body">
-                    <i class="fas fa-calendar-check text-info" style="font-size:2rem;"></i>
-                    <h5 class="card-title mt-2">Citas</h5>
+            <div class="card card-reporte text-center">
+                <div class="card-body py-4">
+                    <div class="icono-reporte text-info"><i class="fas fa-calendar-check"></i></div>
+                    <h5 class="card-title">Citas</h5>
                     <a href="{% url 'reportes:reporte_citas' %}" class="btn btn-sm btn-info">Ver reporte</a>
                 </div>
             </div>
         </div>
-
         <div class="col-md-4 mb-3">
-            <div class="card text-center">
-                <div class="card-body">
-                    <i class="fas fa-users text-warning" style="font-size:2rem;"></i>
-                    <h5 class="card-title mt-2">Empleados</h5>
+            <div class="card card-reporte text-center">
+                <div class="card-body py-4">
+                    <div class="icono-reporte text-warning"><i class="fas fa-users"></i></div>
+                    <h5 class="card-title">Empleados</h5>
                     <a href="{% url 'reportes:reporte_empleados' %}" class="btn btn-sm btn-warning">Ver reporte</a>
                 </div>
             </div>
         </div>
-
         <div class="col-md-4 mb-3">
-            <div class="card text-center">
-                <div class="card-body">
-                    <i class="fas fa-chart-pie text-secondary" style="font-size:2rem;"></i>
-                    <h5 class="card-title mt-2">Financiero</h5>
+            <div class="card card-reporte text-center">
+                <div class="card-body py-4">
+                    <div class="icono-reporte text-secondary"><i class="fas fa-chart-pie"></i></div>
+                    <h5 class="card-title">Financiero</h5>
                     <a href="{% url 'reportes:reporte_financiero' %}" class="btn btn-sm btn-secondary">Ver reporte</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
-{% endblock %}
-
-{% block scripts_extra %}
-<script src="{% static 'js/gestion/reportes/reportes.js' %}"></script>
 {% endblock %}

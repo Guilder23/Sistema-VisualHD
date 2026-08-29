@@ -6,6 +6,22 @@
     vertical-align: middle;
 }
 
+.pagos-tabs .nav-link {
+    color: #475569;
+    font-weight: 500;
+}
+
+.pagos-tabs .nav-link.active {
+    background-color: #C81D31;
+}
+
+.acciones-pagos {
+    display: flex;
+    gap: 0.35rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
 .btn-ver-pago {
     background-color: #F0F9FF;
     color: #0284C7 !important;

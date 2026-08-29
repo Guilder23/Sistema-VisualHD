@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import listar_sesiones, crear_sesion, editar_sesion, eliminar_sesion
+from .views import listar_sesiones, crear_sesion, editar_sesion, eliminar_sesion, pdf_sesion
 
 app_name = 'sesiones'
 
@@ -8,4 +8,5 @@ urlpatterns = [
     path('crear/', crear_sesion, name='crear_sesion'),
     path('<int:pk>/editar/', editar_sesion, name='editar_sesion'),
     path('<int:pk>/eliminar/', eliminar_sesion, name='eliminar_sesion'),
+    path('<int:pk>/pdf/', pdf_sesion, name='pdf_sesion'),
 ]

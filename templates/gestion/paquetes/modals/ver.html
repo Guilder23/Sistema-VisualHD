@@ -1,0 +1,55 @@
+{% load static %}
+<div class="modal fade" id="modalVerPaquete" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="fas fa-box-open"></i> Detalle del Paquete</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <dl class="row">
+                    <dt class="col-sm-3">Nombre</dt><dd class="col-sm-9" id="ver_nombre"></dd>
+                    <dt class="col-sm-3">Servicio Principal</dt><dd class="col-sm-9" id="ver_servicio_principal"></dd>
+                    <dt class="col-sm-3">Descripción</dt><dd class="col-sm-9" id="ver_descripcion"></dd>
+                    <dt class="col-sm-3">Precio total (Bs)</dt><dd class="col-sm-9" id="ver_precio"></dd>
+                    <dt class="col-sm-3">Estado</dt><dd class="col-sm-9" id="ver_estado"></dd>
+                    <dt class="col-sm-3">Registrado</dt><dd class="col-sm-9" id="ver_creado"></dd>
+                </dl>
+
+                <hr>
+                <h6 class="mb-3"><i class="fas fa-list"></i> Items del Paquete</h6>
+                
+                <div class="table-responsive">
+                    <table class="table table-sm table-bordered">
+                        <thead class="bg-light">
+                            <tr>
+                                <th>Descripción</th>
+                                <th style="width: 100px;">Precio Unit.</th>
+                                <th style="width: 80px;">Cant.</th>
+                                <th style="width: 120px;">Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbodyDetallesVer">
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-md-6 offset-md-6">
+                        <div class="card bg-light">
+                            <div class="card-body py-2">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <strong>Total:</strong>
+                                    <span class="h4 mb-0">Bs <span id="ver_total">0.00</span></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>

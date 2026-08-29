@@ -1,0 +1,111 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block titulo %}Paquetes{% endblock %}
+
+{% block estilos_extra %}
+<link rel="stylesheet" href="{% static 'css/gestion/paquetes/paquetes.css' %}">
+<link rel="stylesheet" href="{% static 'css/gestion/paquetes/modals/crear.css' %}">
+<link rel="stylesheet" href="{% static 'css/gestion/paquetes/modals/ver.css' %}">
+<link rel="stylesheet" href="{% static 'css/gestion/paquetes/modals/editar.css' %}">
+<link rel="stylesheet" href="{% static 'css/gestion/paquetes/modals/eliminar.css' %}">
+{% endblock %}
+
+{% block contenido %}
+<div class="container-fluid">
+    <div class="page-header">
+        <div class="page-header-content">
+            <h1 class="page-title"><i class="fas fa-box-open"></i> Gestión de Paquetes</h1>
+            <p class="page-subtitle">Paquetes de servicios fotográficos de VisualHD</p>
+        </div>
+        <button class="btn btn-primary" data-toggle="modal" data-target="#modalCrearPaquete">
+            <i class="fas fa-plus"></i> Nuevo Paquete
+        </button>
+    </div>
+
+    <div class="card card-filtros mb-3">
+        <div class="card-body py-3">
+            <form method="get" class="row align-items-center">
+                <div class="col-md-6 mb-2 mb-md-0">
+                    <input type="text" class="form-control form-control-sm" name="q" value="{{ q }}" placeholder="Buscar por nombre o descripción...">
+                </div>
+                <div class="col-md-3 mb-2 mb-md-0">
+                    <select name="estado" class="form-control form-control-sm">
+                        <option value="">Todos los estados</option>
+                        <option value="activo" {% if estado == 'activo' %}selected{% endif %}>Activos</option>
+                        <option value="inactivo" {% if estado == 'inactivo' %}selected{% endif %}>Inactivos</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <button type="submit" class="btn btn-outline-secondary btn-sm">Filtrar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card card-tabla">
+        <div class="card-header bg-light"><strong>Paquetes registrados</strong></div>
+        <div class="table-responsive">
+            <table class="table table-sm mb-0 tabla-paquetes">
+                <thead>
+                    <tr><th>Nombre</th><th>Servicio Principal</th><th>Descripción</th><th>Precio Total (Bs)</th><th>Items</th><th>Estado</th><th class="text-center">Acciones</th></tr>
+                </thead>
+                <tbody>
+                    {% for paquete in page_obj %}
+                    <tr>
+                        <td>{{ paquete.nombre }}</td>
+                        <td>{{ paquete.servicio_principal|default:'-' }}</td>
+                        <td>{{ paquete.descripcion|truncatewords:10 }}</td>
+                        <td>{{ paquete.precio_total }}</td>
+                        <td>{{ paquete.detalles.count }}</td>
+                        <td>
+                            {% if paquete.estado == 'activo' %}
+                            <span class="badge-estado badge-estado-activo">Activo</span>
+                            {% else %}
+                            <span class="badge-estado badge-estado-inactivo">Inactivo</span>
+                            {% endif %}
+                        </td>
+                        <td class="text-center">
+                            <button type="button" class="btn btn-info btn-sm btn-ver-paquete" data-toggle="modal" data-target="#modalVerPaquete"
+                                data-nombre="{{ paquete.nombre }}" data-descripcion="{{ paquete.descripcion }}" data-precio="{{ paquete.precio_total }}"
+                                data-estado="{{ paquete.get_estado_display }}" data-creado="{{ paquete.creado|date:'d/m/Y H:i' }}"
+                                data-servicio_principal="{{ paquete.servicio_principal|default:'-' }}"
+                                data-detalles="{% for detalle in paquete.detalles.all %}{{ detalle.descripcion }}|{{ detalle.precio_unitario }}|{{ detalle.cantidad }}{% if not forloop.last %};{% endif %}{% endfor %}">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button type="button" class="btn btn-warning btn-sm btn-editar-paquete" data-toggle="modal" data-target="#modalEditarPaquete"
+                                data-action="{% url 'paquetes:editar_paquete' paquete.pk %}" data-nombre="{{ paquete.nombre }}" data-descripcion="{{ paquete.descripcion }}"
+                                data-precio="{{ paquete.precio_total }}" data-estado="{{ paquete.estado }}" data-servicio_principal="{{ paquete.servicio_principal_id|default:'' }}"
+                                data-detalles="{% for detalle in paquete.detalles.all %}{{ detalle.descripcion }}|{{ detalle.precio_unitario }}|{{ detalle.cantidad }}{% if not forloop.last %};{% endif %}{% endfor %}">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button type="button" class="btn btn-danger btn-sm btn-eliminar-paquete" data-toggle="modal" data-target="#modalEliminarPaquete"
+                                data-action="{% url 'paquetes:eliminar_paquete' paquete.pk %}" data-nombre="{{ paquete.nombre }}">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="7" class="text-center py-4">No hay paquetes registrados.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    {% include 'componentes/paginacion.html' %}
+</div>
+
+{% include 'gestion/paquetes/modals/crear.html' %}
+{% include 'gestion/paquetes/modals/ver.html' %}
+{% include 'gestion/paquetes/modals/editar.html' %}
+{% include 'gestion/paquetes/modals/eliminar.html' %}
+{% endblock %}
+
+{% block scripts_extra %}
+<script src="{% static 'js/gestion/paquetes/paquetes.js' %}"></script>
+<script src="{% static 'js/gestion/paquetes/modals/crear.js' %}"></script>
+<script src="{% static 'js/gestion/paquetes/modals/ver.js' %}"></script>
+<script src="{% static 'js/gestion/paquetes/modals/editar.js' %}"></script>
+<script src="{% static 'js/gestion/paquetes/modals/eliminar.js' %}"></script>
+{% endblock %}

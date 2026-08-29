@@ -3,39 +3,84 @@
 
 {% block titulo %}Reporte de Empleados - VisualHD{% endblock %}
 
+{% block estilos_extra %}
+<link rel="stylesheet" href="{% static 'css/gestion/reportes/reportes.css' %}">
+{% endblock %}
+
 {% block contenido %}
-<div class="container-fluid py-4">
-    <h2 class="mb-3"><i class="fas fa-user-tie"></i> Reporte de Empleados</h2>
-    
-    <div class="alert alert-info">
-        <h5>Total Empleados: {{ total_empleados }}</h5>
+<div class="container-fluid py-4 reporte-detalle" data-tiene-monto="false">
+    <a href="{% url 'reportes:reportes_inicio' %}" class="reporte-volver"><i class="fas fa-arrow-left"></i> Volver a reportes</a>
+    <div class="page-header-reporte">
+        <h2><i class="fas fa-users text-warning"></i> Reporte de Empleados</h2>
     </div>
 
-    <div class="table-responsive">
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Nombre</th>
-                    <th>Email</th>
-                    <th>Especialidad</th>
-                    <th>Citas</th>
-                    <th>Eventos</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for empleado in empleados %}
-                <tr>
-                    <td>{{ empleado.nombre }} {{ empleado.apellido }}</td>
-                    <td>{{ empleado.email }}</td>
-                    <td>{{ empleado.especialidad }}</td>
-                    <td>{{ empleado.total_citas|default:0 }}</td>
-                    <td>{{ empleado.total_eventos|default:0 }}</td>
-                </tr>
-                {% empty %}
-                <tr><td colspan="5" class="text-center">Sin registros</td></tr>
-                {% endfor %}
-            </tbody>
-        </table>
+    <div class="card card-filtros-reporte">
+        <div class="card-body">
+            <form class="reporte-filtros-form" data-pdf-url="{% url pdf_url %}">
+                <input type="text" name="q" class="form-control form-control-sm filtro-busqueda" placeholder="Buscar por nombre, email o teléfono..." value="{{ filtros.q }}">
+                <select name="cargo" class="form-control form-control-sm">
+                    <option value="">Todos los cargos</option>
+                    {% for val, label in cargos %}
+                    <option value="{{ val }}" {% if filtros.cargo == val %}selected{% endif %}>{{ label }}</option>
+                    {% endfor %}
+                </select>
+                <select name="estado" class="form-control form-control-sm">
+                    <option value="">Todos los estados</option>
+                    {% for val, label in estados %}
+                    <option value="{{ val }}" {% if filtros.estado == val %}selected{% endif %}>{{ label }}</option>
+                    {% endfor %}
+                </select>
+                <button type="button" class="btn btn-pdf-reporte" title="Descargar PDF"><i class="fas fa-file-pdf"></i></button>
+            </form>
+        </div>
+    </div>
+
+    <div class="reporte-resumen">
+        <div class="resumen-card resumen-warning">
+            <div class="resumen-label">Total empleados</div>
+            <div class="resumen-valor" data-resumen-registros>{{ total_empleados }}</div>
+        </div>
+    </div>
+
+    <div class="card card-tabla-reporte">
+        <div class="card-header">Listado de empleados</div>
+        <div class="table-responsive">
+            <table class="table table-sm tabla-reporte mb-0">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Email</th>
+                        <th>Teléfono</th>
+                        <th>Cargo</th>
+                        <th>Estado</th>
+                        <th>Citas</th>
+                        <th>Eventos</th>
+                        <th>Sesiones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for empleado in empleados %}
+                    <tr data-search="{{ empleado.nombre|lower }} {{ empleado.apellido|lower }} {{ empleado.email|lower }} {{ empleado.telefono|lower }}"
+                        data-estado="{{ empleado.estado }}" data-cargo="{{ empleado.cargo }}">
+                        <td>{{ empleado.nombre }} {{ empleado.apellido }}</td>
+                        <td>{{ empleado.email|default:'-' }}</td>
+                        <td>{{ empleado.telefono|default:'-' }}</td>
+                        <td>{{ empleado.get_cargo_display }}</td>
+                        <td><span class="badge-estado-reporte badge-{{ empleado.estado }}">{{ empleado.get_estado_display }}</span></td>
+                        <td>{{ empleado.total_citas|default:0 }}</td>
+                        <td>{{ empleado.total_eventos|default:0 }}</td>
+                        <td>{{ empleado.total_sesiones|default:0 }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="8" class="text-center py-4">Sin registros</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
+{% endblock %}
+
+{% block scripts_extra %}
+<script src="{% static 'js/gestion/reportes/reportes-detalle.js' %}"></script>
 {% endblock %}

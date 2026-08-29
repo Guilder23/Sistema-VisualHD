@@ -32,6 +32,7 @@ urlpatterns = [
     path('gestion/finanzas/', include(('apps.gestion.finanzas.urls', 'finanzas'), namespace='finanzas')),
     path('gestion/reportes/', include(('apps.gestion.reportes.urls', 'reportes'), namespace='reportes')),
     path('gestion/permisos/', include(('apps.gestion.permisos.urls', 'permisos'), namespace='permisos')),
+    path('gestion/paquetes/', include(('apps.gestion.paquetes.urls', 'paquetes'), namespace='paquetes')),
     path('secret-admin/', admin.site.urls),
 ]
 

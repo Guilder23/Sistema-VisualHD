@@ -22,6 +22,11 @@
                 </a>
             </li>
             <li class="sidebar-item">
+                <a href="{% url 'paquetes:listar_paquetes' %}" class="sidebar-link {% if '/gestion/paquetes/' in request.path %}active{% endif %}">
+                    <i class="fas fa-box-open"></i><span>Paquetes</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
                 <a href="{% url 'sesiones:listar_sesiones' %}" class="sidebar-link {% if '/gestion/sesiones/' in request.path %}active{% endif %}">
                     <i class="fas fa-calendar-check"></i><span>Sesiones</span>
                 </a>
@@ -33,7 +38,7 @@
             </li>
             <li class="sidebar-item">
                 <a href="{% url 'pagos:listar_pagos' %}" class="sidebar-link {% if '/gestion/pagos/' in request.path %}active{% endif %}">
-                    <i class="fas fa-money-bill-wave"></i><span>Pagos</span>
+                    <i class="fas fa-money-bill-wave"></i><span>Cobros</span>
                 </a>
             </li>
 

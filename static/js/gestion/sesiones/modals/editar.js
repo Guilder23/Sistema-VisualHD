@@ -9,9 +9,25 @@ document.addEventListener('DOMContentLoaded', function () {
             form.querySelector('#editar_fecha').value = this.dataset.fecha || '';
             form.querySelector('#editar_hora').value = this.dataset.hora || '';
             form.querySelector('#editar_lugar').value = this.dataset.lugar || '';
-            form.querySelector('#editar_precio').value = this.dataset.precio || '0';
             form.querySelector('#editar_estado').value = this.dataset.estado || 'pendiente';
             form.querySelector('#editar_observacion').value = this.dataset.observacion || '';
+
+            const adicionalesStr = this.dataset.adicionales || '';
+            const adicionales = [];
+            adicionalesStr.split(';').forEach(function (item) {
+                const parts = String(item).split('|');
+                if (parts.length === 3) {
+                    adicionales.push({
+                        descripcion: parts[0],
+                        precio_unitario: parseFloat((parts[1] || '0').replace(',', '.')) || 0,
+                        cantidad: parseInt(parts[2]) || 1
+                    });
+                }
+            });
+
+            if (typeof window.cargarAdicionalesEditarSesion === 'function') {
+                window.cargarAdicionalesEditarSesion(adicionales);
+            }
         });
     });
 });
